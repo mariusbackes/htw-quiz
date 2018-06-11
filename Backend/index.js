@@ -6,10 +6,6 @@ const PORT = 8001;
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.post('/', function(request, response){
-    console.log(request.body);
-});
-
 // User routes
 let user_routes = require('./api/routes/UserRoutes');
 user_routes(app);
