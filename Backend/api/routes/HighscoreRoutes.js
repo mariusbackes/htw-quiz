@@ -5,7 +5,7 @@
 'use strict';
 
 module.exports = function(app) {
-    let highscoreService = require('api/services/HighscoreService');
+    let highscoreService = require('../services/HighscoreService');
 
     app.route('/highscore/get_highscore')
         .post(highscoreService.get_highscore);

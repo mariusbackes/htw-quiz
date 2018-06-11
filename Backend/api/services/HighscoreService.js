@@ -4,10 +4,10 @@
 
 'use strict';
 
-exports.get_highscore = function(req, res) {
+exports.get_highscore = (req, res) => {
     res.send({function: 'get_highscore'});
 };
 
-exports.update_highscore = function(req, res) {
+exports.update_highscore = (req, res) => {
     res.send({function: 'update_highscore'});
 };

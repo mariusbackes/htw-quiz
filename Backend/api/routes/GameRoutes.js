@@ -5,7 +5,7 @@
 'use strict';
 
 module.exports = function(app) {
-    let gameService = require('api/services/GameService');
+    let gameService = require('../services/GameService');
 
     app.route('/game/create_question_catalog')
         .post(gameService.create_question_catalog);
