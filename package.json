@@ -1,0 +1,19 @@
+{
+  "name": "htw-quiz",
+  "version": "1.0.0",
+  "description": "Webapplikation htw-quiz",
+  "main": "index.js",
+  "scripts": {
+    "test": "./node_modules/.bin/mocha --reporter spec"
+  },
+  "author": "Marius Backes und Tobias Meiser",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^2.0.1",
+    "chai": "^4.1.2",
+    "express": "^4.16.3",
+    "mocha": "^5.2.0",
+    "mysql": "^2.15.0",
+    "request": "^2.87.0"
+  }
+}
