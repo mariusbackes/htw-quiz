@@ -1,5 +1,6 @@
-
 # Created by https://www.gitignore.io/api/node,webstorm,sublimetext,visualstudio,visualstudiocode
+
+.DS_Store
 
 ### Node ###
 # Logs
