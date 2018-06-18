@@ -2,57 +2,50 @@
  * Test-File for user management
  */
 
-const expect  = require("chai").expect;
-const request = require("request");
+import { expect } from 'chai';
+import request from 'request-promise';
+
+const url = 'http://localhost:8080';
+const options = {
+  method: 'POST'
+};
 
 describe("User API-Methods", () => {
-    describe("register", () => {
-        it("returns status 200", () => {
-            request(url, (error, response, body) => {
-                expect(response.statusCode).to.equal(200); done();
-            });
-        });
+    it("register", async () => {
+        options.form = {
 
-        it("returns registered user", () => {});
+        };
+        let data = await doRequest(options, "/user/register");
+        expect(data.success).to.equal(true);
+        expect(data.userdata).not.empty;
     });
 
-    describe("login", () => {
-        it("returns status 200", () => {
-            request(url, (error, response, body) => {
-                expect(response.statusCode).to.equal(200); done();
-            });
-        });
+    it("login", async () => {
 
-        it("returns user login data", () => {});
     });
 
-    describe("change_password", () => {
-        it("returns status 200", () => {
-            request(url, (error, response, body) => { 
-                expect(response.statusCode).to.equal(200); done();
-            });
-        });
+    it("change_password", async () => {
 
-        it("returns boolean value if successful", () => {});
     });
 
-    describe("change_email", () => {
-        it("returns status 200", () => {
-            request(url, (error, response, body) => {
-                expect(response.statusCode).to.equal(200); done();
-            });
-        });
+    it("change_email", async () => {
 
-        it("returns boolean value if successful", () => {});
     });
 
-    describe("change_name", () => {
-        it("returns status 200", () => {
-            request(url, (error, response, body) => {
-                expect(response.statusCode).to.equal(200); done();
-            });
-        });
+    it("change_name", async () => {
 
-        it("returns boolean value if successful", () => {});
     });
 });
+
+const doRequest = async (options, query) => {
+    options.uri = url + query;
+    options.json = true;
+  
+    return request(options)
+      .then(data => {
+        return data;
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
