@@ -1,0 +1,16 @@
+{
+  "db": {
+    "name": "db",
+    "connector": "memory"
+  },
+  "htw-quiz": {
+    "host": "localhost",
+    "port": 3306,
+    "url": "mysql://htw_quiz_user@localhost/htw-quiz",
+    "database": "htw-quiz",
+    "password": "X8MpBzYzwK",
+    "name": "htw-quiz",
+    "user": "htw_quiz_user",
+    "connector": "mysql"
+  }
+}
