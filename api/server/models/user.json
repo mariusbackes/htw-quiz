@@ -9,8 +9,7 @@
     "user_id": {
       "type": "number",
       "id": true,
-      "generated": true,
-      "required": true
+      "generated": true
     },
     "username": {
       "type": "string",

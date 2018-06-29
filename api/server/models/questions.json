@@ -8,8 +8,7 @@
   "properties": {
     "question_id": {
       "type": "number",
-      "generated": true,
-      "required": true
+      "generated": true
     },
     "text": {
       "type": "string",

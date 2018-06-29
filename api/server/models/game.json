@@ -9,8 +9,7 @@
     "game_id": {
       "type": "number",
       "id": true,
-      "generated": true,
-      "required": true
+      "generated": true
     },
     "name": {
       "type": "string",
