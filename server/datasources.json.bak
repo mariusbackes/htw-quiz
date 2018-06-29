@@ -4,13 +4,13 @@
     "connector": "memory"
   },
   "htw_quiz": {
-    "host": "127.0.0.1",
+    "host": "localhost",
     "port": 3306,
-    "url": "mysql://root@localhost/htw_quiz",
+    "url": "mysql://htw_quiz_user@localhost/htw_quiz",
     "database": "htw_quiz",
+    "password": "X8MpBzYzwK",
     "name": "htw_quiz",
-    "user": "root",
-    "password": "hertha",
+    "user": "htw_quiz_user",
     "connector": "mysql"
   }
 }

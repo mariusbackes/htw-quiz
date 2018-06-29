@@ -1,0 +1,38 @@
+{
+  "name": "questions",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "question_id": {
+      "type": "number",
+      "generated": true,
+      "required": true
+    },
+    "text": {
+      "type": "string",
+      "required": true
+    },
+    "game_id": {
+      "type": "number",
+      "required": true
+    },
+    "correct_answer": {
+      "type": "string",
+      "required": true
+    },
+    "time_limit": {
+      "type": "number"
+    },
+    "is_multiple_choice": {
+      "type": "boolean",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

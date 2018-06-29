@@ -1,0 +1,38 @@
+{
+  "name": "contributors",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "game_id": {
+      "type": "number",
+      "required": true
+    },
+    "user_id": {
+      "type": "number",
+      "required": true
+    },
+    "play": {
+      "type": "boolean",
+      "required": true
+    },
+    "create": {
+      "type": "boolean",
+      "required": true
+    },
+    "edit": {
+      "type": "boolean",
+      "required": true
+    },
+    "delete": {
+      "type": "boolean",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

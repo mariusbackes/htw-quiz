@@ -34,5 +34,33 @@
   "Role": {
     "dataSource": "db",
     "public": false
+  },
+  "user": {
+    "dataSource": "htw_quiz",
+    "public": true
+  },
+  "game": {
+    "dataSource": "htw_quiz",
+    "public": true
+  },
+  "time_frame": {
+    "dataSource": "htw_quiz",
+    "public": true
+  },
+  "contributors": {
+    "dataSource": "htw_quiz",
+    "public": true
+  },
+  "highscore": {
+    "dataSource": "htw_quiz",
+    "public": true
+  },
+  "questions": {
+    "dataSource": "htw_quiz",
+    "public": true
+  },
+  "multiple_choice": {
+    "dataSource": "htw_quiz",
+    "public": true
   }
 }

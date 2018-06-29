@@ -1,0 +1,65 @@
+{
+  "name": "user",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "user_id": {
+      "type": "number",
+      "id": true,
+      "generated": true,
+      "required": true
+    },
+    "username": {
+      "type": "string",
+      "required": true
+    },
+    "email": {
+      "type": "string",
+      "required": true
+    },
+    "first_name": {
+      "type": "string",
+      "required": true
+    },
+    "last_name": {
+      "type": "string",
+      "required": true
+    },
+    "password": {
+      "type": "string",
+      "required": true
+    },
+    "registered_at": {
+      "type": "date",
+      "required": true,
+      "defaultFn": "now"
+    },
+    "last_login": {
+      "type": "date",
+      "required": true,
+      "defaultFn": "now"
+    },
+    "completed_games": {
+      "type": "number",
+      "required": true,
+      "defaultFn": 0
+    },
+    "reached_points": {
+      "type": "number",
+      "required": true,
+      "defaultFn": 0
+    },
+    "admin": {
+      "type": "number",
+      "required": true,
+      "defaultFn": 0
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}
