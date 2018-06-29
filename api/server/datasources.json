@@ -1,0 +1,12 @@
+{
+    "htw_quiz": {
+        "host": "localhost",
+        "port": 3306,
+        "url": "",
+        "database": "htw_quiz",
+        "password": "hertha",
+        "name": "htw_quiz",
+        "user": "root",
+        "connector": "mysql"
+      }
+}

@@ -2,7 +2,7 @@
   "name": "htw-quiz",
   "version": "1.0.0",
   "description": "Webapplikation htw-quiz",
-  "main": "server/server.js",
+  "main": "api/server/server.js",
   "engines": {
     "node": ">=4"
   },
