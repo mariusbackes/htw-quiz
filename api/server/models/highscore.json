@@ -8,11 +8,13 @@
   "properties": {
     "game_id": {
       "type": "number",
-      "required": true
+      "required": true,
+      "id": true
     },
     "user_id": {
       "type": "number",
-      "required": true
+      "required": true,
+      "id": true
     },
     "score": {
       "type": "number",

@@ -102,10 +102,10 @@ LOCK TABLES `highscore` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `mutliple-choice`
+-- Table structure for table `mutliple_choice`
 --
 
-DROP TABLE IF EXISTS `mutliple-choice`;
+DROP TABLE IF EXISTS `mutliple_choice`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `mutliple-choice` (
@@ -157,10 +157,10 @@ LOCK TABLES `questions` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `time-frame`
+-- Table structure for table `time_frame`
 --
 
-DROP TABLE IF EXISTS `time-frame`;
+DROP TABLE IF EXISTS `time_frame`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `time-frame` (
