@@ -38,7 +38,7 @@ export default function(User) {
 
         return new Promise((resolve, reject) => {
             user_dao.getPasswordHash(email).then(response => {
-                hashed_pas  sword = response;
+                hashed_password = response;
                 bcrypt.compare(password, hashed_password, (err, res) => {
                     resolve(res);
                 }).catch(err => {
