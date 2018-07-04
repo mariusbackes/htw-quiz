@@ -22,7 +22,18 @@
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "user": {
+      "type": "hasOne",
+      "model": "user",
+      "foreignKey": "user_id"
+    },
+    "game": {
+      "type": "hasOne",
+      "model": "game",
+      "foreignKey": "game_id"
+    }
+  },
   "acls": [],
   "methods": {}
 }

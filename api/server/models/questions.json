@@ -33,7 +33,13 @@
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "game": {
+      "type": "hasOne",
+      "model": "game",
+      "foreignKey": "game_id"
+    }
+  },
   "acls": [],
   "methods": {}
 }

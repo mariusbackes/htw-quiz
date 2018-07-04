@@ -5,7 +5,7 @@
 import { expect } from 'chai';
 import request from 'request-promise';
 
-const url = 'http://localhost:8001';
+const url = 'http://localhost:3000/api/';
 const options = {
   method: 'POST'
 };
