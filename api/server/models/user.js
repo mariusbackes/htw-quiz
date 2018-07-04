@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function(User) {
+export default function(User) {
     User.login = async function(){
         
     }

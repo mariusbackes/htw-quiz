@@ -1,5 +1,5 @@
 'use strict';
 
-module.exports = function(Highscore) {
+export default function(Highscore) {
 
 };

@@ -1,0 +1,27 @@
+{
+  "name": "htw-quiz-test",
+  "version": "1.0.0",
+  "description": "Tests für die Webapplikation htw-quiz",
+  "main": "index.js",
+  "engines": {
+    "node": ">=4"
+  },
+  "scripts": {
+    "test": "mocha --compilers js:babel-core/register ./src/**/*.spec.js"
+  },
+  "author": "Marius Backes und Tobias Meiser",
+  "dependencies": {
+    "chai": "^4.1.2",
+    "cheerio": "^1.0.0-rc.2",
+    "express": "^4.16.3",
+    "mocha": "^5.2.0",
+    "request": "^2.87.0",
+    "request-promise": "^4.2.2",
+    "request-promise-native": "^1.0.5"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-preset-es2015": "^6.24.1"
+  },
+  "license": "UNLICENSED"
+}

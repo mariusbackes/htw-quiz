@@ -1,5 +1,5 @@
 'use strict';
 
-module.exports = function(Multiplechoice) {
+export default function(Multiplechoice) {
 
 };

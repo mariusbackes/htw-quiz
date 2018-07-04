@@ -1,5 +1,5 @@
 'use strict';
 
-module.exports = function(Questions) {
+export default function(Questions) {
 
 };
