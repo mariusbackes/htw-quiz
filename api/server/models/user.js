@@ -10,11 +10,11 @@ export default function(User) {
     // Login
     User.login = function(user, callback) {
         let response = {
-            erfolg: false
+            success: false
         };
         response.user = user;
         User.checkCredentials(user.email, user.password).then((data) => {
-            response.erfolg = data;
+            response.success = data;
             callback(null, response);
         });
     };
@@ -38,9 +38,11 @@ export default function(User) {
 
         return new Promise((resolve, reject) => {
             user_dao.getPasswordHash(email).then(response => {
-                hashed_password = response;
+                hashed_pas  sword = response;
                 bcrypt.compare(password, hashed_password, (err, res) => {
                     resolve(res);
+                }).catch(err => {
+                    console.log(err);
                 });
             });
         })
@@ -50,7 +52,7 @@ export default function(User) {
     User.remoteMethod(
         'login', {
             http: { path: '/login', verb: 'post' },
-            accepts: { arg: 'user', type: 'object' },
+            accepts: { arg: 'user', type: 'object', http: { source: 'body' } },
             returns: { arg: 'response', type: 'object' }
         }
     );

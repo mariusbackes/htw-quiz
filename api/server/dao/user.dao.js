@@ -5,7 +5,7 @@ export function getPasswordHash(email) {
 
     return new Promise((resolve, reject) => {
         mysql.query(sql, [email], (error, result) => {
-            if (error) throw error;
+            if (error) reject(error);
             resolve(result[0].password);
         });
     })

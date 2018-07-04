@@ -5,69 +5,42 @@
 import { expect } from 'chai';
 import request from 'request-promise';
 
-const url = 'http://localhost:3000/api/';
-const options = {
+const url = 'http://localhost:3000/api';
+
+const post_options = {
   method: 'POST'
 };
 
+const get_options = {
+  method: 'GET'
+};
+
+const user = {
+  "username": "mariusb73", 
+  "email": "mariusbackes@icloud.com", 
+  "first_name": "Marius", "last_name": 
+  "Backes", "password": "test_passwort", 
+  "registered_at": new Date().toDateString(),
+  "last_login": new Date().toDateString(),
+  "completed_games": 0,
+  "reached_points": 0,
+  "admin": 0
+}
+
 describe("User API-Methods", () => {
-    it("register success", async () => {
-        options.form = {
-          username: "mariusb73",
-          email: "mariusbackes@icloud.com",
-          first_name: "Marius",
-          last_name: "Backes",
-          password: "test123"
-        };
-        let data = await doRequest(options, "/user/register");
-        expect(data.success).to.equal(true);
-        expect(data.userdata).not.empty;
-    });
-
     it("login success", async () => {
-      options.form = {
-        username: "mariusb73",
-        email: "mariusbackes@icloud.com",
-        password: "test123"
-      };
-      let data = await doRequest(options, "/user/login");
-      expect(data.success).to.equal(true);
-      expect(data.userdata).not.empty;
+      post_options.form = user;
+      let data = await doRequest(post_options, "/users/login");
+      expect(data.response.success).to.equal(true);
+      expect(data.response.user).not.empty;
     });
 
-    it("change_password success", async () => {
-      options.form = {
-        user_id: "1",
-        username: "mariusb73",
-        email: "mariusbackes@icloud.com",
-        password: "test123"
-      };
-      let data = await doRequest(options, "/user/change_password");
-      expect(data.success).to.equal(true);
-    });
-
-    it("change_email success", async () => {
-      options.form = {
-        user_id: "1",
-        username: "mariusb73",
-        email: "mariusbackes@icloud.com",
-        password: "test123"
-      };
-      let data = await doRequest(options, "/user/change_email");
-      expect(data.success).to.equal(true);
-    });
-
-    it("change_name success", async () => {
-      options.form = {
-        user_id: "1",
-        username: "mariusb73",
-        email: "mariusbackes@icloud.com",
-        password: "test123",
-        first_name: "Marius",
-        last_name: "Backes"
-      };
-      let data = await doRequest(options, "/user/change_name");
-      expect(data.success).to.equal(true);
+    it("login failes", async () => {
+      user.password = "falsches_passwort";
+      post_options.form = user;
+      let data = await doRequest(post_options, "/users/login");
+      expect(data.response.success).to.equal(false);
+      expect(data.response.user).not.empty;
     });
 });
 
