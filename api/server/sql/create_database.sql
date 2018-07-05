@@ -105,16 +105,16 @@ UNLOCK TABLES;
 -- Table structure for table `mutliple_choice`
 --
 
-DROP TABLE IF EXISTS `mutliple_choice`;
+DROP TABLE IF EXISTS `multiple_choice`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `mutliple-choice` (
+CREATE TABLE `multiple_choice` (
   `question_id` int(11) NOT NULL,
   `wrong_answer_1` varchar(350) NOT NULL,
   `wrong_answer_2` varchar(350) DEFAULT NULL,
   `wrong_answer_3` varchar(350) DEFAULT NULL,
-  KEY `mutliple-choice_questions_question_id_fk` (`question_id`),
-  CONSTRAINT `mutliple-choice_questions_question_id_fk` FOREIGN KEY (`question_id`) REFERENCES `questions` (`question_id`)
+  KEY `mutliple_choice_questions_question_id_fk` (`question_id`),
+  CONSTRAINT `mutliple_choice_questions_question_id_fk` FOREIGN KEY (`question_id`) REFERENCES `questions` (`question_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -122,9 +122,9 @@ CREATE TABLE `mutliple-choice` (
 -- Dumping data for table `mutliple-choice`
 --
 
-LOCK TABLES `mutliple-choice` WRITE;
-/*!40000 ALTER TABLE `mutliple-choice` DISABLE KEYS */;
-/*!40000 ALTER TABLE `mutliple-choice` ENABLE KEYS */;
+LOCK TABLES `mutliple_choice` WRITE;
+/*!40000 ALTER TABLE `mutliple_choice` DISABLE KEYS */;
+/*!40000 ALTER TABLE `mutliple_choice` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -163,22 +163,22 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `time_frame`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `time-frame` (
+CREATE TABLE `time_frame` (
   `game_id` int(11) NOT NULL,
   `from` datetime NOT NULL,
   `to` datetime NOT NULL,
-  KEY `time-frame_game_game_id_fk` (`game_id`),
-  CONSTRAINT `time-frame_game_game_id_fk` FOREIGN KEY (`game_id`) REFERENCES `game` (`game_id`)
+  KEY `time_frame_game_game_id_fk` (`game_id`),
+  CONSTRAINT `time_frame_game_game_id_fk` FOREIGN KEY (`game_id`) REFERENCES `game` (`game_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `time-frame`
+-- Dumping data for table `time_frame`
 --
 
-LOCK TABLES `time-frame` WRITE;
-/*!40000 ALTER TABLE `time-frame` DISABLE KEYS */;
-/*!40000 ALTER TABLE `time-frame` ENABLE KEYS */;
+LOCK TABLES `time_frame` WRITE;
+/*!40000 ALTER TABLE `time_frame` DISABLE KEYS */;
+/*!40000 ALTER TABLE `time_frame` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --

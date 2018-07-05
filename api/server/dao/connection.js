@@ -1,8 +1,9 @@
 import { createConnection } from 'mysql';
 
 var connection = createConnection({
-    host     : '127.0.0.1',
-    user     : 'root',
+    host     : 'localhost',
+    user     : 'htw_quiz_user',
+    password : 'X8MpBzYzwK',
     database : 'htw_quiz'
 });
 
