@@ -138,7 +138,7 @@ CREATE TABLE `questions` (
   `question_id` int(11) NOT NULL AUTO_INCREMENT,
   `text` varchar(350) NOT NULL,
   `game_id` int(11) NOT NULL,
-  `correct_answer` varchar(250) NOT NULL,
+  `correct_answer` varchar(350) NOT NULL,
   `time_limit` int(11) DEFAULT NULL,
   `is_multiple_choice` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`question_id`),
