@@ -12,7 +12,7 @@ export default function(User) {
         let response = {
             success: false
         };
-        response.user = user;
+        //response.user = user;
         User.checkCredentials(user.email, user.password).then((data) => {
             response.success = data;
             callback(null, response);
@@ -20,17 +20,17 @@ export default function(User) {
     };
 
     // Vor dem registrieren das Passwort verschlüsseln
-    User.observe('before save', (context, next) => {
-        if (context.isNewInstance) {
-            var user = context.instance;
-            bcrypt.genSalt(saltRounds, function(err, salt) {
-                bcrypt.hash(user.password, salt, function(err, hash) {
-                    user.password = hash;
-                    next();
-                });
-            });
-        }
-    });
+    // User.observe('before save', (context, next) => {
+    //     if (context.isNewInstance) {
+    //         var user = context.instance;
+    //         bcrypt.genSalt(saltRounds, function(err, salt) {
+    //             bcrypt.hash(user.password, salt, function(err, hash) {
+    //                 user.password = hash;
+    //                 next();
+    //             });
+    //         });
+    //     }
+    // });
 
     // Password des Nutzers überprüfen
     User.checkCredentials = function(email, password){
@@ -47,11 +47,100 @@ export default function(User) {
             });
         })
     };
+
+    //Passwort des Nutzers ändern
+    User.changePassword = function(user, password, newPassword) {
+        let response = {
+            success: false
+        };
+        User.checkCredentials(user.email, password).then(response => {
+            bcrypt.genSalt(saltRounds, function(err, salt) {
+                bcrypt.hash(newPassword, salt, function(err, hash) {
+                    user.password = hash;
+                    user.password = password;
+                    User.upsert(user, (err, res) => {
+                        if(res) response.success = true;
+                    });
+                });
+            });            
+        })
+    }
+
+    //Email des Nutzers ändern
+    User.changeEmail = function(user, password, newEmail){
+        let response = {
+            success: false
+        };
+        User.checkCredentials(user.email, password).then(response => {
+            user.email = newEmail;
+            User.upsert(user, (err, res) => {
+                if(res) response.success = true;
+            });
+        })
+    }
+
+    //Username des Nutzers ändern
+    User.changeUsername = function(user, password, newUsername){
+        let response = {
+            success: false
+        };
+        User.checkCredentials(user.email, password).then(response => {
+            user.email = newEmail;
+            User.upsert(user, (err, res) => {
+                if(res) response.success = true;
+            });
+        })
+    }
+
+    //Methode zum Anlegen eines Nutzers
+    User.registerUser = function(name, mail, pwd, fname, lname){
+        let user = {
+            username: name,
+            email: mail,
+            password: pwd,
+            first_name:fname,
+            last_name:lname,
+            registered_at: new Date(),
+            last_login: new Date(),
+            completed_games: 0,
+            reached_points: 0,
+            admin: false
+        }
+        bcrypt.genSalt(saltRounds, function(err, salt) {
+            bcrypt.hash(user.password, salt, function(err, hash) {
+                user.password = hash;
+                User.create(user, (err, res) => {
+                    if(res) response.success = true;
+                });
+            });
+        });
+    }
     
+
     // Eigene entfernte Methoden
     User.remoteMethod(
         'login', {
             http: { path: '/login', verb: 'post' },
+            accepts: { arg: 'user', type: 'object', http: { source: 'body' } },
+            returns: { arg: 'response', type: 'object' }
+        },
+        'changePassword', {
+            http: { path: '/changePassword', verb: 'post' },
+            accepts: { arg: 'user', type: 'object', http: { source: 'body' } },
+            returns: { arg: 'response', type: 'object' }
+        },
+        'changeEmail', {
+            http: { path: '/changeEmail', verb: 'post' },
+            accepts: { arg: 'user', type: 'object', http: { source: 'body' } },
+            returns: { arg: 'response', type: 'object' }
+        },
+        'changeUsername', {
+            http: { path: '/changeUsername', verb: 'post' },
+            accepts: { arg: 'user', type: 'object', http: { source: 'body' } },
+            returns: { arg: 'response', type: 'object' }
+        },
+        'registerUser', {
+            http: { path: '/registerUser', verb: 'post' },
             accepts: { arg: 'user', type: 'object', http: { source: 'body' } },
             returns: { arg: 'response', type: 'object' }
         }
