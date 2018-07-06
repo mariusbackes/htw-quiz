@@ -1,22 +1,157 @@
 'use strict';
 
 import bcrypt from 'bcrypt';
-import * as user_dao from '../dao/user.dao';
 
 // Konstanten
 const saltRounds = 10;
 
 export default function(User) {
     // Login
-    User.login = function(user, callback) {
+    User.login = function(p_user, callback) {
         let response = {
             success: false
         };
-        //response.user = user;
-        User.checkCredentials(user.email, user.password).then((data) => {
-            response.success = data;
+        User.checkCredentials(p_user.user_id, p_user.password).then((data) => {
+            console.log(data);
+            response.success = data.success;
             callback(null, response);
         });
+    };
+
+    User.remoteMethod('login', {
+        http: { path: '/login', verb: 'post' },
+        accepts: { arg: 'user', type: 'object', http: { source: 'body' } },
+        returns: { arg: 'response', type: 'object' }
+    });
+
+    //Passwort des Nutzers ändern
+    User.changePassword = function(p_data, callback) {
+        let response = {
+            success: false
+        };
+        User.checkCredentials(p_data.user.user_id, p_data.old_password).then(data => {
+            bcrypt.genSalt(saltRounds, function(err, salt) {
+                bcrypt.hash(p_data.new_password, salt, function(err, hash) {
+                    p_data.user.password = hash;
+                    User.upsert(p_data.user, (err, res) => {
+                        if(res) response.success = true;
+                        callback(null, response);
+                    });
+                });
+            });            
+        })
+    }
+
+    User.remoteMethod('changePassword', {
+        http: { path: '/changePassword', verb: 'post' },
+        accepts: { arg: 'data', type: 'object', http: { source: 'body' } },
+        returns: { arg: 'response', type: 'object' }
+    });
+
+    //Email des Nutzers ändern
+    User.changeEmail = function(p_data, callback){
+        let response = {
+            success: false
+        };
+        User.checkCredentials(p_data.user.user_id, p_data.user.password).then(data => {
+            p_data.user.email = p_data.new_email;
+            p_data.user.password = data.user_password;
+            User.upsert(p_data.user, (err, res) => {
+                if(res) response.success = true;
+                callback(null, response);
+            });
+        })
+    }
+
+    User.remoteMethod('changeEmail', {
+        http: { path: '/changeEmail', verb: 'post' },
+        accepts: { arg: 'data', type: 'object', http: { source: 'body' } },
+        returns: { arg: 'response', type: 'object' }
+    });
+
+    //Username des Nutzers ändern
+    User.changeUsername = function(p_data, callback){
+        let response = {
+            success: false
+        };
+        User.checkCredentials(p_data.user.user_id, p_data.user.password).then(data => {
+            p_data.user.username = p_data.new_username;
+            p_data.user.password = data.user_password;
+            User.upsert(p_data.user, (err, res) => {
+                if(res) response.success = true;
+                callback(null, response);
+            });
+        })
+    }
+
+    User.remoteMethod('changeUsername', {
+        http: { path: '/changeUsername', verb: 'post' },
+        accepts: { arg: 'user', type: 'object', http: { source: 'body' } },
+        returns: { arg: 'response', type: 'object' }
+    });
+
+    //Methode zum Anlegen eines Nutzers
+    User.registerUser = function(p_user, callback){
+        let response = {
+            success: false
+        };
+        let user = {
+            username: p_user.username,
+            email: p_user.email,
+            password: p_user.password,
+            first_name: p_user.first_name,
+            last_name: p_user.last_name,
+            registered_at: new Date(),
+            last_login: new Date(),
+            completed_games: 0,
+            reached_points: 0,
+            admin: false
+        }
+        bcrypt.genSalt(saltRounds, function(err, salt) {
+            bcrypt.hash(user.password, salt, function(err, hash) {
+                user.password = hash;
+                User.create(user, (err, res) => {
+                    if(res) {
+                        response.success = true;
+                        response.user_id = res.user_id;
+                    }
+                    callback(null, response);
+                });
+            });
+        });
+    }
+
+    User.remoteMethod('registerUser', {
+        http: { path: '/registerUser', verb: 'post' },
+        accepts: { arg: 'user', type: 'object', http: { source: 'body' } },
+        returns: { arg: 'response', type: 'object' }
+    });
+
+    /* -------------------------------------------- Interne Methoden -------------------------------------------- */
+    
+    // Password des Nutzers überprüfen
+    User.checkCredentials = function(p_user_id, p_password){
+        let response = {
+            success: false
+        }
+
+        console.log(p_user_id, p_password);
+        return new Promise((resolve, reject) => {
+            User.findById(p_user_id, (err, user) => {
+                if(err){
+                    resolve(response);
+                }
+                if(user) {
+                    bcrypt.compare(p_password, user.password, (err, res) => {
+                        response.success = res;
+                        response.user_password = user.password;
+                        resolve(response);
+                    })
+                } else {
+                    resolve(response);
+                }
+            })
+        })
     };
 
     // Vor dem registrieren das Passwort verschlüsseln
@@ -31,118 +166,4 @@ export default function(User) {
     //         });
     //     }
     // });
-
-    // Password des Nutzers überprüfen
-    User.checkCredentials = function(email, password){
-        let hashed_password = '';
-
-        return new Promise((resolve, reject) => {
-            user_dao.getPasswordHash(email).then(response => {
-                hashed_password = response;
-                bcrypt.compare(password, hashed_password, (err, res) => {
-                    resolve(res);
-                }).catch(err => {
-                    console.log(err);
-                });
-            });
-        })
-    };
-
-    //Passwort des Nutzers ändern
-    User.changePassword = function(user, password, newPassword) {
-        let response = {
-            success: false
-        };
-        User.checkCredentials(user.email, password).then(response => {
-            bcrypt.genSalt(saltRounds, function(err, salt) {
-                bcrypt.hash(newPassword, salt, function(err, hash) {
-                    user.password = hash;
-                    user.password = password;
-                    User.upsert(user, (err, res) => {
-                        if(res) response.success = true;
-                    });
-                });
-            });            
-        })
-    }
-
-    //Email des Nutzers ändern
-    User.changeEmail = function(user, password, newEmail){
-        let response = {
-            success: false
-        };
-        User.checkCredentials(user.email, password).then(response => {
-            user.email = newEmail;
-            User.upsert(user, (err, res) => {
-                if(res) response.success = true;
-            });
-        })
-    }
-
-    //Username des Nutzers ändern
-    User.changeUsername = function(user, password, newUsername){
-        let response = {
-            success: false
-        };
-        User.checkCredentials(user.email, password).then(response => {
-            user.email = newEmail;
-            User.upsert(user, (err, res) => {
-                if(res) response.success = true;
-            });
-        })
-    }
-
-    //Methode zum Anlegen eines Nutzers
-    User.registerUser = function(name, mail, pwd, fname, lname){
-        let user = {
-            username: name,
-            email: mail,
-            password: pwd,
-            first_name:fname,
-            last_name:lname,
-            registered_at: new Date(),
-            last_login: new Date(),
-            completed_games: 0,
-            reached_points: 0,
-            admin: false
-        }
-        bcrypt.genSalt(saltRounds, function(err, salt) {
-            bcrypt.hash(user.password, salt, function(err, hash) {
-                user.password = hash;
-                User.create(user, (err, res) => {
-                    if(res) response.success = true;
-                });
-            });
-        });
-    }
-    
-
-    // Eigene entfernte Methoden
-    User.remoteMethod(
-        'login', {
-            http: { path: '/login', verb: 'post' },
-            accepts: { arg: 'user', type: 'object', http: { source: 'body' } },
-            returns: { arg: 'response', type: 'object' }
-        },
-        'changePassword', {
-            http: { path: '/changePassword', verb: 'post' },
-            accepts: { arg: 'user', type: 'object', http: { source: 'body' } },
-            returns: { arg: 'response', type: 'object' }
-        },
-        'changeEmail', {
-            http: { path: '/changeEmail', verb: 'post' },
-            accepts: { arg: 'user', type: 'object', http: { source: 'body' } },
-            returns: { arg: 'response', type: 'object' }
-        },
-        'changeUsername', {
-            http: { path: '/changeUsername', verb: 'post' },
-            accepts: { arg: 'user', type: 'object', http: { source: 'body' } },
-            returns: { arg: 'response', type: 'object' }
-        },
-        'registerUser', {
-            http: { path: '/registerUser', verb: 'post' },
-            accepts: { arg: 'user', type: 'object', http: { source: 'body' } },
-            returns: { arg: 'response', type: 'object' }
-        }
-    );
 };

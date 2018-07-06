@@ -16,6 +16,7 @@ const get_options = {
 };
 
 const user = {
+  "user_id": null,
   "username": "mariusb73", 
   "email": "mariusbackes@icloud.com", 
   "first_name": "Marius", "last_name": 
@@ -28,11 +29,17 @@ const user = {
 }
 
 describe("User API-Methods", () => {
+    it("register success", async () => {
+      post_options.form = user;
+      let data = await doRequest(post_options, "/users/registerUser");
+      user.user_id = data.response.user_id;
+      expect(data.response.success).to.equal(true);
+    });
+
     it("login success", async () => {
       post_options.form = user;
       let data = await doRequest(post_options, "/users/login");
       expect(data.response.success).to.equal(true);
-      //expect(data.response.user).not.empty;
     });
 
     it("login failes", async () => {
@@ -40,7 +47,37 @@ describe("User API-Methods", () => {
       post_options.form = user;
       let data = await doRequest(post_options, "/users/login");
       expect(data.response.success).to.equal(false);
-      //expect(data.response.user).not.empty;
+    });
+
+    it("update user email-success", async () => {
+      let post_data = {
+        user: user,
+        new_email: "mariusbackes1@web.de"
+      }
+      post_options.form = post_data;
+      let data = await doRequest(post_options, "/users/changeEmail");
+      expect(data.response.success).to.equal(true);
+    });
+
+    it("update username success", async () => {
+      let post_data = {
+        user: user,
+        new_username: "marius_new_username"
+      }
+      post_options.form = post_data;
+      let data = await doRequest(post_options, "/users/changeUsername");
+      expect(data.response.success).to.equal(true);
+    });
+
+    it("update user password success", async () => {
+      let post_data = {
+        user: user,
+        old_password: "test_passwort",
+        new_password: "test_passwort"
+      }
+      post_options.form = post_data;
+      let data = await doRequest(post_options, "/users/changePassword");
+      expect(data.response.success).to.equal(true);
     });
 });
 
