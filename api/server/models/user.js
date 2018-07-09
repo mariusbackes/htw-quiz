@@ -73,14 +73,11 @@ export default function(User) {
         let response = {
             success: false
         };
-        User.checkCredentials(p_data.user.user_id, p_data.user.password).then(data => {
             p_data.user.username = p_data.new_username;
-            p_data.user.password = data.user_password;
             User.upsert(p_data.user, (err, res) => {
                 if(res) response.success = true;
                 callback(null, response);
             });
-        })
     }
 
     User.remoteMethod('changeUsername', {
@@ -90,16 +87,18 @@ export default function(User) {
     });
 
     //Methode zum Löschen eines Nutzers
-    User.deleteUser = function(p_user, callback){
+    User.deleteUser = function(p_data, callback){
         let response = {
             success: false
         };
-        User.destroyById(p_user.user_id, (err, res) => {
+        User.checkCredentials(p_data.user.user_id, p_data.password).then(data => {
+        User.destroyById(p_user.user_id, (err, res) => { //alternativ p_user.destroy();
             if(res) {
                 response.success = true;
             }
             callback(null, response);
         });
+    })
     }
 
     //Methode zum Anlegen eines Nutzers

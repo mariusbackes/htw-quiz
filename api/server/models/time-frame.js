@@ -47,7 +47,16 @@ export default function(Timeframe) {
 
     //Timeframe ändern
     Timeframe.updateTimeframe = function(p_data, callback){
-        //TODO implement
+        let timeframe = p_data.timeframe;
+        timeframe.from = p_data.from;
+        timeframe.to = p_data.to;
+        Timeframe.upsert(timeframe, (err, res) => {
+            if(res) {
+                response.success = true;
+                response.timeframe = res.timeframe;
+            }
+            callback(null, response);
+        });
     }
 
     Timeframe.remoteMethod('updateTimeframe', {
