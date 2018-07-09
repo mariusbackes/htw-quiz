@@ -53,9 +53,8 @@ export default function(User) {
         let response = {
             success: false
         };
-        User.checkCredentials(p_data.user.user_id, p_data.user.password).then(data => {
+        User.checkCredentials(p_data.user.user_id, p_data.password).then(data => {
             p_data.user.email = p_data.new_email;
-            p_data.user.password = data.user_password;
             User.upsert(p_data.user, (err, res) => {
                 if(res) response.success = true;
                 callback(null, response);
@@ -89,6 +88,19 @@ export default function(User) {
         accepts: { arg: 'user', type: 'object', http: { source: 'body' } },
         returns: { arg: 'response', type: 'object' }
     });
+
+    //Methode zum Löschen eines Nutzers
+    User.deleteUser = function(p_user, callback){
+        let response = {
+            success: false
+        };
+        User.destroyById(p_user.user_id, (err, res) => {
+            if(res) {
+                response.success = true;
+            }
+            callback(null, response);
+        });
+    }
 
     //Methode zum Anlegen eines Nutzers
     User.registerUser = function(p_user, callback){
@@ -152,7 +164,7 @@ export default function(User) {
                 }
             })
         })
-    };
+    };    
 
     // Vor dem registrieren das Passwort verschlüsseln
     // User.observe('before save', (context, next) => {
