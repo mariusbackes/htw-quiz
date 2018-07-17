@@ -25,16 +25,29 @@
 </template>
 
 <script>
+  import userService from '../services/user.service';
+
   export default {
     name: "Login",
     data() {
       return {
+        register: {
+          email: ''
+        },
+        login_obj: {
 
+        }
       }
     },
     methods: {
       login() {
-        this.$router.push('/home');
+        userService.login(this.login_obj).then((response) => {
+          if(response.success){
+            this.$router.push('/home');
+          } else {
+            // TODO: Maybe helper-service for error alert
+          }
+        });
       }
     }
   }

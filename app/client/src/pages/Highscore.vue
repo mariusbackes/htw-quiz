@@ -1,5 +1,5 @@
 <template>
-
+  <h1>Highscore</h1>
 </template>
 
 <script>
