@@ -1,17 +1,13 @@
 <template>
   <v-app>
-    <Login />
+    <div id="app">
+      <router-view></router-view>
+    </div>
   </v-app>
 </template>
 
 <script>
-import Login from './pages/Login';
-
 export default {
-  name: 'App',
-  components: {
-    Login
-  },
-
+  name: 'App'
 }
 </script>

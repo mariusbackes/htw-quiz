@@ -29,23 +29,12 @@
     name: "Login",
     data() {
       return {
-        authenticated: false
-      }
-    },
-    mounted() {
-      if(this.authenticated) {
-        this.$router.replace({ name: "home" });
+
       }
     },
     methods: {
       login() {
-        this.authenticated = true;
-        console.log(this.authenticated);
-        
-        this.router.push(this.$route.query.redirect || '/');
-      },
-      logout() {
-        this.authenticated = false;
+        this.$router.push('/home');
       }
     }
   }
