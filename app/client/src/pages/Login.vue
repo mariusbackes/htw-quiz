@@ -10,7 +10,7 @@
             <v-card-text>
               <v-form>
                 <v-text-field prepend-icon="person" name="login" label="Login" type="text"></v-text-field>
-                <v-text-field id="password" prepend-icon="lock" name="password" label="Password" type="password"></v-text-field>
+                <v-text-field prepend-icon="lock" name="password" label="Password" type="password"></v-text-field>
               </v-form>
             </v-card-text>
             <v-card-actions>
@@ -18,6 +18,49 @@
               <v-btn color="primary" @click="login()">Login</v-btn>
             </v-card-actions>
           </v-card>
+
+          <!-- Register -->
+          <v-layout row justify-center>
+            <v-dialog v-model="showRegisterModal" persistent max-width="290">
+              <v-btn slot="activator" color="primary" dark>Noch kein Mitglied? Jetzt registrieren!</v-btn>
+              <v-card>
+                <v-card-title class="headline">Nutzer anlegen</v-card-title>
+                <v-card-text>Geben sie alle benötigten Informationen an um ein Nutzerkonto zu erstellen</v-card-text>
+                <!-- Inputs -->
+                <v-form ref="registerForm" lazy-validation>
+                  <v-text-field type="text" prepend-icon="person" label="Username" required
+                                ref="username"
+                                v-model="username"
+                                :rules="[() => !!username || 'Username ist ein Pflichtfeld']"></v-text-field>
+                  <v-text-field type="text" prepend-icon="person" label="Vorname" required
+                                ref="first_name"
+                                v-model="first_name"
+                                :rules="[() => !!first_name || 'Vorname ist ein Pflichtfeld']"></v-text-field>
+                  <v-text-field type="text" prepend-icon="person" label="Name" required
+                                ref="last_name"
+                                v-model="last_name"
+                                :rules="[() => !!last_name || 'Name ist ein Pflichtfeld']"></v-text-field>
+                  <v-text-field type="email" prepend-icon="person" label="E-Mail Adresse" required
+                                ref="email"
+                                v-model="email"
+                                :rules="emailRules"></v-text-field>
+                  <v-text-field type="password" prepend-icon="person" label="Passwort" required
+                                ref="password"
+                                v-model="password"
+                                :rules="passwordRules"></v-text-field>
+                  <v-text-field type="password" prepend-icon="person" label="Passwort wiederholen" required
+                                ref="repeat_password"
+                                v-model="repeat_password"
+                                :rules="repeatPasswordRules"></v-text-field>
+                </v-form>
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn color="red darken-1" flat @click.native="showRegisterModal = false">Abbrechen</v-btn>
+                  <v-btn color="green darken-1" flat @click.native="register()">Registrieren</v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
+          </v-layout>
         </v-flex>
       </v-layout>
     </v-container>
@@ -31,12 +74,29 @@
     name: "Login",
     data() {
       return {
-        register: {
-          email: ''
-        },
-        login_obj: {
+        // Register-Data
+        username: null,
+        first_name: null,
+        last_name: null,
+        email: null,
+        password: null,
+        repeat_password: null,
+        showRegisterModal: false,
 
-        }
+        // Rules
+        emailRules: [
+          email => !!email || 'E-mail ist ein Pflichtfeld',
+          email => /.+@.+/.test(email) || 'E-mail muss gültig sein'
+        ],
+        passwordRules: [
+          password => !!password || 'Passwort ist ein Pflichtfeld',
+          password => !!password && password.length >= 8 || 'Passwort muss mindestens 8 Zeichen enthalten'
+        ],
+        repeatPasswordRules: [
+          repeat_password => !!repeat_password || 'Password wiederholen ist ein Pflichtfeld',
+          repeat_password => !!repeat_password && repeat_password.length >= 8 || 'Passwort muss mindestens 8 Zeichen enthalten',
+          () => this.password == this.repeat_password || 'Passwörter müssen übereinstimmen'
+        ]
       }
     },
     methods: {
@@ -48,6 +108,14 @@
             // TODO: Maybe helper-service for error alert
           }
         });
+      },
+      register(){
+        if (this.$refs.registerForm.validate()) {
+          console.log("true");
+          // TODO: Service call
+        } else {
+          console.log("Not valid");
+        }
       }
     }
   }
