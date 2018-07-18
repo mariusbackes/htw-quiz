@@ -8,9 +8,15 @@
               <v-toolbar-title>Einloggen</v-toolbar-title>
             </v-toolbar>
             <v-card-text>
-              <v-form>
-                <v-text-field prepend-icon="person" name="login" label="Login" type="text"></v-text-field>
-                <v-text-field prepend-icon="lock" name="password" label="Password" type="password"></v-text-field>
+              <v-form ref="loginForm" lazy-validation>
+                <v-text-field type="text" prepend-icon="person" required label="Login"
+                              ref="email"
+                              v-model="email"
+                              :rules="emailRules"></v-text-field>
+                <v-text-field type="password" prepend-icon="lock" required label="Password"
+                              ref="password"
+                              v-model="password"
+                              :rules="[() => !!password || 'Passwort ist ein Pflichtfeld']"></v-text-field>
               </v-form>
             </v-card-text>
             <v-card-actions>
@@ -75,6 +81,7 @@
     data() {
       return {
         // Register-Data
+        user_id: null,
         username: null,
         first_name: null,
         last_name: null,
@@ -101,20 +108,38 @@
     },
     methods: {
       login() {
-        userService.login(this.login_obj).then((response) => {
-          if(response.success){
-            this.$router.push('/home');
-          } else {
-            // TODO: Maybe helper-service for error alert
-          }
-        });
+        if(this.$refs.loginForm.validate()){
+          let login_obj = {
+            user_id: this.user_id,
+            email: this.email,
+            password: this.password
+          };
+          userService.login(login_obj).then((response) => {
+            if(response.success){
+              this.$router.push('/home');
+            } else {
+              // TODO: Show error message
+            }
+          });
+        }
       },
-      register(){
+      register() {
         if (this.$refs.registerForm.validate()) {
-          console.log("true");
-          // TODO: Service call
-        } else {
-          console.log("Not valid");
+          let user = {
+            username: this.username,
+            first_name: this.first_name,
+            last_name: this.last_name,
+            email: this.email,
+            password: this.password,
+          };
+          userService.register(user).then((response) => {
+            if(response.erfolg){
+              this.user.user_id = response.user_id;
+              // TODO: Store user in local storage or something like that
+            } else {
+              // TODO: Show error message
+            }
+          })
         }
       }
     }

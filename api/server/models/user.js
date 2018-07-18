@@ -38,9 +38,9 @@ export default function(User) {
                         callback(null, response);
                     });
                 });
-            });            
+            });
         })
-    }
+    };
 
     User.remoteMethod('changePassword', {
         http: { path: '/changePassword', verb: 'post' },
@@ -53,14 +53,14 @@ export default function(User) {
         let response = {
             success: false
         };
-        User.checkCredentials(p_data.user.user_id, p_data.password).then(data => {
+        User.checkCredentials(p_data.user.user_id, p_data.user.password).then(data => {
             p_data.user.email = p_data.new_email;
             User.upsert(p_data.user, (err, res) => {
                 if(res) response.success = true;
                 callback(null, response);
             });
         })
-    }
+    };
 
     User.remoteMethod('changeEmail', {
         http: { path: '/changeEmail', verb: 'post' },
@@ -73,12 +73,14 @@ export default function(User) {
         let response = {
             success: false
         };
-            p_data.user.username = p_data.new_username;
-            User.upsert(p_data.user, (err, res) => {
-                if(res) response.success = true;
-                callback(null, response);
-            });
-    }
+        User.checkCredentials(p_data.user.user_id, p_data.user.password).then((data) => {
+          p_data.user.username = p_data.new_username;
+          User.upsert(p_data.user, (err, res) => {
+            if(res) response.success = true;
+            callback(null, response);
+          });
+        });
+    };
 
     User.remoteMethod('changeUsername', {
         http: { path: '/changeUsername', verb: 'post' },
@@ -91,15 +93,21 @@ export default function(User) {
         let response = {
             success: false
         };
-        User.checkCredentials(p_data.user.user_id, p_data.password).then(data => {
-        User.destroyById(p_user.user_id, (err, res) => { //alternativ p_user.destroy();
-            if(res) {
-                response.success = true;
-            }
-            callback(null, response);
-        });
-    })
-    }
+        User.checkCredentials(p_data.user_id, p_data.password).then(data => {
+          User.destroyById(p_data.user_id, (err, res) => { //alternativ p_user.destroy();
+              if(res) {
+                  response.success = true;
+              }
+              callback(null, response);
+          });
+        })
+    };
+
+  User.remoteMethod('deleteUser', {
+    http: { path: '/deleteUser', verb: 'post' },
+    accepts: { arg: 'user', type: 'object', http: { source: 'body' } },
+    returns: { arg: 'response', type: 'object' }
+  });
 
     //Methode zum Anlegen eines Nutzers
     User.registerUser = function(p_user, callback){
@@ -117,7 +125,7 @@ export default function(User) {
             completed_games: 0,
             reached_points: 0,
             admin: false
-        }
+        };
         bcrypt.genSalt(saltRounds, function(err, salt) {
             bcrypt.hash(user.password, salt, function(err, hash) {
                 user.password = hash;
@@ -130,7 +138,7 @@ export default function(User) {
                 });
             });
         });
-    }
+    };
 
     User.remoteMethod('registerUser', {
         http: { path: '/registerUser', verb: 'post' },
@@ -139,14 +147,13 @@ export default function(User) {
     });
 
     /* -------------------------------------------- Interne Methoden -------------------------------------------- */
-    
+
     // Password des Nutzers überprüfen
     User.checkCredentials = function(p_user_id, p_password){
         let response = {
             success: false
-        }
+        };
 
-        console.log(p_user_id, p_password);
         return new Promise((resolve, reject) => {
             User.findById(p_user_id, (err, user) => {
                 if(err){
@@ -163,7 +170,7 @@ export default function(User) {
                 }
             })
         })
-    };    
+    };
 
     // Vor dem registrieren das Passwort verschlüsseln
     // User.observe('before save', (context, next) => {
