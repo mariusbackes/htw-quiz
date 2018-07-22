@@ -1,13 +1,21 @@
 'use strict';
-
 export default function(Timeframe) {
 
     //Timeframe anlegen
-    Timeframe.createTimeframe = function(p_timeframe, callback){
+    Timeframe.createTimeframe = function(p_data, callback){ //pdata: user; timeframe; game
         let response = {
             success: false
         };
-        Timeframe.create(p_timeframe, (err, res) => {
+        let timeframe = p_data.timeframe;
+        let user = p_data.user;
+        let game = p_data.game;
+
+        if (user.user_id != game.creator)
+        {
+            console.log("Not Authorized");
+        }
+        else
+        Timeframe.create(p_data.timeframe, (err, res) => {
             if(res) {
                 response.success = true;
                 response.timeframe = res.timeframe;
@@ -18,19 +26,28 @@ export default function(Timeframe) {
 
     Timeframe.remoteMethod('createTimeframe', {
         http: { path: '/createTimeframe', verb: 'post' },
-        accepts: { arg: 'timeframe', type: 'object', http: { source: 'body' } },
+        accepts: { arg: 'data', type: 'object', http: { source: 'body' } },
         returns: { arg: 'response', type: 'object' }
     });
 
     //Timeframe löschen
-    Timeframe.deleteTimeframe = function (p_timeframe, callback){
+    Timeframe.deleteTimeframe = function (p_data, callback){
         let response = {
             success: false
         };
         let where = 
             {
-                where: {and: [game_id = p_timeframe.game_id, from = p_timeframe.from, to = p_timeframe.to]}
+                where: {and: [game_id = p_data.timeframe.game_id, from = p_data.timeframe.from, to = p_data.timeframe.to]}
             }
+        let timeframe = p_data.timeframe;
+        let user = p_data.user;
+        let game = p_data.game;
+
+        if (user.user_id != game.creator)
+        {
+            console.log("Not Authorized");
+        }
+        else
         Timeframe.destroyAll(where, (err, res) => {
             if(res) {
                 response.success = true;
@@ -41,15 +58,21 @@ export default function(Timeframe) {
 
     Timeframe.remoteMethod('deleteTimeframe', {
         http: { path: '/deleteTimeframe', verb: 'post' },
-        accepts: { arg: 'timeframe', type: 'object', http: { source: 'body' } },
+        accepts: { arg: 'data', type: 'object', http: { source: 'body' } },
         returns: { arg: 'response', type: 'object' }
     });
 
     //Timeframe ändern
     Timeframe.updateTimeframe = function(p_data, callback){
         let timeframe = p_data.timeframe;
-        timeframe.from = p_data.from;
-        timeframe.to = p_data.to;
+        let user = p_data.user;
+        let game = p_data.game;
+
+        if (user.user_id != game.creator)
+        {
+            console.log("Not Authorized");
+        }
+        else
         Timeframe.upsert(timeframe, (err, res) => {
             if(res) {
                 response.success = true;
