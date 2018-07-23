@@ -12,7 +12,6 @@ export default function(User) {
             success: false
         };
         User.checkCredentials(p_user.user_id, p_user.password).then((data) => {
-            console.log(data);
             response.success = data.success;
             callback(null, response);
         });

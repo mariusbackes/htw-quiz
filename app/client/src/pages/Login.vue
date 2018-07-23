@@ -1,5 +1,7 @@
 <template>
   <v-content>
+    <!-- Loading Animation -->
+    <v-progress-linear :indeterminate="true" v-if="loading"></v-progress-linear>
     <v-container fluid fill-height>
       <v-layout align-center justify-center>
         <v-flex xs12 sm8 md4>
@@ -75,11 +77,13 @@
 
 <script>
   import userService from '../services/user.service';
+  import globalService from '../services/global.service';
 
   export default {
     name: "Login",
     data() {
       return {
+        loading: false,
         // Register-Data
         user_id: null,
         username: null,
@@ -92,8 +96,8 @@
 
         // Rules
         emailRules: [
-          email => !!email || 'E-mail ist ein Pflichtfeld',
-          email => /.+@.+/.test(email) || 'E-mail muss gültig sein'
+          email => !!email || 'E-Mail ist ein Pflichtfeld',
+          email => /.+@.+/.test(email) || 'E-Mail muss gültig sein'
         ],
         passwordRules: [
           password => !!password || 'Passwort ist ein Pflichtfeld',
@@ -109,17 +113,20 @@
     methods: {
       login() {
         if(this.$refs.loginForm.validate()){
+          this.loading = true;
           let login_obj = {
-            user_id: this.user_id,
+            user_id: globalService.getUserId(),
             email: this.email,
             password: this.password
           };
+          console.log(login_obj);
           userService.login(login_obj).then((response) => {
             if(response.success){
               this.$router.push('/home');
             } else {
               // TODO: Show error message
             }
+            this.loading = false;
           });
         }
       },
@@ -133,15 +140,40 @@
             password: this.password,
           };
           userService.register(user).then((response) => {
-            if(response.erfolg){
-              this.user.user_id = response.user_id;
-              // TODO: Store user in local storage or something like that
+            if(response.success){
+              this.showRegisterModal = false;
+              user.user_id = response.user_id;
+              user.password = this.password;
+              // Localstorage speichern und im GlobalService als temporäre Variable
+              localStorage.setItem('user', JSON.stringify(user));
+              globalService.setUser(user);
             } else {
               // TODO: Show error message
             }
           })
         }
+      },
+      getUserData() {
+        // Prüfen ob ein User vorhanden ist
+        let json = localStorage.getItem('user');
+        if(json){
+          let user = JSON.parse(json);
+          this.email = user.email;
+          this.password = user.password;
+          // Wenn ja, den Nutzer temporär speichern
+          globalService.setUser(user);
+
+          // Automatisches Login ausführen
+          /*
+          setTimeout(() => {
+            this.login();
+          }, 1000);
+          */
+        }
       }
+    },
+    mounted() {
+      this.getUserData();
     }
   }
 </script>
