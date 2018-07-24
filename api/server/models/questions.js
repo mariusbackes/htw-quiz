@@ -8,10 +8,10 @@ export default function(Questions) {
         let contributers = p_data.contributers;
         let questions = p_data.questions;
 
-        if (user.user_id != contributers.user_id)
+        if (user.user_id != contributers.user_id && user.user_id != game.creator)
             console.log("Not Authorized");
         else
-            if (contributers.create && (contributers.game_id == game_id))
+        if ((contributers.create && (contributers.game_id == questions.game_id && questions.game_id == game.game_id)) || user.user_id == game.creator  && questions.game_id == game.game_id)
                 Questions.create(questions, (err, res) => {
                     if(res) {
                         response.success = true;
@@ -35,10 +35,10 @@ export default function(Questions) {
         let contributers = p_data.contributers;
         let questions = p_data.questions;
 
-        if (user.user_id != contributers.user_id)
+        if (user.user_id != contributers.user_id && user.user_id != game.creator)
             console.log("Not Authorized");
         else
-            if (contributers.edit && (contributers.game_id == game_id))
+            if ((contributers.edit && (contributers.game_id == questions.game_id && questions.game_id == game.game_id)) || user.user_id == game.creator  && questions.game_id == game.game_id)
                 Questions.upsert(questions, (err, res) => {
                     if(res) {
                         response.success = true;
@@ -61,11 +61,13 @@ export default function(Questions) {
         let user = p_data.user;
         let contributers = p_data.contributers;
         let questions = p_data.questions;
+        let game = p_data.game;
+        
 
-        if (user.user_id != contributers.user_id)
+        if (user.user_id != contributers.user_id && user.user_id != game.creator)
             console.log("Not Authorized");
         else
-            if (contributers.delete && (contributers.game_id == game_id))
+        if ((contributers.delete && (contributers.game_id == questions.game_id && questions.game_id == game.game_id)) || user.user_id == game.creator  && questions.game_id == game.game_id)
                 Questions.destroyById(questions.question_id, (err, res) => {
                     if(res) {
                         response.success = true;
