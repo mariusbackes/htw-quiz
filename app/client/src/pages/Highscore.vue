@@ -1,11 +1,19 @@
 <template>
-  <h1>Highscore</h1>
+  <div>
+    <NavigationBar />
+    <h1>Highscore</h1>
+  </div>
 </template>
 
 <script>
-    export default {
-        name: "Highscore"
-    }
+  import NavigationBar from '../components/NavigationBar';
+
+  export default {
+    name: "Highscore",
+    components: {
+      NavigationBar
+    },
+  }
 </script>
 
 <style scoped>

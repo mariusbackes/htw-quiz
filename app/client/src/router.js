@@ -4,6 +4,7 @@ import Login from './pages/Login'
 import Home from './pages/Home'
 import Game from './pages/Game'
 import Highscore from './pages/Highscore'
+import User from './pages/User'
 
 Vue.use(Router);
 
@@ -28,6 +29,11 @@ export default new Router({
       path: '/highscore',
       name: 'Highscore',
       component: Highscore
+    },
+    {
+      path: '/user',
+      name: 'User',
+      component: User
     }
   ]
 })

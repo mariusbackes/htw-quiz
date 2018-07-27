@@ -119,7 +119,6 @@
             email: this.email,
             password: this.password
           };
-          console.log(login_obj);
           userService.login(login_obj).then((response) => {
             if(response.success){
               this.$router.push('/home');
@@ -144,6 +143,11 @@
               this.showRegisterModal = false;
               user.user_id = response.user_id;
               user.password = this.password;
+              user.registered_at = response.registered_at;
+              user.last_login = response.last_login;
+              user.completed_games = 0;
+              user.reached_points = 0;
+              user.admin = false;
               // Localstorage speichern und im GlobalService als temporäre Variable
               localStorage.setItem('user', JSON.stringify(user));
               globalService.setUser(user);

@@ -130,8 +130,10 @@ export default function(User) {
                 user.password = hash;
                 User.create(user, (err, res) => {
                     if(res) {
-                        response.success = true;
-                        response.user_id = res.user_id;
+                      response.success = true;
+                      response.user_id = res.user_id;
+                      response.registered_at = user.registered_at;
+                      response.last_login = user.last_login;
                     }
                     callback(null, response);
                 });
