@@ -26,11 +26,7 @@
 
       <!-- Änderung von Namen oder E-Mail Adresse -->
       <v-tab-item id="tab-2">
-        <v-card flat>
-          <v-card-text>
-            <!-- TODO: Component einfügen -->
-          </v-card-text>
-        </v-card>
+        <UserData />
       </v-tab-item>
 
       <!-- Passwort ändern -->
@@ -48,7 +44,8 @@
 <script>
   // Components
   import NavigationBar from '../components/NavigationBar';
-  import UserInfo from '../components/UserInfo';
+  import UserInfo from '../components/user_management/UserInfo';
+  import UserData from '../components/user_management/UserData'
 
   // Services
   import globalService from '../services/global.service';
@@ -57,7 +54,8 @@
     name: "User",
     components: {
       NavigationBar,
-      UserInfo
+      UserInfo,
+      UserData
     },
     data(){
       return {
@@ -67,7 +65,6 @@
     methods: {
       getUserData() {
         this.user = globalService.getUser();
-        console.log(this.user);
       }
     },
     mounted() {

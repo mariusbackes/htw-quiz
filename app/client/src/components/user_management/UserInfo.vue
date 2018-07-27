@@ -87,7 +87,7 @@
 
 <script>
   // Services
-  import globalService from '../services/global.service';
+  import globalService from '../../services/global.service';
 
   export default {
     name: "UserInfo",
@@ -99,7 +99,6 @@
     methods: {
       getUserData() {
         this.user = globalService.getUser();
-        console.log(this.user);
       }
     },
     mounted() {
