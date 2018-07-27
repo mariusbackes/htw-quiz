@@ -53,11 +53,12 @@ export default function(User) {
             success: false
         };
         User.checkCredentials(p_data.user.user_id, p_data.user.password).then(data => {
-            p_data.user.email = p_data.new_email;
-            User.upsert(p_data.user, (err, res) => {
-                if(res) response.success = true;
-                callback(null, response);
-            });
+          p_data.user.email = p_data.new_email;
+          p_data.user.password = data.user_password;
+          User.upsert(p_data.user, (err, res) => {
+              if(res) response.success = true;
+              callback(null, response);
+          });
         })
     };
 
@@ -74,6 +75,7 @@ export default function(User) {
         };
         User.checkCredentials(p_data.user.user_id, p_data.user.password).then((data) => {
           p_data.user.username = p_data.new_username;
+          p_data.user.password = data.user_password;
           User.upsert(p_data.user, (err, res) => {
             if(res) response.success = true;
             callback(null, response);
@@ -93,12 +95,15 @@ export default function(User) {
             success: false
         };
         User.checkCredentials(p_data.user_id, p_data.password).then(data => {
-          User.destroyById(p_data.user_id, (err, res) => { //alternativ p_user.destroy();
+          if(data.success){
+            User.destroyById(p_data.user_id, (err, res) => { //alternativ p_user.destroy();
               if(res) {
-                  response.success = true;
+                response.success = true;
               }
               callback(null, response);
-          });
+            });
+          }
+          callback(null, response);
         })
     };
 

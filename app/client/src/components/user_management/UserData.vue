@@ -169,8 +169,8 @@
         if (this.$refs.confirmPasswordForm.validate()) {
           userService.deleteUser(this.user, this.confirm_password).then(response => {
             if(response.success){
-              // TODO: "Logout"
-              // Localstorage löschen + auf die startseite navigieren
+              localStorage.removeItem('user');
+              this.$router.push('/');
             }
           })
         }

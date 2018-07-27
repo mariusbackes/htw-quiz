@@ -33,7 +33,7 @@
       <v-tab-item id="tab-3">
         <v-card flat>
           <v-card-text>
-            <!-- TODO: Component einfügen -->
+            <UserChangePassword />
           </v-card-text>
         </v-card>
       </v-tab-item>
@@ -45,7 +45,8 @@
   // Components
   import NavigationBar from '../components/NavigationBar';
   import UserInfo from '../components/user_management/UserInfo';
-  import UserData from '../components/user_management/UserData'
+  import UserData from '../components/user_management/UserData';
+  import UserChangePassword from '../components/user_management/UserChangePassword';
 
   // Services
   import globalService from '../services/global.service';
@@ -55,7 +56,8 @@
     components: {
       NavigationBar,
       UserInfo,
-      UserData
+      UserData,
+      UserChangePassword
     },
     data(){
       return {

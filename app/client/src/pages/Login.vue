@@ -104,7 +104,7 @@
           password => !!password && password.length >= 8 || 'Passwort muss mindestens 8 Zeichen enthalten'
         ],
         repeatPasswordRules: [
-          repeat_password => !!repeat_password || 'Password wiederholen ist ein Pflichtfeld',
+          repeat_password => !!repeat_password || 'Passwort wiederholen ist ein Pflichtfeld',
           repeat_password => !!repeat_password && repeat_password.length >= 8 || 'Passwort muss mindestens 8 Zeichen enthalten',
           () => this.password == this.repeat_password || 'Passwörter müssen übereinstimmen'
         ]
