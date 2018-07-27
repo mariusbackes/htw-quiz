@@ -21,14 +21,14 @@ export default function(Questions) {
                 });
                 else
                     console.log("Not Authorized");
-    }
+    };
 
     Questions.remoteMethod('createQuestion', {
         http: { path: '/createQuestion', verb: 'post' },
         accepts: { arg: 'data', type: 'object', http: { source: 'body' } },
         returns: { arg: 'response', type: 'object' }
     });
-    
+
     //Frage bearbeiten
     Questions.updateQuestion = function(p_data, callback){
         let user = p_data.user;
@@ -48,7 +48,7 @@ export default function(Questions) {
                 });
                 else
                     console.log("Not Authorized");
-    }
+    };
 
     Questions.remoteMethod('updateQuestion', {
         http: { path: '/updateQuestion', verb: 'post' },
@@ -62,7 +62,7 @@ export default function(Questions) {
         let contributers = p_data.contributers;
         let questions = p_data.questions;
         let game = p_data.game;
-        
+
 
         if (user.user_id != contributers.user_id && user.user_id != game.creator)
             console.log("Not Authorized");
@@ -76,14 +76,11 @@ export default function(Questions) {
                 });
                 else
                     console.log("Not Authorized");
-    }
+    };
 
     Questions.remoteMethod('deleteQuestion', {
         http: { path: '/deleteQuestion', verb: 'post' },
         accepts: { arg: 'data', type: 'object', http: { source: 'body' } },
         returns: { arg: 'response', type: 'object' }
     });
-
-
-
 };
