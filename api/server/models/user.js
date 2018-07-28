@@ -8,13 +8,21 @@ const saltRounds = 10;
 export default function(User) {
     // Login
     User.login = function(p_user, callback) {
-        let response = {
-            success: false
-        };
-        User.checkCredentials(p_user.user_id, p_user.password).then((data) => {
+      let response = {
+          success: false
+      };
+      User.find({where: {email: p_user.email}}, (err, results) => {
+        if(results.length > 0){
+          User.checkCredentials(results[0].user_id, p_user.password).then((data) => {
             response.success = data.success;
+            response.user = results[0];
+            response.user.password = p_user.password;
             callback(null, response);
-        });
+          });
+        } else {
+          callback(null, response);
+        }
+      });
     };
 
     User.remoteMethod('login', {

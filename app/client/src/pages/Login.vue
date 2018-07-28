@@ -121,6 +121,7 @@
           };
           userService.login(login_obj).then((response) => {
             if(response.success){
+              this.storeUserData(response.user);
               this.$router.push('/home');
             } else {
               // TODO: Show error message
@@ -149,8 +150,7 @@
               user.reached_points = 0;
               user.admin = false;
               // Localstorage speichern und im GlobalService als temporäre Variable
-              localStorage.setItem('user', JSON.stringify(user));
-              globalService.setUser(user);
+              this.storeUserData(user);
             } else {
               // TODO: Show error message
             }
@@ -174,6 +174,10 @@
           }, 1000);
           */
         }
+      },
+      storeUserData(user) {
+        localStorage.setItem('user', JSON.stringify(user));
+        globalService.setUser(user);
       }
     },
     mounted() {

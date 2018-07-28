@@ -22,7 +22,7 @@ export default function(Timeframe) {
             }
             callback(null, response);
         });
-    }
+    };
 
     Timeframe.remoteMethod('createTimeframe', {
         http: { path: '/createTimeframe', verb: 'post' },
@@ -35,7 +35,7 @@ export default function(Timeframe) {
         let response = {
             success: false
         };
-        let where = 
+        let where =
             {
                 where: {and: [game_id = p_data.timeframe.game_id, from = p_data.timeframe.from, to = p_data.timeframe.to]}
             }
@@ -54,7 +54,7 @@ export default function(Timeframe) {
             }
             callback(null, response);
         });
-    }
+    };
 
     Timeframe.remoteMethod('deleteTimeframe', {
         http: { path: '/deleteTimeframe', verb: 'post' },
@@ -80,7 +80,7 @@ export default function(Timeframe) {
             }
             callback(null, response);
         });
-    }
+    };
 
     Timeframe.remoteMethod('updateTimeframe', {
         http: { path: '/updateTimeframe', verb: 'post' },
