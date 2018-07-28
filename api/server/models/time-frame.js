@@ -1,6 +1,5 @@
 'use strict';
 export default function(Timeframe) {
-
     //Timeframe anlegen
     Timeframe.createTimeframe = function(p_data, callback){ //pdata: user; timeframe; game
         let response = {
@@ -64,22 +63,25 @@ export default function(Timeframe) {
 
     //Timeframe ändern
     Timeframe.updateTimeframe = function(p_data, callback){
-        let timeframe = p_data.timeframe;
-        let user = p_data.user;
-        let game = p_data.game;
+      let response = {
+        success: false
+      };
+      let timeframe = p_data.timeframe;
+      let user = p_data.user;
+      let game = p_data.game;
 
-        if (user.user_id != game.creator)
-        {
-            console.log("Not Authorized");
-        }
-        else
-        Timeframe.upsert(timeframe, (err, res) => {
-            if(res) {
-                response.success = true;
-                response.timeframe = res.timeframe;
-            }
-            callback(null, response);
-        });
+      if (user.user_id != game.creator)
+      {
+          console.log("Not Authorized");
+      }
+      else
+      Timeframe.upsert(timeframe, (err, res) => {
+          if(res) {
+              response.success = true;
+              response.timeframe = res.timeframe;
+          }
+          callback(null, response);
+      });
     };
 
     Timeframe.remoteMethod('updateTimeframe', {

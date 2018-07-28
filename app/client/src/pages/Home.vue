@@ -1,7 +1,7 @@
 <template>
   <div>
     <NavigationBar />
-    <h1>Hallo</h1>
+    <h1>Home</h1>
   </div>
 </template>
 

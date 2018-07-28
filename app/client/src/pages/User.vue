@@ -31,11 +31,7 @@
 
       <!-- Passwort ändern -->
       <v-tab-item id="tab-3">
-        <v-card flat>
-          <v-card-text>
-            <UserChangePassword />
-          </v-card-text>
-        </v-card>
+        <UserChangePassword />
       </v-tab-item>
     </v-tabs>
   </div>
