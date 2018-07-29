@@ -1,6 +1,13 @@
 'use strict';
 
 export default function(Game) {
+  let TimeFrame;
+
+  // TimeFrame Methoden aktivieren
+  Game.on('attached', (app) => {
+    TimeFrame = app.models.time_frame;
+  });
+
   // Create Game
   Game.createGame = function(p_data, callback) {
     let response = {
@@ -17,11 +24,23 @@ export default function(Game) {
     Game.create(game_to_save, (err, res) => {
       if(res){
         game.game_id = res.game_id;
-        // TODO: save time_frame if available
-        response.success = true;
+        // Time-Frame sichern, falls vorhanden
+        if(game.challenged){
+          console.log("challenged");
+          TimeFrame.createTimeframe({ game: game, user: user }, (err, res) => {
+            if(res.success){
+              response.success = true;
+            }
+            callback(null, response);
+          });
+        } else {
+          response.success = true;
+          callback(null, response);
+        }
+      } else {
+        callback(null, response);
       }
-      callback(null, response);
-    })
+    });
   };
 
   Game.remoteMethod('createGame', {

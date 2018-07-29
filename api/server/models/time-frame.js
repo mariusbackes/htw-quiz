@@ -2,26 +2,30 @@
 export default function(Timeframe) {
     //Timeframe anlegen
     Timeframe.createTimeframe = function(p_data, callback){ //pdata: user; timeframe; game
-        let response = {
-            success: false
-        };
-        let timeframe = p_data.game.timeframe;
-        let user = p_data.user;
-        let game = p_data.game;
+      let response = {
+          success: false
+      };
 
-        if (user.user_id != game.creator)
-        {
-          console.log("Not Authorized");
+      let user = p_data.user;
+      let game = p_data.game;
+      let time_frame = {
+        game_id: game.game_id,
+        from: game.time_frame.from,
+        to: game.time_frame.to,
+      };
+
+      if (user.user_id != game.creator) {
+        console.log("Not Authorized");
+        callback(null, response);
+      }
+      else
+      Timeframe.create(time_frame, (err, res) => {
+          if(res) {
+            response.success = true;
+            response.time_frame = res;
+          }
           callback(null, response);
-        }
-        else
-        Timeframe.create(p_data.timeframe, (err, res) => {
-            if(res) {
-                response.success = true;
-                response.timeframe = res.timeframe;
-            }
-            callback(null, response);
-        });
+      });
     };
 
     Timeframe.remoteMethod('createTimeframe', {

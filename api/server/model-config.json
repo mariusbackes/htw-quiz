@@ -17,11 +17,11 @@
     "dataSource": "htw_quiz",
     "public": true
   },
-  "game": {
+  "time_frame": {
     "dataSource": "htw_quiz",
     "public": true
   },
-  "time_frame": {
+  "game": {
     "dataSource": "htw_quiz",
     "public": true
   },

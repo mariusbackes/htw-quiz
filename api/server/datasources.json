@@ -1,12 +1,12 @@
 {
-    "htw_quiz": {
-        "host": "localhost",
-        "port": 3306,
-        "url": "",
-        "database": "htw_quiz",
-        "name": "htw_quiz",
-        "user": "htw_quiz_user",
-        "password": "X8MpBzYzwK",
-        "connector": "mysql"
-      }
+  "htw_quiz": {
+    "host": "localhost",
+    "port": 3306,
+    "url": "",
+    "database": "htw_quiz",
+    "name": "htw_quiz",
+    "user": "htw_quiz_user",
+    "password": "X8MpBzYzwK",
+    "connector": "mysql"
+  }
 }
