@@ -54,14 +54,58 @@
                 </v-datetime-picker>
               </div>
 
-              <v-btn color="primary" @click="stepper = 4">Weiter</v-btn>
+              <v-btn color="primary" @click="checkDateTimes()">Weiter</v-btn>
               <v-btn color="light" @click="stepper = 2">Zurück</v-btn>
             </v-stepper-content>
 
             <v-stepper-step step="4">Übersicht</v-stepper-step>
-            <v-stepper-content step="4">
-              <!-- TODO: summary of all inputs -->
-              <v-card color="grey lighten-1" class="mb-5" height="200px"></v-card>
+            <v-stepper-content step="4" class="full-card-sytle">
+              <v-card flat>
+                <v-card-text>
+                  <v-list two-line>
+                    <v-list-tile avatar>
+                      <v-list-tile-avatar>
+                        <v-icon>subtitles</v-icon>
+                      </v-list-tile-avatar>
+                      <v-list-tile-content>
+                        <v-list-tile-title>Name</v-list-tile-title>
+                        <v-list-tile-sub-title>{{game.name}}</v-list-tile-sub-title>
+                      </v-list-tile-content>
+                    </v-list-tile>
+                    <v-list-tile avatar>
+                      <v-list-tile-avatar>
+                        <v-icon>description</v-icon>
+                      </v-list-tile-avatar>
+                      <v-list-tile-content>
+                        <v-list-tile-title>Beschreibung</v-list-tile-title>
+                        <v-list-tile-sub-title>{{game.description}}</v-list-tile-sub-title>
+                      </v-list-tile-content>
+                    </v-list-tile>
+                    <v-list-tile avatar>
+                      <v-list-tile-avatar>
+                        <v-icon>add_alarm</v-icon>
+                      </v-list-tile-avatar>
+                      <v-list-tile-content>
+                        <v-list-tile-title>Nur zu bestimmter Zeit spielbar?</v-list-tile-title>
+                        <v-list-tile-sub-title>{{game.challenged ? 'Ja' : 'Nein'}}</v-list-tile-sub-title>
+                      </v-list-tile-content>
+                    </v-list-tile>
+                    <v-list-tile avatar v-if="game.challenged">
+                      <v-list-tile-avatar>
+                        <v-icon>access_time</v-icon>
+                      </v-list-tile-avatar>
+                      <v-list-tile-content>
+                        <v-list-tile-title>Start- und Endzeit</v-list-tile-title>
+                        <v-list-tile-sub-title>
+                          Startzeit: {{locale_start_time}} Uhr
+                          <br />
+                          Endzeit: {{locale_end_time}} Uhr
+                        </v-list-tile-sub-title>
+                      </v-list-tile-content>
+                    </v-list-tile>
+                  </v-list>
+                </v-card-text>
+              </v-card>
               <v-btn color="primary" @click="createGame()">Erstellen</v-btn>
               <v-btn color="light" @click="stepper = 3">Zurück</v-btn>
             </v-stepper-content>
@@ -95,12 +139,26 @@
         },
         picker_count: 0,
         start_time_picker: null,
-        end_time_picker: null
+        end_time_picker: null,
+        locale_start_time: null,
+        locale_end_time: null
       }
     },
     methods: {
       getUserData() {
         this.user = globalService.getUser();
+      },
+      checkDateTimes(){
+        // Compare Dates if End-Date is bigger than Start-Date
+        if(this.start_time_picker > this.end_time_picker){
+          console.log("Startzeit ist größer der Endzeit");
+          // TODO: Fehlermeldung anzeigen
+        } else {
+          this.stepper = 4;
+          // Locale Strings anlegen
+          this.locale_start_time = this.start_time_picker.toLocaleString('de-DE');
+          this.locale_end_time = this.end_time_picker.toLocaleString('de-DE');
+        }
       },
       createGame() {
         if(this.$refs.gameCreateForm.validate()){
@@ -125,5 +183,8 @@
 </script>
 
 <style scoped>
-
+  .full-card-sytle {
+    margin: 0px 0px 0px 0px;
+    padding-right: 0px;
+  }
 </style>
