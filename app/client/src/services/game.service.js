@@ -1,0 +1,19 @@
+/*
+ * Service for all user http-requests
+ */
+
+import axios from 'axios';
+import { environment } from "../environment/environment";
+
+export default {
+  createGame(game, user) {
+    let data = {
+      game: game,
+      user: user
+    };
+    let api_endpoint = 'games/createGame';
+    return axios.post(environment.api_url + api_endpoint, data).then((response) => {
+      return response.data.response;
+    })
+  }
+};

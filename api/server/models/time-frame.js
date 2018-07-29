@@ -5,13 +5,14 @@ export default function(Timeframe) {
         let response = {
             success: false
         };
-        let timeframe = p_data.timeframe;
+        let timeframe = p_data.game.timeframe;
         let user = p_data.user;
         let game = p_data.game;
 
         if (user.user_id != game.creator)
         {
-            console.log("Not Authorized");
+          console.log("Not Authorized");
+          callback(null, response);
         }
         else
         Timeframe.create(p_data.timeframe, (err, res) => {
@@ -37,14 +38,15 @@ export default function(Timeframe) {
         let where =
             {
                 where: {and: [game_id = p_data.timeframe.game_id, from = p_data.timeframe.from, to = p_data.timeframe.to]}
-            }
+            };
         let timeframe = p_data.timeframe;
         let user = p_data.user;
         let game = p_data.game;
 
         if (user.user_id != game.creator)
         {
-            console.log("Not Authorized");
+          console.log("Not Authorized");
+          callback(null, response);
         }
         else
         Timeframe.destroyAll(where, (err, res) => {
@@ -72,7 +74,8 @@ export default function(Timeframe) {
 
       if (user.user_id != game.creator)
       {
-          console.log("Not Authorized");
+        console.log("Not Authorized");
+        callback(null, response);
       }
       else
       Timeframe.upsert(timeframe, (err, res) => {
@@ -89,7 +92,4 @@ export default function(Timeframe) {
         accepts: { arg: 'data', type: 'object', http: { source: 'body' } },
         returns: { arg: 'response', type: 'object' }
     });
-
-
-
 };

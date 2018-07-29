@@ -37,13 +37,21 @@
               ></v-checkbox>
 
               <div v-if="game.challenged">
-                <!-- TODO: Date and Time Pickers with date objects -->
-                <!--
-                <h2>Startzeit wählen </h2>
-                <v-time-picker v-if="picker_count == 0" v-model="start_time_picker" format="24hr"></v-time-picker>
-                <v-btn color="primary" v-if="picker_count == 0" @click="picker_count = 1">Endzeit wählen</v-btn>
-                <v-time-picker v-if="picker_count == 1" v-model="start_time_picker" format="24hr"></v-time-picker>
-                -->
+                <v-datetime-picker
+                  label="Startzeit wählen"
+                  v-model="start_time_picker"
+                  format="DD.MM.YYYY HH:mm"
+                  clearText="Zurück"
+                  okText="Übernehmen">
+                </v-datetime-picker>
+
+                <v-datetime-picker
+                  label="Endzeit wählen"
+                  v-model="end_time_picker"
+                  format="DD.MM.YYYY HH:mm"
+                  clearText="Zurück"
+                  okText="Übernehmen">
+                </v-datetime-picker>
               </div>
 
               <v-btn color="primary" @click="stepper = 4">Weiter</v-btn>
@@ -66,6 +74,7 @@
 
 <script>
   import globalService from '../../services/global.service';
+  import gameService from '../../services/game.service';
 
   export default {
     name: "GameCreate",
@@ -100,8 +109,12 @@
             this.game.time_frame.from = this.start_time_picker;
             this.game.time_frame.to = this.end_time_picker;
           }
-          // TODO: service call and store game
           console.log(this.game);
+          gameService.createGame(this.game, this.user).then((response) => {
+            if(response.success){
+              // TODO: Store game
+            }
+          });
         }
       }
     },
