@@ -26,7 +26,7 @@
 
       <!-- Änderung von Namen oder E-Mail Adresse -->
       <v-tab-item id="tab-2">
-
+        <GameEdit />
       </v-tab-item>
 
       <!-- Passwort ändern -->
@@ -44,10 +44,12 @@
 <script>
   import NavigationBar from '../components/NavigationBar';
   import GameCreate from '../components/game_management/GameCreate'
+  import GameEdit from "../components/game_management/GameEdit";
 
   export default {
     name: "Game",
     components: {
+      GameEdit,
       NavigationBar,
       GameCreate
     },

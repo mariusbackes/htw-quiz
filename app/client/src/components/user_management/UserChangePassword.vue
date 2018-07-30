@@ -1,47 +1,51 @@
 <template>
   <v-card flat>
     <v-card-text>
-      <div class="text-xs-center">
-        <div class="element-padding">
-          <v-form ref="changePasswordForm">
-            <!-- Aktuelles Passwort -->
-            <v-layout row wrap>
-              <v-flex >
-                <v-text-field p-2 outline label="Aktuelles Passwort"
-                              v-model="actual_password"
-                              ref="actual_password"
-                              :rules="changePasswordRules" required></v-text-field>
-              </v-flex>
-            </v-layout>
+      <v-layout row wrap justify-center>
+        <v-flex xs12 lg5 mb-3>
+          <div class="text-xs-center">
+            <div class="element-padding">
+              <v-form ref="changePasswordForm">
+                <!-- Aktuelles Passwort -->
+                <v-layout row wrap>
+                  <v-flex >
+                    <v-text-field p-2 outline label="Aktuelles Passwort"
+                                  v-model="actual_password"
+                                  ref="actual_password"
+                                  :rules="changePasswordRules" required></v-text-field>
+                  </v-flex>
+                </v-layout>
 
-            <!-- Neues Passwort -->
-            <v-layout row wrap>
-              <v-flex>
-                <v-text-field p-2 outline label="Neues Passwort"
-                              v-model="new_password"
-                              ref="new_password"
-                              :rules="changePasswordRules" required></v-text-field>
-              </v-flex>
-            </v-layout>
+                <!-- Neues Passwort -->
+                <v-layout row wrap>
+                  <v-flex>
+                    <v-text-field p-2 outline label="Neues Passwort"
+                                  v-model="new_password"
+                                  ref="new_password"
+                                  :rules="changePasswordRules" required></v-text-field>
+                  </v-flex>
+                </v-layout>
 
-            <!-- Neues Passwort bestätigen -->
-            <v-layout row wrap>
-              <v-flex>
-                <v-text-field p-2 outline label="Neues Passwort bestätigen"
-                              v-model="new_password_confirm"
-                              ref="new_password_confirm"
-                              :rules="changePasswordRules" required></v-text-field>
-              </v-flex>
-            </v-layout>
-          </v-form>
-        </div>
+                <!-- Neues Passwort bestätigen -->
+                <v-layout row wrap>
+                  <v-flex>
+                    <v-text-field p-2 outline label="Neues Passwort bestätigen"
+                                  v-model="new_password_confirm"
+                                  ref="new_password_confirm"
+                                  :rules="changePasswordRules" required></v-text-field>
+                  </v-flex>
+                </v-layout>
+              </v-form>
+            </div>
 
-        <div>
-          <v-btn color="primary" @click="changePassword()">
-            Neues Passwort speichern
-          </v-btn>
-        </div>
-      </div>
+            <div>
+              <v-btn color="primary" @click="changePassword()">
+                Neues Passwort speichern
+              </v-btn>
+            </div>
+          </div>
+        </v-flex>
+      </v-layout>
     </v-card-text>
   </v-card>
 </template>

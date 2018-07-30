@@ -48,4 +48,53 @@ export default function(Game) {
     accepts: { arg: 'user', type: 'object', http: { source: 'body' } },
     returns: { arg: 'response', type: 'object' }
   });
+
+  // Get Games
+  Game.getGames = function(p_data, callback) {
+    let response = {
+      success: false
+    };
+    let games_counted = 0;
+
+    Game.find({where: {creator: p_data.user_id}}, (err, res_games) => {
+      if(res_games){
+        response.success = true;
+        // Checking index, to check if loop is completed
+        res_games.forEach((game, index) => {
+          // Load time frames for challenged games
+          if(game.challenged){
+            Game.getTimeFrameForGame(game).then((result) => {
+              let time_frame = {
+                from: result.from,
+                to: result.to
+              };
+              game.time_frame = time_frame;
+              if(index === res_games.length - 1){
+                response.games = res_games;
+                callback(null, response)
+              }
+            });
+          }
+        });
+      }
+    })
+  };
+
+  Game.remoteMethod('getGames', {
+    http: { path: '/getGames', verb: 'post' },
+    accepts: { arg: 'user', type: 'object', http: { source: 'body' } },
+    returns: { arg: 'response', type: 'object' }
+  });
+
+  /* -------------------------------------------- Interne Methoden -------------------------------------------- */
+
+  Game.getTimeFrameForGame = function(p_game) {
+    return new Promise(resolve => {
+      TimeFrame.getTimeFrameById(p_game.game_id, (err, res) => {
+        if(res){
+          resolve(res);
+        }
+      })
+    })
+  }
 };

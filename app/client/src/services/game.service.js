@@ -28,7 +28,7 @@ export default {
     })
   },
 
-  getGames(user){
+  getGames(user_id){
     let data = {
       user_id: user_id
     };

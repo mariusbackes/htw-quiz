@@ -96,4 +96,14 @@ export default function(Timeframe) {
         accepts: { arg: 'data', type: 'object', http: { source: 'body' } },
         returns: { arg: 'response', type: 'object' }
     });
+
+    Timeframe.getTimeFrameById = function(game_id, callback) {
+      let response = null;
+      Timeframe.findById(game_id, (err, res) => {
+        if(res) {
+          response = res;
+        }
+        callback(null, response);
+      });
+    }
 };
