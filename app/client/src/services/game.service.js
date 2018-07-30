@@ -17,10 +17,9 @@ export default {
     })
   },
 
-  editGame(){
+  editGame(game){
     let data = {
-      game: game,
-      user: user
+      game: game
     };
     let api_endpoint = 'games/editGame';
     return axios.post(environment.api_url + api_endpoint, data).then((response) => {

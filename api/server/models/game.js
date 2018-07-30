@@ -54,7 +54,6 @@ export default function(Game) {
     let response = {
       success: false
     };
-    let games_counted = 0;
 
     Game.find({where: {creator: p_data.user_id}}, (err, res_games) => {
       if(res_games){
@@ -64,11 +63,10 @@ export default function(Game) {
           // Load time frames for challenged games
           if(game.challenged){
             Game.getTimeFrameForGame(game).then((result) => {
-              let time_frame = {
+              game.time_frame = {
                 from: result.from,
                 to: result.to
               };
-              game.time_frame = time_frame;
               if(index === res_games.length - 1){
                 response.games = res_games;
                 callback(null, response)
@@ -82,6 +80,34 @@ export default function(Game) {
 
   Game.remoteMethod('getGames', {
     http: { path: '/getGames', verb: 'post' },
+    accepts: { arg: 'user', type: 'object', http: { source: 'body' } },
+    returns: { arg: 'response', type: 'object' }
+  });
+
+  // Edit Game
+  Game.editGame = function(p_data, callback) {
+    let response = {
+      success: false
+    };
+
+    Game.find({where: {game_id: p_data.game_id}}, (err, result) => {
+      if(result){
+        let saved_game = result[0];
+        if(saved_game.challenged && !p_data.challenged){
+          // TODO: TimeFrame entfernen
+        } else if(!saved_game.challenged && p_data.challenged){
+          // TODO: Neuen TimeFrame zum Spiel speichern
+        } else if(saved_game.challenged && p_data.challenged){
+          // TODO: Game und TimeFrame updaten
+        } else {
+          // TODO: Normales Update
+        }
+      }
+    })
+  };
+
+  Game.remoteMethod('editGame', {
+    http: { path: '/editGame', verb: 'post' },
     accepts: { arg: 'user', type: 'object', http: { source: 'body' } },
     returns: { arg: 'response', type: 'object' }
   });

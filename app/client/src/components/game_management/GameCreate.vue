@@ -20,7 +20,7 @@
               <v-text-field
                 v-model="game.description"
                 :rules="[() => !!game.description && game.description.length >= 1 || 'Beschreibung ist ein Pflichtfeld']"
-                label="Name"
+                label="Beschreibung"
                 required
               ></v-text-field>
               <v-btn color="primary" @click="stepper = 3">Weiter</v-btn>
@@ -150,14 +150,18 @@
       },
       checkDateTimes(){
         // Compare Dates if End-Date is bigger than Start-Date
-        if(this.start_time_picker > this.end_time_picker){
-          console.log("Startzeit ist größer der Endzeit");
-          // TODO: Fehlermeldung anzeigen
+        if(this.game.challenged){
+          if(this.start_time_picker > this.end_time_picker){
+            console.log("Startzeit ist größer der Endzeit");
+            // TODO: Fehlermeldung anzeigen
+          } else {
+            this.stepper = 4;
+            // Locale Strings anlegen
+            this.locale_start_time = this.start_time_picker.toLocaleString('de-DE');
+            this.locale_end_time = this.end_time_picker.toLocaleString('de-DE');
+          }
         } else {
           this.stepper = 4;
-          // Locale Strings anlegen
-          this.locale_start_time = this.start_time_picker.toLocaleString('de-DE');
-          this.locale_end_time = this.end_time_picker.toLocaleString('de-DE');
         }
       },
       createGame() {
@@ -186,5 +190,9 @@
   .full-card-sytle {
     margin: 0px 0px 0px 0px;
     padding-right: 0px;
+  }
+
+  .v-card__text {
+    padding: 0px !important;
   }
 </style>
