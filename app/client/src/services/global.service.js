@@ -4,6 +4,7 @@
 
 export default {
   user: {},
+  games: null,
 
   setUser(user) {
     this.user = user;
@@ -15,5 +16,13 @@ export default {
 
   getUserId() {
     return this.user.user_id;
+  },
+
+  setGames(games){
+    this.games = games;
+  },
+
+  getGames(){
+    return this.games;
   }
 }
