@@ -1,6 +1,28 @@
 'use strict';
 
 export default function(Questions) {
+    let Multiplechoice;
+
+    // TimeFrame Methoden aktivieren
+    Game.on('attached', (app) => {
+        Multiplechoice = app.models.multiple_choice;
+    });
+
+    Questions.getQuestions = function(p_data, callback){
+        let response = {
+            success: false
+        };
+
+        // TODO: Implement
+
+        callback(null, response);
+    }
+
+    Questions.remoteMethod('getQuestions', {
+        http: { path: '/getQuestions', verb: 'post' },
+        accepts: { arg: 'data', type: 'object', http: { source: 'body' } },
+        returns: { arg: 'response', type: 'object' }
+    });
 
     //Neue Frage anlegen
     Questions.createQuestion = function(p_data, callback){
@@ -9,21 +31,32 @@ export default function(Questions) {
       };
       let user = p_data.user;
       let contributers = p_data.contributers;
-      let questions = p_data.questions;
+      let question = p_data.question;
 
-      if (user.user_id != contributers.user_id && user.user_id != game.creator)
+      if (user.user_id != contributers.user_id && user.user_id != game.creator) {
         console.log("Not Authorized");
-      else
-      if ((contributers.create && (contributers.game_id == questions.game_id && questions.game_id == game.game_id)) || user.user_id == game.creator  && questions.game_id == game.game_id)
-        Questions.create(questions, (err, res) => {
-          if(res) {
-              response.success = true;
-              response.questions = res.questions;
-          }
-          callback(null, response);
-        });
-        else
-          console.log("Not Authorized");
+        callback(null, response);
+      } else {
+        if (
+            (contributers.create && (contributers.game_id == question.game_id && question.game_id == game.game_id)) 
+            || user.user_id == game.creator  && question.game_id == game.game_id){
+                Questions.create(question, (err, res) => {
+                    if(res) {
+                        // Save multiple choice values, if available
+                        if(question.is_multiple_choice){
+                            // TODO: Implement
+                        }
+                        response.success = true;
+                        response.question = res;
+                    }
+                    callback(null, response);
+                  });
+            }
+        else {
+            console.log("Not Authorized");
+            callback(null, response);
+        }
+      }
     };
 
     Questions.remoteMethod('createQuestion', {
@@ -39,16 +72,17 @@ export default function(Questions) {
       };
       let user = p_data.user;
       let contributers = p_data.contributers;
-      let questions = p_data.questions;
+      let question = p_data.question;
 
       if (user.user_id != contributers.user_id && user.user_id != game.creator)
           console.log("Not Authorized");
       else
-          if ((contributers.edit && (contributers.game_id == questions.game_id && questions.game_id == game.game_id)) || user.user_id == game.creator  && questions.game_id == game.game_id)
-              Questions.upsert(questions, (err, res) => {
+          if ((contributers.edit && (contributers.game_id == question.game_id && question.game_id == game.game_id)) || user.user_id == game.creator  && questions.game_id == game.game_id)
+              Questions.upsert(question, (err, res) => {
                   if(res) {
+                      // TODO: Check if multiple choice has changed
                       response.success = true;
-                      response.questions = res.questions;
+                      response.question = res.question;
                   }
                   callback(null, response);
               });
@@ -69,17 +103,20 @@ export default function(Questions) {
       };
       let user = p_data.user;
       let contributers = p_data.contributers;
-      let questions = p_data.questions;
+      let question = p_data.question;
       let game = p_data.game;
-
 
       if (user.user_id != contributers.user_id && user.user_id != game.creator)
           console.log("Not Authorized");
       else
-      if ((contributers.delete && (contributers.game_id == questions.game_id && questions.game_id == game.game_id)) || user.user_id == game.creator  && questions.game_id == game.game_id)
-              Questions.destroyById(questions.question_id, (err, res) => {
+      if ((contributers.delete && (contributers.game_id == question.game_id && question.game_id == game.game_id)) || user.user_id == game.creator  && questions.game_id == game.game_id)
+              Questions.destroyById(question.question_id, (err, res) => {
                   if(res) {
-                      response.success = true;
+                      // Also delete the multiple choice values
+                      if(question.is_multiple_choice){
+                        // TODO: delete multiplce choice values for this question
+                        response.success = true;
+                      }
                   }
                   callback(null, response);
               });

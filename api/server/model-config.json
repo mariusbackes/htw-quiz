@@ -33,11 +33,11 @@
     "dataSource": "htw_quiz",
     "public": true
   },
-  "questions": {
+  "multiple_choice": {
     "dataSource": "htw_quiz",
     "public": true
   },
-  "multiple_choice": {
+  "questions": {
     "dataSource": "htw_quiz",
     "public": true
   }
