@@ -4,7 +4,7 @@ export default function(Questions) {
     let Multiplechoice;
 
     // TimeFrame Methoden aktivieren
-    Game.on('attached', (app) => {
+    Questions.on('attached', (app) => {
         Multiplechoice = app.models.multiple_choice;
     });
 
@@ -16,7 +16,7 @@ export default function(Questions) {
         // TODO: Implement
 
         callback(null, response);
-    }
+    };
 
     Questions.remoteMethod('getQuestions', {
         http: { path: '/getQuestions', verb: 'post' },
@@ -25,42 +25,47 @@ export default function(Questions) {
     });
 
     //Neue Frage anlegen
-    Questions.createQuestion = function(p_data, callback){
+    Questions.saveQuestion = function(p_data, callback){
       let response = {
         success: false
       };
       let user = p_data.user;
-      let contributers = p_data.contributers;
+      // let contributers = p_data.contributers;
       let question = p_data.question;
+      let multiple_choice = p_data.question.multiple_choice;
+      delete question.multiple_choice;
 
-      if (user.user_id != contributers.user_id && user.user_id != game.creator) {
-        console.log("Not Authorized");
-        callback(null, response);
-      } else {
-        if (
-            (contributers.create && (contributers.game_id == question.game_id && question.game_id == game.game_id)) 
-            || user.user_id == game.creator  && question.game_id == game.game_id){
+      //if (user.user_id != contributers.user_id && user.user_id != game.creator) {
+      //  console.log("Not Authorized");
+      //  callback(null, response);
+      //} else {
+      //  if (
+      //      (contributers.create && (contributers.game_id == question.game_id && question.game_id == game.game_id))
+      //      || user.user_id == game.creator  && question.game_id == game.game_id){
                 Questions.create(question, (err, res) => {
-                    if(res) {
-                        // Save multiple choice values, if available
-                        if(question.is_multiple_choice){
-                            // TODO: Implement
-                        }
-                        response.success = true;
-                        response.question = res;
+                  if(err) {
+                    console.log(err);
+                  }
+                  if(res) {
+                    // Save multiple choice values, if available
+                    if(question.is_multiple_choice){
+                        // TODO: Implement
                     }
+                    response.success = true;
+                    response.question = res;
                     callback(null, response);
-                  });
-            }
-        else {
-            console.log("Not Authorized");
-            callback(null, response);
-        }
-      }
+                  }
+                });
+        //    }
+        //else {
+        //    console.log("Not Authorized");
+        //    callback(null, response);
+        //}
+      //}
     };
 
-    Questions.remoteMethod('createQuestion', {
-        http: { path: '/createQuestion', verb: 'post' },
+    Questions.remoteMethod('saveQuestion', {
+        http: { path: '/saveQuestion', verb: 'post' },
         accepts: { arg: 'data', type: 'object', http: { source: 'body' } },
         returns: { arg: 'response', type: 'object' }
     });

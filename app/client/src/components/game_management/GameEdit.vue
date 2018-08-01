@@ -152,8 +152,8 @@
         // TODO: Servie call + api
       },
       addQuestion(game){
-        console.log(game);
-        // TODO: show new view with all questions and an add button for a new question
+        // Redirect to new view for adding a question to a game
+        this.$router.push({name: 'addQuestion', params: {game_id: game.game_id, game: game}});
       }
     },
     mounted() {
