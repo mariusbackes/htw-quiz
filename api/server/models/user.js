@@ -106,7 +106,7 @@ export default function(User) {
           if(data.success){
             User.destroyById(p_data.user_id, (err, res) => { //alternativ p_user.destroy();
               if(res) {
-                response.success = true;
+                response.success = res.count > 0;
               }
               callback(null, response);
             });

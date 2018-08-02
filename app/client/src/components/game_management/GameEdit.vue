@@ -18,7 +18,7 @@
                   <v-icon>edit</v-icon>
                 </v-btn>
                 <v-btn outline small fab color="primary" @click="addQuestion(game)">
-                  <v-icon>add</v-icon>
+                  <v-icon>help</v-icon>
                 </v-btn>
               </v-list-tile>
             </div>

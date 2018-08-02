@@ -6,8 +6,14 @@ import axios from 'axios';
 import { environment } from "../environment/environment";
 
 export default {
-  getQuestionsForGame(){
-    // TODO: Implement
+  getQuestionsForGame(game_id){
+    let data = {
+      game_id: game_id
+    };
+    let api_endpoint = 'questions/getQuestions';
+    return axios.post(environment.api_url + api_endpoint, data).then((response) => {
+      return response.data.response;
+    })
   },
   saveQuestion(question) {
     let data = {

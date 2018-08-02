@@ -144,7 +144,13 @@
         this.getQuestionsForGame();
       },
       getQuestionsForGame(){
-        // TODO: service call + api
+        questionService.getQuestionsForGame(this.game_id).then((response) => {
+          if(response.success){
+            this.questions = response.questions;
+          } else {
+            // TODO: Show error message
+          }
+        })
       },
       saveQuestion(){
         if(this.$refs.addQuestionForm.validate()){
