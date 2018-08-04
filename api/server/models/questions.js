@@ -20,7 +20,6 @@ export default function(Questions) {
           // Load time frames for challenged games
           if(question.is_multiple_choice){
             Multiplechoice.getMultipleChoiceOptions(question.question_id, (err, result) => {
-              console.log(result);
               question.multiple_choice = {
                 wrong_answer_1: result.multiple_choice.wrong_answer_1,
                 wrong_answer_2: result.multiple_choice.wrong_answer_2,
@@ -142,7 +141,7 @@ export default function(Questions) {
       returns: { arg: 'response', type: 'object' }
   });
 
-  //Frage löschen
+  // Frage löschen
   Questions.deleteQuestion = function(p_data, callback){
     let response = {
       success: false

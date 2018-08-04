@@ -33,7 +33,13 @@ export default {
       return response.data.response;
     })
   },
-  deleteQuestion() {
-    // TODO: Implement
+  deleteQuestion(question) {
+    let data = {
+      question: question
+    };
+    let api_endpoint = 'questions/deleteQuestion';
+    return axios.post(environment.api_url + api_endpoint, data).then((response) => {
+      return response.data.response;
+    })
   }
 };

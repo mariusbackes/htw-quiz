@@ -16,7 +16,6 @@ export default {
       return response.data.response;
     })
   },
-
   editGame(game){
     let data = {
       game: game
@@ -26,13 +25,18 @@ export default {
       return response.data.response;
     })
   },
-
   getGames(user_id){
     let data = {
       user_id: user_id
     };
     let api_endpoint = 'games/getGames';
     return axios.post(environment.api_url + api_endpoint, data).then((response) => {
+      return response.data.response;
+    })
+  },
+  deleteGame(game){
+    let api_endpoint = 'games/deleteGame';
+    return axios.post(environment.api_url + api_endpoint, game).then((response) => {
       return response.data.response;
     })
   }

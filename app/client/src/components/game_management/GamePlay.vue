@@ -23,7 +23,6 @@
           this.loading = true;
           gameService.getGames(this.user_id).then((response) => {
             if(response.success){
-              console.log(response);
               this.games = response.data;
             } else {
               // TODO: Show error message

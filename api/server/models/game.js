@@ -26,7 +26,6 @@ export default function(Game) {
         game.game_id = res.game_id;
         // Time-Frame sichern, falls vorhanden
         if(game.challenged){
-          console.log("challenged");
           TimeFrame.createTimeframe({ game: game, user: user }, (err, res) => {
             if(res.success){
               response.success = true;
@@ -108,6 +107,26 @@ export default function(Game) {
 
   Game.remoteMethod('editGame', {
     http: { path: '/editGame', verb: 'post' },
+    accepts: { arg: 'user', type: 'object', http: { source: 'body' } },
+    returns: { arg: 'response', type: 'object' }
+  });
+
+  // Delete Game
+  Game.deleteGame = function(p_data, callback) {
+    let response = {
+      success: false
+    };
+
+    Game.deleteById(p_data.game_id, (err, res) => {
+      if(res) {
+        response.success = true;
+        callback(null, response);
+      }
+    })
+  };
+
+  Game.remoteMethod('deleteGame', {
+    http: { path: '/deleteGame', verb: 'post' },
     accepts: { arg: 'user', type: 'object', http: { source: 'body' } },
     returns: { arg: 'response', type: 'object' }
   });

@@ -114,7 +114,7 @@ CREATE TABLE `multiple_choice` (
   `wrong_answer_2` varchar(350) DEFAULT NULL,
   `wrong_answer_3` varchar(350) DEFAULT NULL,
   KEY `multiple_choice_questions_question_id_fk` (`question_id`),
-  CONSTRAINT `multiple_choice_questions_question_id_fk` FOREIGN KEY (`question_id`) REFERENCES `questions` (`question_id`)
+  CONSTRAINT `multiple_choice_questions_question_id_fk` FOREIGN KEY (`question_id`) REFERENCES `questions` (`question_id`) on delete cascade on update cascade
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -143,7 +143,7 @@ CREATE TABLE `questions` (
   `is_multiple_choice` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`question_id`),
   KEY `questions_game_game_id_fk` (`game_id`),
-  CONSTRAINT `questions_game_game_id_fk` FOREIGN KEY (`game_id`) REFERENCES `game` (`game_id`)
+  CONSTRAINT `questions_game_game_id_fk` FOREIGN KEY (`game_id`) REFERENCES `game` (`game_id`) on delete cascade on update cascade
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -168,7 +168,7 @@ CREATE TABLE `time_frame` (
   `from` datetime NOT NULL,
   `to` datetime NOT NULL,
   KEY `time_frame_game_game_id_fk` (`game_id`),
-  CONSTRAINT `time_frame_game_game_id_fk` FOREIGN KEY (`game_id`) REFERENCES `game` (`game_id`)
+  CONSTRAINT `time_frame_game_game_id_fk` FOREIGN KEY (`game_id`) REFERENCES `game` (`game_id`) on delete cascade on update cascade
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

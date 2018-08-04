@@ -8,10 +8,6 @@ export default function(Multiplechoice) {
     };
 
     Multiplechoice.findById(p_question_id, (err, res) => {
-      if(err){
-        console.log(err);
-      }
-
       if(res) {
         response.success = true;
         response.multiple_choice = res;
@@ -57,9 +53,6 @@ export default function(Multiplechoice) {
       success: false
     };
     Multiplechoice.upsert(p_data, (err, res) => {
-      if(err) {
-        console.log(err);
-      }
       if(res){
         response.success = true;
         response.multiple_choice = res;

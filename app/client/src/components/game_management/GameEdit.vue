@@ -7,11 +7,11 @@
           <v-list two-line subheader>
             <v-subheader>Verfügbare Spiele</v-subheader>
             <div v-if="games != null">
-              <v-list-tile v-for="game in games">
+              <v-list-tile v-for="(game, index) in games">
                 <v-list-tile-content>
                   <v-list-tile-title>{{game.name}}</v-list-tile-title>
                 </v-list-tile-content>
-                <v-btn outline small fab color="error" @click="deleteGame(game)">
+                <v-btn outline small fab color="error" @click="showDeleteGameDialog(game, index)">
                   <v-icon>delete</v-icon>
                 </v-btn>
                 <v-btn outline small fab color="primary" @click="editGame(game)">
@@ -78,6 +78,36 @@
           </v-card-actions>
         </v-card>
       </v-dialog>
+
+      <!-- Löschen des Spiels bestätigen -->
+      <v-dialog
+        v-model="confirmDeleteGameDialog"
+        max-width="290">
+        <v-card>
+          <v-card-title class="headline">Spiel löschen</v-card-title>
+          <v-card-text>
+            Soll das Spiel wirklich gelöscht werden? Alle darin enthaltenen Fragen werden ebenfalls unwiederruflich gelöscht
+            und sind nicht mehr abrufbar!
+          </v-card-text>
+
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn
+              color="primary"
+              flat="flat"
+              @click="confirmDeleteGameDialog = false">
+              Abbrechen
+            </v-btn>
+
+            <v-btn
+              color="error"
+              flat="flat"
+              @click="deleteGame()">
+              Löschen
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
     </v-layout>
   </div>
 </template>
@@ -96,12 +126,14 @@
         // Dialogs
         editGameDialog: false,
         newQuestionDialog: false,
+        confirmDeleteGameDialog: false,
         // Variables
         loading: false,
         user_id: -1,
         games: null,
         // Edit game
         game: null,
+        games_index: -1,
         start_time_picker: null,
         end_time_picker: null,
       }
@@ -126,7 +158,6 @@
         }
       },
       editGame(game){
-        console.log(game);
         this.game = game;
         this.editGameDialog = true;
 
@@ -147,9 +178,20 @@
         this.editGameDialog = false;
         // TODO: Servie call + api
       },
-      deleteGame(game){
-        console.log(game);
-        // TODO: Servie call + api
+      showDeleteGameDialog(game, index){
+        this.game = game;
+        this.games_index = index;
+        this.confirmDeleteGameDialog = true;
+      },
+      deleteGame(){
+        this.confirmDeleteGameDialog = false;
+        gameService.deleteGame(this.game).then((response) => {
+          if(response.success){
+            this.games.splice(this.games_index, 1);
+          } else {
+            // TODO: Show error alert
+          }
+        })
       },
       addQuestion(game){
         // Redirect to new view for adding a question to a game

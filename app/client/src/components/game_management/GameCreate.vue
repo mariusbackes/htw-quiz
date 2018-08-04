@@ -152,7 +152,6 @@
         // Compare Dates if End-Date is bigger than Start-Date
         if(this.game.challenged){
           if(this.start_time_picker > this.end_time_picker){
-            console.log("Startzeit ist größer der Endzeit");
             // TODO: Fehlermeldung anzeigen
           } else {
             this.stepper = 4;
