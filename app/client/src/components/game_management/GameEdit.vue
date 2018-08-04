@@ -44,11 +44,11 @@
                   <v-text-field text label="Name" v-model="game.name" required></v-text-field>
                   <v-text-field text label="Beschreibung" v-model="game.description" required></v-text-field>
 
-                  <v-checkbox
+                  <v-switch
                     v-model="game.challenged"
                     label="Spiel nur zu bestimmter Zeit spielbar?"
                     required
-                  ></v-checkbox>
+                  ></v-switch>
 
                   <div v-if="game.challenged">
                     <v-datetime-picker

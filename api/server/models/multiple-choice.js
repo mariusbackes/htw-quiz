@@ -56,8 +56,18 @@ export default function(Multiplechoice) {
     let response = {
       success: false
     };
-    // TODO: Implement
-    callback(null, response);
+    Multiplechoice.upsert(p_data, (err, res) => {
+      if(err) {
+        console.log(err);
+      }
+      if(res){
+        response.success = true;
+        response.multiple_choice = res;
+        callback(null, response);
+      } else {
+        callback(null, response);
+      }
+    });
   };
 
   Multiplechoice.remoteMethod('updateMutlipleChoiceOptions', {

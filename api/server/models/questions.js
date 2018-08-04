@@ -100,32 +100,44 @@ export default function(Questions) {
   });
 
   //Frage bearbeiten
-  Questions.updateQuestion = function(p_data, callback){
+  Questions.editQuestion = function(p_data, callback){
     let response = {
       success: false
     };
-    let user = p_data.user;
-    let contributers = p_data.contributers;
+    //let user = p_data.user;
+    //let contributers = p_data.contributers;
     let question = p_data.question;
 
-    if (user.user_id != contributers.user_id && user.user_id != game.creator)
-        console.log("Not Authorized");
-    else
-        if ((contributers.edit && (contributers.game_id == question.game_id && question.game_id == game.game_id)) || user.user_id == game.creator  && questions.game_id == game.game_id)
+    //if (user.user_id != contributers.user_id && user.user_id != game.creator)
+    //    console.log("Not Authorized");
+    //else
+    //    if ((contributers.edit && (contributers.game_id == question.game_id && question.game_id == game.game_id)) || user.user_id == game.creator  && questions.game_id == game.game_id)
             Questions.upsert(question, (err, res) => {
                 if(res) {
-                    // TODO: Check if multiple choice has changed
-                    response.success = true;
-                    response.question = res.question;
+                  response.question = res;
+                    if(question.is_multiple_choice){
+                      question.multiple_choice.question_id = question.question_id;
+                      Multiplechoice.updateMutlipleChoiceOptions(question.multiple_choice, (err, res) => {
+                        if(res.success){
+                          response.success = true;
+                          response.question.multiple_choice = res.multiple_choice;
+                        }
+                        callback(null, response);
+                      })
+                    } else {
+                      response.success = true;
+                      callback(null, response);
+                    }
+                } else {
+                  callback(null, response);
                 }
-                callback(null, response);
             });
-            else
-                console.log("Not Authorized");
+    //        else
+    //            console.log("Not Authorized");
   };
 
-  Questions.remoteMethod('updateQuestion', {
-      http: { path: '/updateQuestion', verb: 'post' },
+  Questions.remoteMethod('editQuestion', {
+      http: { path: '/editQuestion', verb: 'post' },
       accepts: { arg: 'data', type: 'object', http: { source: 'body' } },
       returns: { arg: 'response', type: 'object' }
   });
