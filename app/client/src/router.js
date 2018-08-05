@@ -6,6 +6,7 @@ import Game from './pages/Game'
 import Highscore from './pages/Highscore'
 import User from './pages/User'
 import AddQuestion from './pages/AddQuestion'
+import Play from './pages/Play'
 
 Vue.use(Router);
 
@@ -40,6 +41,11 @@ export default new Router({
       path: '/user',
       name: 'user',
       component: User
+    },
+    {
+      path: '/game/:game_id/play',
+      name: 'play',
+      component: Play
     }
   ]
 })

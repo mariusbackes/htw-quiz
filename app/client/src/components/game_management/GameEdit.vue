@@ -22,7 +22,7 @@
                 </v-btn>
               </v-list-tile>
             </div>
-            <div v-if="games == null">
+            <div v-if="games == null || games.length == 0">
               <v-alert :value="true" type="info">
                 Keine Spiele vorhanden
               </v-alert>
@@ -150,6 +150,7 @@
           gameService.getGames(this.user_id).then((response) => {
             if(response.success){
               this.games = response.games;
+              globalService.setGames(this.games);
             } else {
               // TODO: Show error message
             }

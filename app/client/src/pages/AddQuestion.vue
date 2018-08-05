@@ -248,7 +248,7 @@
           this.question.game_id = this.game_id;
           questionService.saveQuestion(this.question).then((response) => {
             if(response.success){
-              // TODO: Push question to questions array
+              this.questions.push(this.question);
             } else {
               // TODO: Show error message
             }

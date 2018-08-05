@@ -28,9 +28,16 @@ export default function(Questions) {
               if(index === res_questions.length - 1){
                 response.success = true;
                 response.questions = res_questions;
-                callback(null, response)
+                callback(null, response);
               }
             });
+          } else {
+            // TODO: Bugfix: wenn die letzte frage kein mc ist, dann werden falsche werte gesendet
+            if(index === res_questions.length - 1){
+              response.success = true;
+              response.questions = res_questions;
+              callback(null, response);
+            }
           }
         });
       }

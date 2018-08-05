@@ -68,9 +68,14 @@ export default function(Game) {
               };
               if(index === res_games.length - 1){
                 response.games = res_games;
-                callback(null, response)
+                callback(null, response);
               }
             });
+          } else {
+            if(index === res_games.length - 1){
+              response.games = res_games;
+              callback(null, response);
+            }
           }
         });
       }
