@@ -15,6 +15,8 @@
         <v-container fill-height>
           <v-layout align-center>
             <v-flex>
+              <v-progress-linear v-model="secondsLeftProgress"></v-progress-linear>
+
               <v-text-field p-2 outline label="Frage:" :placeholder="current_question.text" disabled></v-text-field>
               <v-divider class="my-3"></v-divider>
 
@@ -36,7 +38,6 @@
                               :rules="[() => !!text_answer && text_answer.length >= 1 || 'Fragetext ist ein Pflichtfeld']"
                               required></v-text-field>
               </div>
-
               <v-btn
                 class="mx-0"
                 block
@@ -71,7 +72,9 @@
         answer_radio_group: null,
         answer_radio_array: [],
         // Answers
-        text_answer: ""
+        text_answer: "",
+        secondsLeftProgress: 100,
+        countdown: null
       }
     },
     methods: {
@@ -89,6 +92,7 @@
               this.current_question = this.questions[this.current_question_index];
               if(this.current_question.is_multiple_choice){
                 this.setAnswerInputOptions();
+                this.resetTimer();
               }
             }
             this.loading = false;
@@ -97,17 +101,41 @@
       },
       checkAnswer(){
         // Prüfen ob die Frage richtig oder falsch beantwortet wurde
-        // TODO
-
-        // Wenn die Frage richtig beantwortet wurde, die Punkte setzen
-        // TODO
+        if(this.current_question.is_multiple_choice){
+          this.checkMulitpleChoiceAnswer();
+        } else {
+          this.checkInputAnswer();
+        }
 
         // Zur nächsten Frage wechseln, wenn es nicht die letzte Frage ist
-        if(this.current_question_index === this.questions.length -1) {
+        if(this.current_question_index === this.questions.length -1 ) {
           // Spiel abschließen
+          console.log("spiel beenden");
           // TODO
         } else {
-          this.current_question_index++;
+          this.moveToNextQuestion();
+        }
+      },
+      checkMulitpleChoiceAnswer(){
+        if(this.answer_radio_group != null){
+          if(this.answer_radio_group.correct){
+            // TODO: Set points
+          } else {
+            console.log("incorrect");
+          }
+          // clear RadioGroup for next question
+          this.answer_radio_group = null;
+        } else {
+          // TODO: Show message to choose a answer
+        }
+      },
+      checkInputAnswer(){
+        let correct_answer = this.current_question.correct_answer.toLowerCase();
+        let input_answer = this.text_answer.toLowerCase();
+        if(correct_answer === input_answer){
+          // TODO: Set points
+        } else {
+          console.log("incorrect");
         }
       },
       setAnswerInputOptions() {
@@ -137,6 +165,26 @@
           [array[i], array[j]] = [array[j], array[i]];
         }
         return array;
+      },
+      resetTimer(){
+        let countdown = null;
+        let time_limit = this.current_question.time_limit;
+        let seconds_left = time_limit;
+        this.countdown = setInterval(() => {
+          seconds_left--;
+          this.secondsLeftProgress = (seconds_left * 100 / time_limit);
+          if(seconds_left === 0){
+            clearInterval(this.countdown);
+            // Zeit abgelaufen --> Zur nächsten Frage wechseln
+            this.moveToNextQuestion();
+          }
+        }, 1000)
+      },
+      moveToNextQuestion(){
+        clearInterval(this.countdown);
+        this.current_question_index++;
+        this.current_question = this.questions[this.current_question_index];
+        this.resetTimer();
       }
     },
     mounted() {
