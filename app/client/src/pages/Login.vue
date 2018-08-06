@@ -69,6 +69,11 @@
               </v-card>
             </v-dialog>
           </v-layout>
+
+          <!-- Show Snackbar Message -->
+          <div v-if="showSnackbar">
+            <SnackBarAlert :text="snackbarTitle" :color="snackbarColor"></SnackBarAlert>
+          </div>
         </v-flex>
       </v-layout>
     </v-container>
@@ -78,9 +83,12 @@
 <script>
   import userService from '../services/user.service';
   import globalService from '../services/global.service';
+  import SnackBarAlert from "../components/SnackBarAlert";
+  import { CONSTANTS } from "../services/constants";
 
   export default {
     name: "Login",
+    components: {SnackBarAlert},
     data() {
       return {
         loading: false,
@@ -93,6 +101,11 @@
         password: null,
         repeat_password: null,
         showRegisterModal: false,
+
+        // Snackbar Data
+        showSnackbar: false,
+        snackbarTitle: "",
+        snackbarColor: "",
 
         // Rules
         emailRules: [
@@ -124,7 +137,9 @@
               this.storeUserData(response.user);
               this.$router.push('/home');
             } else {
-              // TODO: Show error message
+              this.snackbarTitle = CONSTANTS.ERROR_LOGIN;
+              this.snackbarColor = "error";
+              this.showSnackbar = true;
             }
             this.loading = false;
           });
@@ -152,7 +167,9 @@
               // Localstorage speichern und im GlobalService als temporäre Variable
               this.storeUserData(user);
             } else {
-              // TODO: Show error message
+              this.snackbarTitle = CONSTANTS.ERROR_REGISTER;
+              this.snackbarColor = "error";
+              this.showSnackbar = true;
             }
           })
         }

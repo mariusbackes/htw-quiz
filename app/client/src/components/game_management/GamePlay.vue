@@ -25,22 +25,37 @@
             </div>
           </v-list>
         </v-card>
+
+        <!-- Show Snackbar Message -->
+        <div v-if="showSnackbar">
+          <SnackBarAlert :text="snackbarTitle" :color="snackbarColor"></SnackBarAlert>
+        </div>
       </v-flex>
     </v-layout>
   </div>
 </template>
 
 <script>
-  import globalService from '../../services/global.service'
-  import gameService from '../../services/game.service'
+  import globalService from '../../services/global.service';
+  import gameService from '../../services/game.service';
+  import SnackBarAlert from "../../components/SnackBarAlert";
+  import { CONSTANTS } from "../../services/constants";
 
   export default {
     name: "GamePlay",
+    components: {
+      SnackBarAlert
+    },
     data() {
       return {
         loading: false,
         user_id: -1,
-        games: null
+        games: null,
+
+        // Snackbar Data
+        showSnackbar: false,
+        snackbarTitle: "",
+        snackbarColor: "",
       }
     },
     methods: {
@@ -56,7 +71,9 @@
               this.games = response.games;
               globalService.setGames(this.games);
             } else {
-              // TODO: Show error message
+              this.snackbarTitle = CONSTANTS.ERROR_NO_GAMES;
+              this.snackbarColor = "error";
+              this.showSnackbar =  true;
             }
             this.loading = false;
           })

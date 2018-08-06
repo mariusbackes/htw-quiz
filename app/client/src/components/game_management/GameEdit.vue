@@ -108,18 +108,25 @@
           </v-card-actions>
         </v-card>
       </v-dialog>
+
+      <!-- Show Snackbar Message -->
+      <div v-if="showSnackbar">
+        <SnackBarAlert :text="snackbarTitle" :color="snackbarColor"></SnackBarAlert>
+      </div>
     </v-layout>
   </div>
 </template>
 
 <script>
-  import globalService from '../../services/global.service'
-  import gameService from '../../services/game.service'
+  import globalService from '../../services/global.service';
+  import gameService from '../../services/game.service';
+  import SnackBarAlert from "../../components/SnackBarAlert";
+  import { CONSTANTS } from "../../services/constants";
 
   export default {
     name: "GameEdit",
     components: {
-
+      SnackBarAlert
     },
     data() {
       return {
@@ -136,6 +143,11 @@
         games_index: -1,
         start_time_picker: null,
         end_time_picker: null,
+
+        // Snackbar Data
+        showSnackbar: false,
+        snackbarTitle: "",
+        snackbarColor: "",
       }
     },
     methods: {
@@ -152,7 +164,9 @@
               this.games = response.games;
               globalService.setGames(this.games);
             } else {
-              // TODO: Show error message
+              this.snackbarTitle = CONSTANTS.ERROR_NO_GAMES;
+              this.snackbarColor = "error";
+              this.showSnackbar =  true;
             }
             this.loading = false;
           })
@@ -190,7 +204,9 @@
           if(response.success){
             this.games.splice(this.games_index, 1);
           } else {
-            // TODO: Show error alert
+            this.snackbarTitle = CONSTANTS.ERROR_DELETE_GAME;
+            this.snackbarColor = "error";
+            this.showSnackbar =  true;
           }
         })
       },

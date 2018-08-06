@@ -111,6 +111,11 @@
             </v-stepper-content>
           </v-stepper>
         </v-form>
+
+        <!-- Show Snackbar Message -->
+        <div v-if="showSnackbar">
+          <SnackBarAlert :text="snackbarTitle" :color="snackbarColor"></SnackBarAlert>
+        </div>
       </v-flex>
     </v-layout>
   </div>
@@ -119,9 +124,14 @@
 <script>
   import globalService from '../../services/global.service';
   import gameService from '../../services/game.service';
+  import SnackBarAlert from "../../components/SnackBarAlert";
+  import { CONSTANTS } from "../../services/constants";
 
   export default {
     name: "GameCreate",
+    components: {
+      SnackBarAlert
+    },
     data() {
       return {
         user: {},
@@ -141,7 +151,12 @@
         start_time_picker: null,
         end_time_picker: null,
         locale_start_time: null,
-        locale_end_time: null
+        locale_end_time: null,
+
+        // Snackbar Data
+        showSnackbar: false,
+        snackbarTitle: "",
+        snackbarColor: "",
       }
     },
     methods: {
@@ -152,7 +167,9 @@
         // Compare Dates if End-Date is bigger than Start-Date
         if(this.game.challenged){
           if(this.start_time_picker > this.end_time_picker){
-            // TODO: Fehlermeldung anzeigen
+            this.snackbarTitle = CONSTANTS.WARNING_STARTTIMER_GREATER_ENDTIME;
+            this.snackbarColor = "warning";
+            this.showSnackbar =  true;
           } else {
             this.stepper = 4;
             // Locale Strings anlegen

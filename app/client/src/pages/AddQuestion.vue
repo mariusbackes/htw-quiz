@@ -191,6 +191,11 @@
           </v-card>
         </v-dialog>
 
+        <!-- Show Snackbar Message -->
+        <div v-if="showSnackbar">
+          <SnackBarAlert :text="snackbarTitle" :color="snackbarColor"></SnackBarAlert>
+        </div>
+
       </v-flex>
     </v-layout>
   </div>
@@ -199,11 +204,14 @@
 <script>
   import NavigationBar from '../components/NavigationBar';
   import questionService from '../services/question.service';
+  import SnackBarAlert from "../components/SnackBarAlert";
+  import { CONSTANTS } from "../services/constants";
 
   export default {
     name: 'AddQuestion',
     components: {
-      NavigationBar
+      NavigationBar,
+      SnackBarAlert
     },
     data () {
       return {
@@ -225,7 +233,12 @@
         game_id: -1,
         game: {},
         showMulitpleChoiceDialog: false,
-        editQuestionDialog: false
+        editQuestionDialog: false,
+
+        // Snackbar Data
+        showSnackbar: false,
+        snackbarTitle: "",
+        snackbarColor: "",
       }
     },
     methods: {
@@ -239,7 +252,9 @@
           if(response.success){
             this.questions = response.questions;
           } else {
-            // TODO: Show error message
+            this.snackbarTitle = CONSTANTS.WARNING_NO_QUESTIONS;
+            this.snackbarColor = "warning";
+            this.showSnackbar =  true;
           }
         })
       },
@@ -250,7 +265,9 @@
             if(response.success){
               this.questions.push(this.question);
             } else {
-              // TODO: Show error message
+              this.snackbarTitle = CONSTANTS.ERRROR_SAVE_QUESTION;
+              this.snackbarColor = "error";
+              this.showSnackbar =  true;
             }
           })
         }
@@ -260,8 +277,8 @@
         if(!this.question_to_edit.is_multiple_choice){
           this.question_to_edit.multiple_choice =  {
             wrong_answer_1: "",
-              wrong_answer_2: "",
-              wrong_answer_3: ""
+            wrong_answer_2: "",
+            wrong_answer_3: ""
           }
         }
         this.editQuestionDialog = true;
@@ -272,7 +289,9 @@
             if(response.success){
               // TODO: Replace edited question with the question in the array
             } else {
-              // TODO: Show error message
+              this.snackbarTitle = CONSTANTS.ERRROR_SAVE_QUESTION;
+              this.snackbarColor = "error";
+              this.showSnackbar =  true;
             }
           })
         }
