@@ -60,6 +60,7 @@ export default function(User) {
         let response = {
             success: false
         };
+
         User.checkCredentials(p_data.user.user_id, p_data.user.password).then(data => {
           p_data.user.email = p_data.new_email;
           p_data.user.password = data.user_password;
@@ -103,15 +104,15 @@ export default function(User) {
             success: false
         };
         User.checkCredentials(p_data.user_id, p_data.password).then(data => {
-          if(data.success){
+          //if(data.success){
             User.destroyById(p_data.user_id, (err, res) => { //alternativ p_user.destroy();
               if(res) {
                 response.success = res.count > 0;
               }
               callback(null, response);
             });
-          }
-          callback(null, response);
+          //}
+          //callback(null, response);
         })
     };
 
