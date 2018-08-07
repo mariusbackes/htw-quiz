@@ -29,11 +29,13 @@ export default function(Game) {
           TimeFrame.createTimeframe({ game: game, user: user }, (err, res) => {
             if(res.success){
               response.success = true;
+              response.game_id = game.game_id;
             }
             callback(null, response);
           });
         } else {
           response.success = true;
+          response.game_id = game.game_id;
           callback(null, response);
         }
       } else {
