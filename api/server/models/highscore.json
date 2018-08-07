@@ -16,9 +16,26 @@
       "required": true,
       "id": true
     },
-    "score": {
+    "reached_score": {
       "type": "number",
       "required": true
+    },
+    "maximum_score": {
+      "type": "number",
+      "required": true
+    },
+    "answers_correct": {
+      "type": "number",
+      "required": true
+    },
+    "answers_wrong": {
+      "type": "number",
+      "required": true
+    },
+    "finished_at": {
+      "type": "date",
+      "required": true,
+      "defaultFn": "now"
     }
   },
   "validations": [],

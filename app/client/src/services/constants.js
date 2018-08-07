@@ -6,5 +6,8 @@ export const CONSTANTS = {
   ERROR_DELETE_GAME: "Das ausgewählte Spiel konnt nicht gelöscht werden",
 
   WARNING_NO_QUESTIONS: "Es sind keine Fragen für dieses Spiel vorhanden",
-  WARNING_STARTTIMER_GREATER_ENDTIME: "Die Startzeit ist neuer als die Endzeit"
+  WARNING_STARTTIMER_GREATER_ENDTIME: "Die Startzeit ist neuer als die Endzeit",
+
+  // Factors
+  HIGHSCORE_MULTIPLIER: 5
 };

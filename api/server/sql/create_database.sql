@@ -84,7 +84,11 @@ DROP TABLE IF EXISTS `highscore`;
 CREATE TABLE `highscore` (
   `game_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `score` int(11) DEFAULT NULL,
+  `reached_score` int(11) NOT NULL,
+  `maximum_score` int(11) NOT NULL,
+  `answers_correct` int(11) NOT NULL,
+  `answers_wrong` int(11) NOT NULL,
+  `finished_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   KEY `highscore_game_game_id_fk` (`game_id`),
   KEY `highscore_user_user_id_fk` (`user_id`),
   CONSTRAINT `highscore_game_game_id_fk` FOREIGN KEY (`game_id`) REFERENCES `game` (`game_id`),

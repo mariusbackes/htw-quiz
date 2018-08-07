@@ -29,38 +29,35 @@ describe("User API-Methods", () => {
 
   it("update user email-success", async () => {
     env.user.password = "test_passwort";
-    let post_data = {
+    env.post_options.form = {
       user: env.user,
-      new_email: "mariusbackes1@web.de"
-    }
-    env.post_options.form = post_data;
+      new_email: "neuetestmail@test.de"
+    };
     let data = await doRequest(env.post_options, "/users/changeEmail");
     expect(data.response.success).to.equal(true);
     env.user.email = "mariusbackes1@web.de";
   });
 
   it("update username success", async () => {
-    let post_data = {
+    env.post_options.form = {
       user: env.user,
       new_username: "marius_new_username"
-    }
-    env.post_options.form = post_data;
+    };
     let data = await doRequest(env.post_options, "/users/changeUsername");
     expect(data.response.success).to.equal(true);
     env.user.username = "marius_new_username";
   });
 
   it("update user password success", async () => {
-    let post_data = {
+    env.post_options.form = {
       user: env.user,
       old_password: "test_passwort",
       new_password: "test_passwort"
-    }
-    env.post_options.form = post_data;
+    };
     let data = await doRequest(env.post_options, "/users/changePassword");
     expect(data.response.success).to.equal(true);
   });
-})
+});
 
 const doRequest = async (options, query) => {
   options.uri = env.url + query;

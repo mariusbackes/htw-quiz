@@ -35,13 +35,15 @@
               <div v-if="!current_question.is_multiple_choice">
                 <v-text-field text label="Text der Frage"
                               v-model="text_answer"
-                              :rules="[() => !!text_answer && text_answer.length >= 1 || 'Fragetext ist ein Pflichtfeld']"
-                              required></v-text-field>
+                              :rules="[() => !!text_answer && text_answer.length >= 1 || 'Die Antwort muss eingegeben werden']"
+                              required>
+                </v-text-field>
               </div>
               <v-btn
                 class="mx-0"
                 block
                 color="primary"
+                :disabled="(answer_radio_group == null) && (text_answer === '')"
                 @click="checkAnswer()">
                 Antwort absenden
               </v-btn>
@@ -57,6 +59,7 @@
   import NavigationBar from '../components/NavigationBar';
   import gameService from '../services/game.service';
   import questionService from '../services/question.service';
+  import { CONSTANTS } from "../services/constants";
 
   export default {
     name: "Play",
@@ -74,7 +77,16 @@
         // Answers
         text_answer: "",
         secondsLeftProgress: 100,
-        countdown: null
+        countdown: null,
+        seconds_left: -1,
+
+        // Game Summary Object
+        game_summary: {
+          answers_correct: 0,
+          answers_wrong: 0,
+          reached_score: 0,
+          maximum_score: 0
+        }
       }
     },
     methods: {
@@ -108,34 +120,38 @@
         }
 
         // Zur nächsten Frage wechseln, wenn es nicht die letzte Frage ist
-        if(this.current_question_index === this.questions.length -1 ) {
-          // Spiel abschließen
-          console.log("spiel beenden");
-          // TODO
+        if(this.current_question_index === this.questions.length -1) {
+          this.finishGame();
         } else {
           this.moveToNextQuestion();
         }
       },
+      finishGame() {
+        // Maximale erreibare Punkte für ein Spiel ermitteln
+        this.game_summary.maximum_score = this.getMaximumPoints();
+        // Spiel abschließen
+        console.log(this.game_summary);
+        console.log("spiel beenden");
+        // TODO: redirect to new page and summarize game
+      },
       checkMulitpleChoiceAnswer(){
         if(this.answer_radio_group != null){
           if(this.answer_radio_group.correct){
-            // TODO: Set points
+            this.setPointsForAnswer();
           } else {
-            console.log("incorrect");
+            this.game_summary.answers_wrong++;
           }
           // clear RadioGroup for next question
           this.answer_radio_group = null;
-        } else {
-          // TODO: Show message to choose a answer
         }
       },
       checkInputAnswer(){
         let correct_answer = this.current_question.correct_answer.toLowerCase();
         let input_answer = this.text_answer.toLowerCase();
         if(correct_answer === input_answer){
-          // TODO: Set points
+          this.setPointsForAnswer();
         } else {
-          console.log("incorrect");
+          this.game_summary.answers_wrong++;
         }
       },
       setAnswerInputOptions() {
@@ -167,24 +183,44 @@
         return array;
       },
       resetTimer(){
-        let countdown = null;
         let time_limit = this.current_question.time_limit;
-        let seconds_left = time_limit;
+        this.seconds_left = time_limit;
         this.countdown = setInterval(() => {
-          seconds_left--;
-          this.secondsLeftProgress = (seconds_left * 100 / time_limit);
-          if(seconds_left === 0){
+          this.seconds_left--;
+          this.secondsLeftProgress = (this.seconds_left * 100 / time_limit);
+          if(this.seconds_left === 0){
             clearInterval(this.countdown);
             // Zeit abgelaufen --> Zur nächsten Frage wechseln
-            this.moveToNextQuestion();
+            if(this.current_question_index === this.questions.length -1){
+              this.finishGame();
+            } else{
+              this.moveToNextQuestion();
+            }
           }
         }, 1000)
       },
       moveToNextQuestion(){
         clearInterval(this.countdown);
+        // Nächste Frage wählen
         this.current_question_index++;
         this.current_question = this.questions[this.current_question_index];
+        // Antworten zurücksetzen
+        this.answer_radio_group = null;
+        this.text_answer = "";
         this.resetTimer();
+      },
+      setPointsForAnswer(){
+        // Points will be calculated by the remaining time * 5
+        this.game_summary.answers_correct++;
+        this.game_summary.reached_score = this.game_summary.reached_score + this.seconds_left * CONSTANTS.HIGHSCORE_MULTIPLIER;
+      },
+      getMaximumPoints(){
+        let points = 0;
+        this.questions.forEach((question) => {
+          points += question.time_limit * CONSTANTS.HIGHSCORE_MULTIPLIER;
+        });
+
+        return points;
       }
     },
     mounted() {
