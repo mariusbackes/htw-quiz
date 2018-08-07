@@ -96,18 +96,27 @@ export default function(Game) {
       success: false
     };
 
-    Game.find({where: {game_id: p_data.game_id}}, (err, result) => {
-      if(result){
-        let saved_game = result[0];
-        if(saved_game.challenged && !p_data.challenged){
-          // TODO: TimeFrame entfernen
-        } else if(!saved_game.challenged && p_data.challenged){
-          // TODO: Neuen TimeFrame zum Spiel speichern
-        } else if(saved_game.challenged && p_data.challenged){
-          // TODO: Game und TimeFrame updaten
+    Game.upsert(p_data, (err, res) => {
+      if(res){
+        response.game = res;
+        if(p_data.challenged){
+          game.time_frame.game_id = p_data.game_id;
+          let data = {
+            time_frame = p_data.time_frame
+          }
+          TimeFrame.updateTimeframe(data, (err, res) => {
+            if(res.success){
+              response.success = true;
+              response.game.time_frame = res.time_frame;
+            }
+            callback(null, response);
+          })
         } else {
-          // TODO: Normales Update
+          response.success = true;
+          callback(null, response);
         }
+      } else {
+        callback(null, response);
       }
     })
   };

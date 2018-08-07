@@ -29,10 +29,6 @@ export default function(Multiplechoice) {
     };
 
     Multiplechoice.create(p_data, (err, res) => {
-      if(err){
-        console.log(err);
-      }
-
       if(res) {
         response.success = true;
         response.multiple_choice = res;

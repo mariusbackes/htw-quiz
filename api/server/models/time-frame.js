@@ -72,20 +72,20 @@ export default function(Timeframe) {
       let response = {
         success: false
       };
-      let timeframe = p_data.timeframe;
-      let user = p_data.user;
-      let game = p_data.game;
+      let time_frame = p_data.time_frame;
+      //let user = p_data.user;
+      //let game = p_data.game;
 
-      if (user.user_id != game.creator)
-      {
-        console.log("Not Authorized");
-        callback(null, response);
-      }
-      else
-      Timeframe.upsert(timeframe, (err, res) => {
+      //if (user.user_id != game.creator)
+      //{
+      //  console.log("Not Authorized");
+      //  callback(null, response);
+      //}
+      //else
+      Timeframe.upsert(time_frame, (err, res) => {
           if(res) {
               response.success = true;
-              response.timeframe = res.timeframe;
+              response.time_frame = res;
           }
           callback(null, response);
       });
