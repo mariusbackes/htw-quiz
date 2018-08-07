@@ -7,17 +7,17 @@ export const env = {
         method: 'GET'
     },
     user: {
-        "user_id": null,
-        "username": "mariusb73", 
-        "email": "mariusbackes@icloud.com", 
-        "first_name": "Marius", 
-        "last_name": "Backes", 
-        "password": "test_passwort", 
-        "registered_at": new Date().toLocaleString(),
-        "last_login": new Date().toLocaleString(),
-        "completed_games": 0,
-        "reached_points": 0,
-        "admin": 0
+        user_id: null,
+        username: "test_username",
+        email: "unittest@test.de",
+        first_name: "Marius",
+        last_name: "Backes",
+        password: "test_passwort",
+        registered_at: new Date().toLocaleString(),
+        last_login: new Date().toLocaleString(),
+        completed_games: 0,
+        reached_points: 0,
+        admin: 0
     },
     game: {
         game_id: -1,
@@ -42,4 +42,4 @@ export const env = {
           wrong_answer_3: "Und zuletzt auch noch die Dritte"
         }
     },
-}
+};

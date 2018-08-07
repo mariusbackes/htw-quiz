@@ -113,6 +113,7 @@ CREATE TABLE `multiple_choice` (
   `wrong_answer_1` varchar(350) NOT NULL,
   `wrong_answer_2` varchar(350) DEFAULT NULL,
   `wrong_answer_3` varchar(350) DEFAULT NULL,
+  PRIMARY KEY (`question_id`),
   KEY `multiple_choice_questions_question_id_fk` (`question_id`),
   CONSTRAINT `multiple_choice_questions_question_id_fk` FOREIGN KEY (`question_id`) REFERENCES `questions` (`question_id`) on delete cascade on update cascade
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -167,6 +168,7 @@ CREATE TABLE `time_frame` (
   `game_id` int(11) NOT NULL,
   `from` datetime NOT NULL,
   `to` datetime NOT NULL,
+  PRIMARY KEY (`game_id`),
   KEY `time_frame_game_game_id_fk` (`game_id`),
   CONSTRAINT `time_frame_game_game_id_fk` FOREIGN KEY (`game_id`) REFERENCES `game` (`game_id`) on delete cascade on update cascade
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;

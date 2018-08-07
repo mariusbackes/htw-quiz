@@ -96,14 +96,16 @@ export default function(Game) {
       success: false
     };
 
-    Game.upsert(p_data, (err, res) => {
+    let game = p_data.game;
+
+    Game.upsert(game, (err, res) => {
       if(res){
         response.game = res;
-        if(p_data.challenged){
-          game.time_frame.game_id = p_data.game_id;
+        if(game.challenged){
+          game.time_frame.game_id = p_data.game.game_id;
           let data = {
-            time_frame = p_data.time_frame
-          }
+            time_frame: game.time_frame
+          };
           TimeFrame.updateTimeframe(data, (err, res) => {
             if(res.success){
               response.success = true;

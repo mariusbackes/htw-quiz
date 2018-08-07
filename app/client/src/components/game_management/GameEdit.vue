@@ -183,15 +183,21 @@
           this.start_time_picker = null;
           this.end_time_picker = null;
         }
+      },
+      saveEditedGame(){
+        if(this.game.challenged){
+          this.game.time_frame = {
+            from: this.start_time_picker,
+            to: this.end_time_picker
+          };
+        }
+
+        this.editGameDialog = false;
         gameService.editGame(this.game).then((response) => {
           if(response.success){
             console.log(response);
           }
         })
-      },
-      saveEditedGame(){
-        this.editGameDialog = false;
-        // TODO: Servie call + api
       },
       showDeleteGameDialog(game, index){
         this.game = game;
