@@ -27,7 +27,7 @@ export default function(User) {
 
     User.remoteMethod('login', {
         http: { path: '/login', verb: 'post' },
-        accepts: { arg: 'user', type: 'object', http: { source: 'body' } },
+        accepts: { arg: 'data', type: 'object', http: { source: 'body' } },
         returns: { arg: 'response', type: 'object' }
     });
 
@@ -94,7 +94,7 @@ export default function(User) {
 
     User.remoteMethod('changeUsername', {
         http: { path: '/changeUsername', verb: 'post' },
-        accepts: { arg: 'user', type: 'object', http: { source: 'body' } },
+        accepts: { arg: 'data', type: 'object', http: { source: 'body' } },
         returns: { arg: 'response', type: 'object' }
     });
 
@@ -118,7 +118,7 @@ export default function(User) {
 
   User.remoteMethod('deleteUser', {
     http: { path: '/deleteUser', verb: 'post' },
-    accepts: { arg: 'user', type: 'object', http: { source: 'body' } },
+    accepts: { arg: 'data', type: 'object', http: { source: 'body' } },
     returns: { arg: 'response', type: 'object' }
   });
 
@@ -157,7 +157,7 @@ export default function(User) {
 
     User.remoteMethod('registerUser', {
         http: { path: '/registerUser', verb: 'post' },
-        accepts: { arg: 'user', type: 'object', http: { source: 'body' } },
+        accepts: { arg: 'data', type: 'object', http: { source: 'body' } },
         returns: { arg: 'response', type: 'object' }
     });
 

@@ -46,7 +46,7 @@ export default function(Game) {
 
   Game.remoteMethod('createGame', {
     http: { path: '/createGame', verb: 'post' },
-    accepts: { arg: 'user', type: 'object', http: { source: 'body' } },
+    accepts: { arg: 'data', type: 'object', http: { source: 'body' } },
     returns: { arg: 'response', type: 'object' }
   });
 
@@ -86,7 +86,7 @@ export default function(Game) {
 
   Game.remoteMethod('getGames', {
     http: { path: '/getGames', verb: 'post' },
-    accepts: { arg: 'user', type: 'object', http: { source: 'body' } },
+    accepts: { arg: 'data', type: 'object', http: { source: 'body' } },
     returns: { arg: 'response', type: 'object' }
   });
 
@@ -125,7 +125,7 @@ export default function(Game) {
 
   Game.remoteMethod('editGame', {
     http: { path: '/editGame', verb: 'post' },
-    accepts: { arg: 'user', type: 'object', http: { source: 'body' } },
+    accepts: { arg: 'data', type: 'object', http: { source: 'body' } },
     returns: { arg: 'response', type: 'object' }
   });
 
@@ -145,7 +145,7 @@ export default function(Game) {
 
   Game.remoteMethod('deleteGame', {
     http: { path: '/deleteGame', verb: 'post' },
-    accepts: { arg: 'user', type: 'object', http: { source: 'body' } },
+    accepts: { arg: 'data', type: 'object', http: { source: 'body' } },
     returns: { arg: 'response', type: 'object' }
   });
 

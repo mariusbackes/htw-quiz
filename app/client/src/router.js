@@ -7,6 +7,7 @@ import Highscore from './pages/Highscore'
 import User from './pages/User'
 import AddQuestion from './pages/AddQuestion'
 import Play from './pages/Play'
+import GameSummary from './pages/GameSummary'
 
 Vue.use(Router);
 
@@ -46,6 +47,11 @@ export default new Router({
       path: '/game/:game_id/play',
       name: 'play',
       component: Play
+    },
+    {
+      path: '/game/:game_id/gameSummary',
+      name: 'gameSummary',
+      component: GameSummary
     }
   ]
 })

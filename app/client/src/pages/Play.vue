@@ -57,7 +57,7 @@
 
 <script>
   import NavigationBar from '../components/NavigationBar';
-  import gameService from '../services/game.service';
+  import globalService from '../services/global.service';
   import questionService from '../services/question.service';
   import { CONSTANTS } from "../services/constants";
 
@@ -86,13 +86,15 @@
           answers_wrong: 0,
           reached_score: 0,
           maximum_score: 0
-        }
+        },
+        user: null
       }
     },
     methods: {
-      getGameInfo(){
+      getInfos(){
         this.game_id = this.$route.params.game_id;
         this.game = this.$route.params.game;
+        this.user = globalService.getUser();
         this.getQuestions();
       },
       getQuestions() {
@@ -131,8 +133,14 @@
         this.game_summary.maximum_score = this.getMaximumPoints();
         // Spiel abschließen
         console.log(this.game_summary);
-        console.log("spiel beenden");
-        // TODO: redirect to new page and summarize game
+        this.$router.push({name: 'gameSummary',
+          params: {
+            game_id: this.game.game_id,
+            game: this.game,
+            game_summary: this.game_summary,
+            user: this.user
+          }
+        });
       },
       checkMulitpleChoiceAnswer(){
         if(this.answer_radio_group != null){
@@ -224,7 +232,7 @@
       }
     },
     mounted() {
-      this.getGameInfo();
+      this.getInfos();
     }
   }
 </script>
