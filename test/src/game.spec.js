@@ -19,16 +19,17 @@ describe("Game API-Methods", function() {
         expect(data.response.success).to.equal(true);
     });
 
-    /*
     it("edit game success", async () => {
-        let data = {
-
+        let game = env.game;
+        game.name = "Ein neuer Titel für ein bearbeitetes Spiel";
+        game.description = "Hier ist eine bearbeitete Beschreibung für ein Spiel";
+        let post_data = {
+            game: game
         };
-        env.post_options.form = env.user;
+        env.post_options.form = post_data;
         let data = await doRequest(env.post_options, "/games/editGame");
         expect(data.response.success).to.equal(true);
     });
-    */
 
     it("get games success", async () => {
         let post_data = {

@@ -9,6 +9,9 @@ import './game.spec';
 // create, update and delete questions
 import './question.spec';
 
+// Save and get Highscores for a played game
+import './highscore.spec';
+
 // delete game at least
 import './game_delete.spec';
 

@@ -91,7 +91,7 @@ CREATE TABLE `highscore` (
   `finished_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   KEY `highscore_game_game_id_fk` (`game_id`),
   KEY `highscore_user_user_id_fk` (`user_id`),
-  CONSTRAINT `highscore_game_game_id_fk` FOREIGN KEY (`game_id`) REFERENCES `game` (`game_id`),
+  CONSTRAINT `highscore_game_game_id_fk` FOREIGN KEY (`game_id`) REFERENCES `game` (`game_id`) ON DELETE CASCADE,
   CONSTRAINT `highscore_user_user_id_fk` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;

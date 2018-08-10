@@ -42,4 +42,10 @@ export const env = {
           wrong_answer_3: "Und zuletzt auch noch die Dritte"
         }
     },
+    game_summary: {
+        answers_correct: 4,
+        answers_wrong: 1,
+        reached_score: 320,
+        maximum_score: 500
+    }
 };
