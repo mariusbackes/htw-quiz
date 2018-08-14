@@ -56,6 +56,8 @@ export default function(Game) {
       success: false
     };
 
+    //callback(null, response);
+
     // Get own gamges
     Game.getOwnGames(p_data, (err, res) => {
       response.ownGames = res.games;
@@ -82,44 +84,51 @@ export default function(Game) {
     // TODO: Implement
     let response = null;
     callback(null, response);
-  }
+  };
 
   Game.getChallengedGames = function(p_data, callback){
     // TODO: Implement
     let response = null;
     callback(null, response);
-  }
+  };
 
   // Get own Games
   Game.getOwnGames = function(p_data, callback) {
     let response = {
-      success: false
+      success: false,
+      games: null
     };
 
     Game.find({where: {creator: p_data.user_id}}, (err, res_games) => {
       if(res_games){
         response.success = true;
-        // Checking index, to check if loop is completed
-        res_games.forEach((game, index) => {
-          // Load time frames for challenged games
-          if(game.challenged){
-            Game.getTimeFrameForGame(game).then((result) => {
-              game.time_frame = {
-                from: result.from,
-                to: result.to
-              };
+        if(res_games.length > 0){
+          // Checking index, to check if loop is completed
+          res_games.forEach((game, index) => {
+            // Load time frames for challenged games
+            if(game.challenged){
+              Game.getTimeFrameForGame(game).then((result) => {
+                game.time_frame = {
+                  from: result.from,
+                  to: result.to
+                };
+                if(index === res_games.length - 1){
+                  response.games = res_games;
+                  callback(null, response);
+                }
+              });
+            } else {
               if(index === res_games.length - 1){
                 response.games = res_games;
                 callback(null, response);
               }
-            });
-          } else {
-            if(index === res_games.length - 1){
-              response.games = res_games;
-              callback(null, response);
             }
-          }
-        });
+          });
+        } else {
+          callback(null, response);
+        }
+      } else {
+        callback(null, response);
       }
     })
   };

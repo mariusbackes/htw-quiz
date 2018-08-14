@@ -60,6 +60,7 @@
   import globalService from '../services/global.service';
   import questionService from '../services/question.service';
   import { CONSTANTS } from "../services/constants";
+  import swal from 'sweetalert';
 
   export default {
     name: "Play",
@@ -107,6 +108,12 @@
               if(this.current_question.is_multiple_choice){
                 this.setAnswerInputOptions();
                 this.resetTimer();
+              }
+            } else {
+              if(Array.isArray(response.questions) && response.questions.length === 0){
+                swal(CONSTANTS.ERROR_NO_QUESTIONS_TITLE, CONSTANTS.ERROR_NO_QUESTIONS_BODY, CONSTANTS.WARNING).then((data) => {
+                  this.$router.push('/home');
+                });
               }
             }
             this.loading = false;

@@ -15,31 +15,36 @@ export default function(Questions) {
 
     Questions.find({where: {game_id:p_data.game_id}}, (err, res_questions) => {
       if(res_questions){
-        // Checking index, to check if loop is completed
-        res_questions.forEach((question, index) => {
-          // Load time frames for challenged games
-          if(question.is_multiple_choice){
-            Multiplechoice.getMultipleChoiceOptions(question.question_id, (err, result) => {
-              question.multiple_choice = {
-                wrong_answer_1: result.multiple_choice.wrong_answer_1,
-                wrong_answer_2: result.multiple_choice.wrong_answer_2,
-                wrong_answer_3: result.multiple_choice.wrong_answer_3
-              };
+        if(res_questions.length > 0){
+          // Checking index, to check if loop is completed
+          res_questions.forEach((question, index) => {
+            // Load time frames for challenged games
+            if(question.is_multiple_choice){
+              Multiplechoice.getMultipleChoiceOptions(question.question_id, (err, result) => {
+                question.multiple_choice = {
+                  wrong_answer_1: result.multiple_choice.wrong_answer_1,
+                  wrong_answer_2: result.multiple_choice.wrong_answer_2,
+                  wrong_answer_3: result.multiple_choice.wrong_answer_3
+                };
+                if(index === res_questions.length - 1){
+                  response.success = true;
+                  response.questions = res_questions;
+                  callback(null, response);
+                }
+              });
+            } else {
+              // TODO: Bugfix: wenn die letzte frage kein mc ist, dann werden falsche werte gesendet
               if(index === res_questions.length - 1){
                 response.success = true;
                 response.questions = res_questions;
                 callback(null, response);
               }
-            });
-          } else {
-            // TODO: Bugfix: wenn die letzte frage kein mc ist, dann werden falsche werte gesendet
-            if(index === res_questions.length - 1){
-              response.success = true;
-              response.questions = res_questions;
-              callback(null, response);
             }
-          }
-        });
+          });
+        } else {
+          response.questions = res_questions;
+          callback(null, response);
+        }
       }
     });
   };

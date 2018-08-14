@@ -5,26 +5,20 @@
       <v-flex xs12 lg5 mb-3>
         <!-- Fill view -->
       </v-flex>
-
-      <!-- Show Snackbar Message -->
-      <div v-if="showSnackbar">
-        <SnackBarAlert :text="snackbarTitle" :color="snackbarColor"></SnackBarAlert>
-      </div>
     </v-layout>
   </div>
 </template>
 
 <script>
-  import globalService from '../../services/global.service';
-  import userService from '../../services/user.service';
-  import contributorService from '../../services/contributor.service';
-  import SnackBarAlert from "../../components/SnackBarAlert";
-  import { CONSTANTS } from "../../services/constants";
+  import globalService from '../services/global.service';
+  import userService from '../services/user.service';
+  import contributorService from '../services/contributor.service';
+  import { CONSTANTS } from "../services/constants";
+  import swal from 'sweetalert';
 
   export default {
     name: "ContributorAdd",
     components: {
-      SnackBarAlert
     },
     data() {
       return {

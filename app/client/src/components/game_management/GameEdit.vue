@@ -111,11 +111,6 @@
           </v-card-actions>
         </v-card>
       </v-dialog>
-
-      <!-- Show Snackbar Message -->
-      <div v-if="showSnackbar">
-        <SnackBarAlert :text="snackbarTitle" :color="snackbarColor"></SnackBarAlert>
-      </div>
     </v-layout>
   </div>
 </template>
@@ -123,13 +118,12 @@
 <script>
   import globalService from '../../services/global.service';
   import gameService from '../../services/game.service';
-  import SnackBarAlert from "../../components/SnackBarAlert";
   import { CONSTANTS } from "../../services/constants";
+  import swal from 'sweetalert';
 
   export default {
     name: "GameEdit",
     components: {
-      SnackBarAlert
     },
     data() {
       return {
@@ -146,11 +140,6 @@
         games_index: -1,
         start_time_picker: null,
         end_time_picker: null,
-
-        // Snackbar Data
-        showSnackbar: false,
-        snackbarTitle: "",
-        snackbarColor: "",
       }
     },
     methods: {
@@ -162,14 +151,12 @@
         this.games = globalService.getGames();
         if(this.games == null){
           this.loading = true;
-          gameService.getGames(this.user_id).then((response) => {
+          gameService.getOwnGames(this.user_id).then((response) => {
             if(response.success){
               this.games = response.games;
               globalService.setGames(this.games);
             } else {
-              this.snackbarTitle = CONSTANTS.ERROR_NO_GAMES;
-              this.snackbarColor = "error";
-              this.showSnackbar =  true;
+              swal(CONSTANTS.ERROR_TITLE, CONSTANTS.ERROR_NO_GAMES, CONSTANTS.ERROR);
             }
             this.loading = false;
           })
@@ -213,9 +200,7 @@
           if(response.success){
             this.games.splice(this.games_index, 1);
           } else {
-            this.snackbarTitle = CONSTANTS.ERROR_DELETE_GAME;
-            this.snackbarColor = "error";
-            this.showSnackbar =  true;
+            swal(CONSTANTS.ERROR_TITLE, CONSTANTS.ERROR_DELETE_GAME, CONSTANTS.ERROR);
           }
         })
       },

@@ -19,7 +19,7 @@
                 </v-btn>
               </v-list-tile>
             </div>
-            <div v-if="ownGames == null || ownGames.length == 0">
+            <div v-if="ownGames == null || ownGames.length === 0">
               <v-alert :value="true" type="info">
                 Keine eigenen Spiele vorhanden
               </v-alert>
@@ -39,7 +39,7 @@
                 </v-btn>
               </v-list-tile>
             </div>
-            <div v-if="contributingGame == null || contributingGame.length == 0">
+            <div v-if="contributingGame == null || contributingGame.length === 0">
               <v-alert :value="true" type="info">
                 Du bist zu keinen Spielen eingeladen
               </v-alert>
@@ -59,18 +59,13 @@
                 </v-btn>
               </v-list-tile>
             </div>
-            <div v-if="challengedGame == null || challengedGame.length == 0">
+            <div v-if="challengedGame == null || challengedGame.length === 0">
               <v-alert :value="true" type="info">
                 Momentan finden keine offenen Spiele statt, denen du beitreteten könntest
               </v-alert>
             </div>
           </v-list>
         </v-card>
-
-        <!-- Show Snackbar Message -->
-        <div v-if="showSnackbar">
-          <SnackBarAlert :text="snackbarTitle" :color="snackbarColor"></SnackBarAlert>
-        </div>
       </v-flex>
     </v-layout>
   </div>
@@ -79,26 +74,22 @@
 <script>
   import globalService from '../../services/global.service';
   import gameService from '../../services/game.service';
-  import SnackBarAlert from "../../components/SnackBarAlert";
   import { CONSTANTS } from "../../services/constants";
+  import swal from 'sweetalert';
 
   export default {
     name: "GamePlay",
-    components: {
-      SnackBarAlert
-    },
+    components: {},
     data() {
       return {
         loading: false,
         user_id: -1,
         ownGames: null,
+        ownGame: null,
         contributingGames: null,
-        challengedGames: null
-
-        // Snackbar Data
-        showSnackbar: false,
-        snackbarTitle: "",
-        snackbarColor: "",
+        contributingGame: null,
+        challengedGames: null,
+        challengedGame: null,
       }
     },
     methods: {
@@ -119,9 +110,7 @@
               this.challengedGames = response.challengedGames;
               globalService.setGames(this.games);
             } else {
-              this.snackbarTitle = CONSTANTS.ERROR_NO_GAMES;
-              this.snackbarColor = "error";
-              this.showSnackbar =  true;
+              swal(CONSTANTS.ERROR_TITLE, CONSTANTS.ERROR_NO_GAMES, CONSTANTS.ERROR);
             }
             this.loading = false;
           })

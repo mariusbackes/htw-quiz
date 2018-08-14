@@ -190,12 +190,6 @@
             </v-card-actions>
           </v-card>
         </v-dialog>
-
-        <!-- Show Snackbar Message -->
-        <div v-if="showSnackbar">
-          <SnackBarAlert :text="snackbarTitle" :color="snackbarColor"></SnackBarAlert>
-        </div>
-
       </v-flex>
     </v-layout>
   </div>
@@ -204,14 +198,13 @@
 <script>
   import NavigationBar from '../components/NavigationBar';
   import questionService from '../services/question.service';
-  import SnackBarAlert from "../components/SnackBarAlert";
   import { CONSTANTS } from "../services/constants";
+  import swal from 'sweetalert';
 
   export default {
     name: 'AddQuestion',
     components: {
-      NavigationBar,
-      SnackBarAlert
+      NavigationBar
     },
     data () {
       return {
@@ -234,11 +227,6 @@
         game: {},
         showMulitpleChoiceDialog: false,
         editQuestionDialog: false,
-
-        // Snackbar Data
-        showSnackbar: false,
-        snackbarTitle: "",
-        snackbarColor: "",
       }
     },
     methods: {
@@ -252,9 +240,7 @@
           if(response.success){
             this.questions = response.questions;
           } else {
-            this.snackbarTitle = CONSTANTS.WARNING_NO_QUESTIONS;
-            this.snackbarColor = "warning";
-            this.showSnackbar =  true;
+            swal(CONSTANTS.WARNING_TITLE, CONSTANTS.WARNING_NO_QUESTIONS, CONSTANTS.WARNING);
           }
         })
       },
@@ -265,9 +251,7 @@
             if(response.success){
               this.questions.push(this.question);
             } else {
-              this.snackbarTitle = CONSTANTS.ERRROR_SAVE_QUESTION;
-              this.snackbarColor = "error";
-              this.showSnackbar =  true;
+              swal(CONSTANTS.ERROR_TITLE, CONSTANTS.ERRROR_SAVE_QUESTION, CONSTANTS.ERROR);
             }
           })
         }
@@ -289,9 +273,7 @@
             if(response.success){
               // TODO: Replace edited question with the question in the array
             } else {
-              this.snackbarTitle = CONSTANTS.ERRROR_SAVE_QUESTION;
-              this.snackbarColor = "error";
-              this.showSnackbar =  true;
+              swal(CONSTANTS.ERROR_TITLE, CONSTANTS.ERRROR_SAVE_QUESTION, CONSTANTS.ERROR);
             }
           })
         }
