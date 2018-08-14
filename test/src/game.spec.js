@@ -31,12 +31,12 @@ describe("Game API-Methods", function() {
         expect(data.response.success).to.equal(true);
     });
 
-    it("get games success", async () => {
+    it("get all games success", async () => {
         let post_data = {
             user_id: env.user.user_id
         };
         env.post_options.form = post_data;
-        let data = await doRequest(env.post_options, "/games/getGames");
+        let data = await doRequest(env.post_options, "/games/getAllGamesForStartpage");
         expect(data.response.success).to.equal(true);
     });
 });

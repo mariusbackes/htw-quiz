@@ -50,8 +50,48 @@ export default function(Game) {
     returns: { arg: 'response', type: 'object' }
   });
 
-  // Get Games
-  Game.getGames = function(p_data, callback) {
+  // Get all games for start page
+  Game.getAllGamesForStartpage = function(p_data, callback) {
+    let response = {
+      success: false
+    };
+
+    // Get own gamges
+    Game.getOwnGames(p_data, (err, res) => {
+      response.ownGames = res.games;
+      // Contributing games
+      Game.getContributingGames(p_data, (err, res) => {
+        response.contributingGames = res;
+        // Challenged games
+        Game.getChallengedGames(p_data, (err, res) => {
+          response.challengedGames = res;
+          response.success = true;
+          callback(null, response);
+        })
+      })
+    });
+  };
+
+  Game.remoteMethod('getAllGamesForStartpage', {
+    http: { path: '/getAllGamesForStartpage', verb: 'post' },
+    accepts: { arg: 'data', type: 'object', http: { source: 'body' } },
+    returns: { arg: 'response', type: 'object' }
+  });
+
+  Game.getContributingGames = function(p_data, callback){
+    // TODO: Implement
+    let response = null;
+    callback(null, response);
+  }
+
+  Game.getChallengedGames = function(p_data, callback){
+    // TODO: Implement
+    let response = null;
+    callback(null, response);
+  }
+
+  // Get own Games
+  Game.getOwnGames = function(p_data, callback) {
     let response = {
       success: false
     };
@@ -84,8 +124,8 @@ export default function(Game) {
     })
   };
 
-  Game.remoteMethod('getGames', {
-    http: { path: '/getGames', verb: 'post' },
+  Game.remoteMethod('getOwnGames', {
+    http: { path: '/getOwnGames', verb: 'post' },
     accepts: { arg: 'data', type: 'object', http: { source: 'body' } },
     returns: { arg: 'response', type: 'object' }
   });

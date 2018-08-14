@@ -25,11 +25,20 @@ export default {
       return response.data.response;
     })
   },
-  getGames(user_id){
+  getOwnGames(user_id){
     let data = {
       user_id: user_id
     };
-    let api_endpoint = 'games/getGames';
+    let api_endpoint = 'games/getOwnGames';
+    return axios.post(environment.api_url + api_endpoint, data).then((response) => {
+      return response.data.response;
+    })
+  },
+  getAllGamesForStartpage(user_id){
+    let data = {
+      user_id: user_id
+    };
+    let api_endpoint = 'games/getAllGamesForStartpage';
     return axios.post(environment.api_url + api_endpoint, data).then((response) => {
       return response.data.response;
     })
