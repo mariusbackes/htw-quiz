@@ -116,11 +116,11 @@ export default function(User) {
         })
     };
 
-  User.remoteMethod('deleteUser', {
-    http: { path: '/deleteUser', verb: 'post' },
-    accepts: { arg: 'data', type: 'object', http: { source: 'body' } },
-    returns: { arg: 'response', type: 'object' }
-  });
+    User.remoteMethod('deleteUser', {
+      http: { path: '/deleteUser', verb: 'post' },
+      accepts: { arg: 'data', type: 'object', http: { source: 'body' } },
+      returns: { arg: 'response', type: 'object' }
+    });
 
     //Methode zum Anlegen eines Nutzers
     User.registerUser = function(p_user, callback){
@@ -160,28 +160,42 @@ export default function(User) {
         accepts: { arg: 'data', type: 'object', http: { source: 'body' } },
         returns: { arg: 'response', type: 'object' }
     });
-    
+
     // Find user by email
     User.searchForUser = function(p_data, callback) {
-        let response = {
-            success: false
-        };
-        User.find({where: {email: p_data.email}}, (err, results) => {
-          if(results.length > 0){
-            response.user_id = results[0].user_id;
-            response.first_name = results[0].first_name;
-            response.last_login = results[0].last_name;
-            response.success = true;
-          }
+      let response = {
+          success: false
+      };
+      User.find({where: {email: p_data.email}}, (err, results) => {
+        if(results.length > 0){
+          response.user_id = results[0].user_id;
+          response.first_name = results[0].first_name;
+          response.last_login = results[0].last_name;
+          response.success = true;
+        }
+        callback(null, response);
+      });
+    };
+
+    User.remoteMethod('searchForUser', {
+      http: { path: '/searchForUser', verb: 'post' },
+      accepts: { arg: 'data', type: 'object', http: { source: 'body' } },
+      returns: { arg: 'response', type: 'object' }
+    });
+
+    User.updateUser = function(p_data, callback){
+      let response = {
+        success: false
+      };
+
+      User.checkCredentials(p_data.user_id, p_data.password).then((data) => {
+        p_data.password = data.user_password;
+        User.upsert(p_data, (err, res) => {
+          if(res) response.success = true;
           callback(null, response);
         });
-      };
-  
-      User.remoteMethod('searchForUser', {
-          http: { path: '/searchForUser', verb: 'post' },
-          accepts: { arg: 'data', type: 'object', http: { source: 'body' } },
-          returns: { arg: 'response', type: 'object' }
       });
+    };
 
     /* -------------------------------------------- Interne Methoden -------------------------------------------- */
 

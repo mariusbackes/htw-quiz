@@ -1,6 +1,13 @@
 'use strict';
 
 export default function(Highscore) {
+  let User;
+
+  // TimeFrame Methoden aktivieren
+  Highscore.on('attached', (app) => {
+    User = app.models.user;
+  });
+
   // Save Highscore
   Highscore.saveHighscore = function(p_data, callback) {
     let response = {
@@ -10,13 +17,20 @@ export default function(Highscore) {
     let highscore = p_data.game_summary;
     highscore.finished_at = new Date();
     highscore.game_id = p_data.game_id;
-    highscore.user_id = p_data.user_id;
+    highscore.user_id = p_data.user.user_id;
 
     Highscore.create(highscore, (err, res) => {
-      if(res){
-        response.success = true;
+      if(err){
+        console.log(err);
       }
-      callback(null, response);
+      if(res){
+        User.updateUser(p_data.user, (err, res) => {
+          if(res.success) response.success = true;
+          callback(null, response);
+        });
+      } else {
+        callback(null, response);
+      }
     });
   };
 
@@ -55,9 +69,9 @@ export default function(Highscore) {
     };
 
     // TODO: Order results
-    let where = { where: 
+    let where = { where:
       { and: [
-        {user_id: p_data.user_id}, 
+        {user_id: p_data.user_id},
         {game_id: p_data.game_id}
         ]
       }

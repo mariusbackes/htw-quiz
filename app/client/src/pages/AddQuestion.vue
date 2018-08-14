@@ -240,7 +240,7 @@
           if(response.success){
             this.questions = response.questions;
           } else {
-            swal(CONSTANTS.WARNING_TITLE, CONSTANTS.WARNING_NO_QUESTIONS, CONSTANTS.WARNING);
+            //swal(CONSTANTS.WARNING_TITLE, CONSTANTS.WARNING_NO_QUESTIONS, CONSTANTS.WARNING);
           }
         })
       },
@@ -249,6 +249,7 @@
           this.question.game_id = this.game_id;
           questionService.saveQuestion(this.question).then((response) => {
             if(response.success){
+              this.question.question_id = response.question.question_id;
               this.questions.push(this.question);
             } else {
               swal(CONSTANTS.ERROR_TITLE, CONSTANTS.ERRROR_SAVE_QUESTION, CONSTANTS.ERROR);

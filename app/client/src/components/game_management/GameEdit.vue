@@ -21,7 +21,7 @@
                   <v-icon>help</v-icon>
                 </v-btn>
                 <v-btn outline small fab color="primary" @click="addContributor(game)">
-                  <v-icon>help</v-icon>
+                  <v-icon>person_add</v-icon>
                 </v-btn>
               </v-list-tile>
             </div>
