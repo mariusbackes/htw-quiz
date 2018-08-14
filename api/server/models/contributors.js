@@ -1,53 +1,49 @@
 'use strict';
 
 export default function(Contributors) {
-
-  Contributors.createContributor = function(p_data, callback){
+  Contributors.addOrUpdateUserAsContributor = function(p_data, callback){
     let response = {
       success: false
     };
-    let user = p_data.user;
-    let game = p_data.game;
-    let contributor = p_data.contributor;
 
-    if (game.game_id == contributor.game_id && game.creator == user.user_id)
-    {
-      Contributers.upsert(contributor, (err, res) => {
-          if(res) {
-              response.success = true;
-              response.contributor = res;
-          }
-          callback(null, response);
-      });
-    }
+    Contributers.upsert(p_data.contributorOptions, (err, res) => {
+      if(res) {
+          response.success = true;
+          response.contributor = res;
+      }
+      callback(null, response);
+    });
   };
 
-  Contributors.remoteMethod('createContributor', {
-      http: { path: '/createContributor', verb: 'post' },
+  Contributors.remoteMethod('addOrUpdateUserAsContributor', {
+      http: { path: '/addOrUpdateUserAsContributors', verb: 'post' },
       accepts: { arg: 'data', type: 'object', http: { source: 'body' } },
       returns: { arg: 'response', type: 'object' }
   });
 
-  Contributors.deleteContributor = function(p_data, callback){
+  Contributors.deleteUserAsContributor = function(p_data, callback){
     let response = {
       success: false
     };
-    let user = p_data.user;
-    let game = p_data.game;
-    let contributor = p_data.contributor;
 
-    if (game.game_id == contributor.game_id && game.creator == user.user_id) {
-      Contributors.destroy((err, res) => {
-        if(res){
-          response.success = true;
-          callback(null, response);
-        }
-      });
-    }
+    let where = { where: 
+      { and: [
+        {user_id: p_data.user_id}, 
+        {game_id: p_data.game_id}
+        ]
+      }
+    };
+
+    Contributors.destroyAll(where, (err, res) => {
+      if(res){
+        response.success = true;
+        callback(null, response);
+      }
+    });
   };
 
-  Contributors.remoteMethod('deleteContributor', {
-      http: { path: '/deleteContributor', verb: 'post' },
+  Contributors.remoteMethod('deleteUserAsContributor', {
+      http: { path: '/deleteUserAsContributor', verb: 'post' },
       accepts: { arg: 'data', type: 'object', http: { source: 'body' } },
       returns: { arg: 'response', type: 'object' }
   });

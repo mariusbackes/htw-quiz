@@ -160,6 +160,28 @@ export default function(User) {
         accepts: { arg: 'data', type: 'object', http: { source: 'body' } },
         returns: { arg: 'response', type: 'object' }
     });
+    
+    // Find user by email
+    User.searchForUser = function(p_data, callback) {
+        let response = {
+            success: false
+        };
+        User.find({where: {email: p_data.email}}, (err, results) => {
+          if(results.length > 0){
+            response.user_id = results[0].user_id;
+            response.first_name = results[0].first_name;
+            response.last_login = results[0].last_name;
+            response.success = true;
+          }
+          callback(null, response);
+        });
+      };
+  
+      User.remoteMethod('searchForUser', {
+          http: { path: '/searchForUser', verb: 'post' },
+          accepts: { arg: 'data', type: 'object', http: { source: 'body' } },
+          returns: { arg: 'response', type: 'object' }
+      });
 
     /* -------------------------------------------- Interne Methoden -------------------------------------------- */
 

@@ -71,5 +71,14 @@ export default {
     return axios.post(environment.api_url + api_endpoint, data).then((response) => {
       return response.data.response;
     });
+  },
+  searchForUser(email) {
+    let data = {
+        email: email
+    };
+    let api_endpoint = 'users/searchForUser';
+    return axios.post(environment.api_url + api_endpoint, data).then((response) => {
+      return response.data.response;
+    })
   }
 };

@@ -41,7 +41,7 @@
             </div>
             <div v-if="contributingGame == null || contributingGame.length == 0">
               <v-alert :value="true" type="info">
-                Du bist zu keinen Spielne eingeladen
+                Du bist zu keinen Spielen eingeladen
               </v-alert>
             </div>
 

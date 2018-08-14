@@ -20,6 +20,9 @@
                 <v-btn outline small fab color="primary" @click="addQuestion(game)">
                   <v-icon>help</v-icon>
                 </v-btn>
+                <v-btn outline small fab color="primary" @click="addContributor(game)">
+                  <v-icon>help</v-icon>
+                </v-btn>
               </v-list-tile>
             </div>
             <div v-if="games == null || games.length == 0">
@@ -219,6 +222,9 @@
       addQuestion(game){
         // Redirect to new view for adding a question to a game
         this.$router.push({name: 'addQuestion', params: {game_id: game.game_id, game: game}});
+      },
+      addContributor(game){
+        // TODO: show dialog or redirect to new page to add contributors
       }
     },
     mounted() {
