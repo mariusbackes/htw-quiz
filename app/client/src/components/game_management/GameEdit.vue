@@ -209,7 +209,7 @@
         this.$router.push({name: 'addQuestion', params: {game_id: game.game_id, game: game}});
       },
       addContributor(game){
-        // TODO: show dialog or redirect to new page to add contributors
+        this.$router.push({name: 'addContributor', params: {game_id: game.game_id, game: game}});
       }
     },
     mounted() {

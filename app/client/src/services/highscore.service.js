@@ -17,6 +17,15 @@ export default {
       return response.data.response;
     })
   },
+  getAllDataForHighscorePage(user_id){
+    let data = {
+      user_id: user_id
+    };
+    let api_endpoint = 'highscores/getAllDataForHighscorePage';
+    return axios.post(environment.api_url + api_endpoint, data).then((response) => {
+      return response.data.response;
+    })
+  },
   getOwnHighscoresForAllGames(user_id){
     let data = {
       user_id: user_id

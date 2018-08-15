@@ -4,6 +4,13 @@ import bcrypt from 'bcrypt';
 
 // Konstanten
 const saltRounds = 10;
+const user_fields =  {
+  completed_games: true,
+    reached_points: true,
+    username: true,
+    first_name: true,
+    last_name: true,
+};
 
 export default function(User) {
     // Login
@@ -193,6 +200,34 @@ export default function(User) {
         User.upsert(p_data, (err, res) => {
           if(res) response.success = true;
           callback(null, response);
+        });
+      });
+    };
+
+    User.getBestUsers = function(callback){
+      let response = {
+        success: false
+      };
+
+      let filter = {
+        fields: user_fields,
+        order:['reached_points DESC', 'completed_games DESC'],
+        limit: 5
+      };
+
+      User.find(filter, (err,res) => {
+        if(res) {
+          response.success = true;
+          response.bestUsers = res;
+        }
+        callback(null, response);
+      })
+    };
+
+    User.getById = function(p_user_id){
+      return new Promise(resolve => {
+        User.findById(p_user_id, {fields: user_fields}, (err, res) => {
+          resolve(res);
         });
       });
     };

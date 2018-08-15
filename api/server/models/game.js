@@ -198,6 +198,12 @@ export default function(Game) {
     returns: { arg: 'response', type: 'object' }
   });
 
+  Game.getById = function(p_game_id, callback){
+    Game.findById(p_game_id, (err, res) => {
+      callback(null, res);
+    });
+  };
+
   /* -------------------------------------------- Interne Methoden -------------------------------------------- */
 
   Game.getTimeFrameForGame = function(p_game) {

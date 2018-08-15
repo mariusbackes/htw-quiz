@@ -26,7 +26,7 @@
             </div>
 
             <!-- Contributing Games -->
-            <v-subheader>Eigene Spiele</v-subheader>
+            <v-subheader>Zu Spielen eingeladen</v-subheader>
             <div v-if="contributingGames != null">
               <v-list-tile v-for="contributingGame in contributingGames">
                 <v-list-tile-content>

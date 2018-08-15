@@ -3,11 +3,13 @@ import Router from 'vue-router'
 import Login from './pages/Login'
 import Home from './pages/Home'
 import Game from './pages/Game'
-import Highscore from './pages/Highscore'
+import Highscore from './pages/highscores/Highscore'
 import User from './pages/User'
 import AddQuestion from './pages/AddQuestion'
 import Play from './pages/Play'
 import GameSummary from './pages/GameSummary'
+import AddContributor from './pages/AddContributor'
+import HighscoreForGame from './pages/highscores/HighscoreForGame'
 
 Vue.use(Router);
 
@@ -39,6 +41,11 @@ export default new Router({
       component: Highscore
     },
     {
+      path: '/highscore/:game_id/highscoreForGame',
+      name: 'highscoreForGame',
+      component: HighscoreForGame
+    },
+    {
       path: '/user',
       name: 'user',
       component: User
@@ -52,6 +59,11 @@ export default new Router({
       path: '/game/:game_id/gameSummary',
       name: 'gameSummary',
       component: GameSummary
+    },
+    {
+      path: '/game/:game_id/addContributor',
+      name: 'addContributor',
+      component: AddContributor
     }
   ]
 })

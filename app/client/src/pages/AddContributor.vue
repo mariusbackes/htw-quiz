@@ -17,7 +17,7 @@
   import swal from 'sweetalert';
 
   export default {
-    name: "ContributorAdd",
+    name: "AddContributor",
     components: {
     },
     data() {
@@ -42,7 +42,7 @@
       }
     },
     methods: {
-      getGameInfo(){
+      getGameInfos(){
         this.game = this.$route.params.game;
         this.user_id = globalService.getUserId();
       },

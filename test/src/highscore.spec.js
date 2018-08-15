@@ -10,12 +10,17 @@ describe("Highscore API-Methods", function() {
     it("save highscore success", async () => {
         let post_data = {
             game_id: env.game.game_id,
-            user_id: env.user.user_id,
+            user: env.user,
             game_summary: env.game_summary
         };
         env.post_options.form = post_data;
         let data = await doRequest(env.post_options, "/highscores/saveHighscore");
         expect(data.response.success).to.equal(true);
+    });
+
+    it("get all highscores", async () => {
+      let data = await doRequest(env.post_options, "/highscores/getAllDataForHighscorePage");
+      expect(data.response.success).to.equal(true);
     });
 
     it("get own highscores for all games success", async () => {
@@ -50,7 +55,7 @@ describe("Highscore API-Methods", function() {
 const doRequest = async (options, query) => {
     options.uri = env.url + query;
     options.json = true;
-  
+
     return request(options)
       .then(data => {
         return data;
