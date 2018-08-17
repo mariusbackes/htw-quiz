@@ -13,6 +13,9 @@ export const CONSTANTS = {
   ERROR_NO_QUESTIONS_TITLE: "Keine Fragen",
   ERROR_NO_QUESTIONS_BODY: "Zu diesem Spiel sind keine Fragen vorhanden",
 
+  ERROR_DELETE_CONTRIBUTOR_TITLE: "Fehler beim löschen",
+  ERROR_DELETE_CONTRIBUTOR_BODY: "Beim Löschen des Mitwirkenden ist ein Fehler aufgetreten",
+
   // Sweet Alert Options
   INFO: "info",
   SUCCESS: "success",
