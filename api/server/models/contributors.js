@@ -56,7 +56,7 @@ export default function(Contributors) {
       success: false
     };
 
-    Contributers.upsert(p_data.contributorOptions, (err, res) => {
+    Contributors.upsert(p_data.contributorOptions, (err, res) => {
       if(res) {
           response.success = true;
           response.contributor = res;
@@ -66,7 +66,7 @@ export default function(Contributors) {
   };
 
   Contributors.remoteMethod('addOrUpdateUserAsContributor', {
-      http: { path: '/addOrUpdateUserAsContributors', verb: 'post' },
+      http: { path: '/addOrUpdateUserAsContributor', verb: 'post' },
       accepts: { arg: 'data', type: 'object', http: { source: 'body' } },
       returns: { arg: 'response', type: 'object' }
   });

@@ -6,10 +6,11 @@ import bcrypt from 'bcrypt';
 const saltRounds = 10;
 const user_fields =  {
   completed_games: true,
-    reached_points: true,
-    username: true,
-    first_name: true,
-    last_name: true,
+  reached_points: true,
+  username: true,
+  first_name: true,
+  last_name: true,
+  user_id: true
 };
 
 export default function(User) {
@@ -173,11 +174,9 @@ export default function(User) {
       let response = {
           success: false
       };
-      User.find({where: {email: p_data.email}}, (err, results) => {
+      User.find({where: {email: p_data.email}, fields: user_fields}, (err, results) => {
         if(results.length > 0){
-          response.user_id = results[0].user_id;
-          response.first_name = results[0].first_name;
-          response.last_login = results[0].last_name;
+          response.user = results[0];
           response.success = true;
         }
         callback(null, response);

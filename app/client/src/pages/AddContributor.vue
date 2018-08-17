@@ -77,7 +77,7 @@
                           <v-checkbox v-model="contributorOptions.play_value"></v-checkbox>
                         </v-list-tile-action>
                         <v-list-tile-content>
-                          <v-list-tile-title>Spieler</v-list-tile-title>
+                          <v-list-tile-title>Spielen</v-list-tile-title>
                           <v-list-tile-sub-title>Der Nutzer hat die Möglichkeit dein Spiel auch zu spielen</v-list-tile-sub-title>
                         </v-list-tile-content>
                       </v-list-tile>
@@ -107,7 +107,7 @@
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn color="blue darken-1" flat @click="searchForNewContributorDialog = false">Zurück</v-btn>
-              <v-btn color="blue darken-1" flat :disabled="!userFound" @click="searchForNewContributorDialog = false">Save</v-btn>
+              <v-btn color="blue darken-1" flat :disabled="!userFound" @click="addUserAsContributor()">Speichern</v-btn>
             </v-card-actions>
           </v-card>
         </v-dialog>
@@ -216,7 +216,7 @@
                 this.initContributorOptions();
                 this.showContributorOptions = true;
                 this.userFound = true;
-                // TODO: SHow user props
+                this.contributingUser = response.user;
               } else {
                 swal(CONSTANTS.WARNING_NO_USER_FOR_CONTRIBUTOR_TITLE, CONSTANTS.WARNING_NO_USER_FOR_CONTRIBUTOR_BODY, CONSTANTS.WARNING);
                 this.searchForNewContributorDialog = false;
@@ -228,9 +228,13 @@
         }
       },
       addUserAsContributor(){
+        this.contributorOptions.game_id = this.game.game_id;
+        this.contributorOptions.user_id = this.contributingUser.user_id;
         contributorService.addOrUpdateUserAsContributor(this.contributorOptions).then((response) =>{
           if(response.success){
-            // TODO: show success message
+            this.contributorOptions.user = this.contributingUser;
+            this.contributorsForGame.push(this.contributorOptions);
+            this.showContributorOptions = false;
           } else {
             swal(CONSTANTS.ERROR_ADD_CONTRIBUTOR_TITLE, CONSTANTS.ERROR_ADD_CONTRIBUTOR_BODY, CONSTANTS.ERROR);
           }
