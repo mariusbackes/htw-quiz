@@ -1,5 +1,7 @@
 # htw-quiz
 
+[![Build Status](https://travis-ci.com/mariusbackes/htw-quiz.svg?token=Jx5oxfWFAmzkZjbjCxpQ&branch=master)](https://travis-ci.com/mariusbackes/htw-quiz)
+
 Eine Webapplikation für die htw-saar zum spielerischen Testen oder Überprüfen des Wissens von Studenten. Mehr Infos zum Aufbau und den Funktionen dieser Applikation können im [Wiki](https://github.com/mariusbackes/htw-quiz/wiki/) gefunden werden.
 
 ## Verwendete Tools und Libraries:
