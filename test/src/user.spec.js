@@ -14,6 +14,13 @@ describe("User API-Methods", () => {
     expect(data.response.success).to.equal(true);
   });
 
+  it("register contributing user success", async () => {
+    env.post_options.form = env.contributing_user;
+    let data = await doRequest(env.post_options, "/users/registerUser");
+    env.contributing_user.user_id = data.response.user_id;
+    expect(data.response.success).to.equal(true);
+  });
+
   it("login success", async () => {
     env.post_options.form = env.user;
     let data = await doRequest(env.post_options, "/users/login");

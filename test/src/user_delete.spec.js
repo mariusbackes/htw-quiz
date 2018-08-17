@@ -12,7 +12,13 @@ describe("Delete user API-Method", () => {
     let data = await doRequest(env.post_options, "/users/deleteUser");
     expect(data.response.success).to.equal(true);
   });
-})
+
+  it("delete contributing user success", async () => {
+    env.post_options.form = env.contributing_user;
+    let data = await doRequest(env.post_options, "/users/deleteUser");
+    expect(data.response.success).to.equal(true);
+  });
+});
 
 const doRequest = async (options, query) => {
   options.uri = env.url + query;

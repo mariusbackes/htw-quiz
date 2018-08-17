@@ -200,7 +200,6 @@
         this.loadContributors();
       },
       loadContributors(){
-        // TODO: test case
         contributorService.loadContributors(this.game.game_id).then((response) => {
           if(response.success){
             this.contributorsForGame = response.contributors;
@@ -208,7 +207,6 @@
         })
       },
       searchForUser(){
-        // TODO: test case
         if(this.user.email !== this.user_email){
           if(this.$refs.searchForUserForm.validate()){
             userService.searchForUser(this.user_email).then((response) => {
@@ -241,7 +239,6 @@
         })
       },
       updateContributor(index){
-        // TODO: test case
         this.contributorOptions.game_id = this.contributorsForGame[index].game_id;
         this.contributorOptions.user_id = this.contributorsForGame[index].user_id;
         this.contributorOptions.play_value = this.contributorsForGame[index].play_value;
@@ -259,9 +256,9 @@
         this.delete_index = index;
       },
       deleteUserAsContributor(){
-        // TODO: test case
         contributorService.deleteUserAsContributor(this.user_id_to_delete, this.game.game_id).then((response) => {
           if(response.success){
+            this.showDeleteContributorDialog = false;
             this.contributorsForGame.splice(this.delete_index, 1);
           } else {
             swal(CONSTANTS.ERROR_DELETE_CONTRIBUTOR_TITLE, CONSTANTS.ERROR_DELETE_CONTRIBUTOR_BODY, CONSTANTS.ERROR);

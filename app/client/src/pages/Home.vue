@@ -1,6 +1,7 @@
 <template>
   <div>
     <NavigationBar />
+    <!-- TODO: check why event is just fired once -->
     <GamePlay />
   </div>
 </template>

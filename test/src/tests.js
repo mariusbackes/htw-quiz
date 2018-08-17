@@ -12,6 +12,10 @@ import './question.spec';
 // Save and get Highscores for a played game
 import './highscore.spec';
 
+// Search for user, create and update contributor,
+// load the contributor from api and delete him again
+import './contributor.spec';
+
 // delete game at least
 import './game_delete.spec';
 
