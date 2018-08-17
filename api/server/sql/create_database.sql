@@ -28,10 +28,9 @@ DROP TABLE IF EXISTS `contributors`;
 CREATE TABLE `contributors` (
   `game_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `play` tinyint(4) NOT NULL DEFAULT '0',
-  `create` tinyint(4) NOT NULL DEFAULT '0',
-  `edit` tinyint(4) NOT NULL DEFAULT '0',
-  `delete` tinyint(4) NOT NULL DEFAULT '0',
+  `play_value` tinyint(4) NOT NULL DEFAULT '0',
+  `edit_value` tinyint(4) NOT NULL DEFAULT '0',
+  `delete_value` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`game_id`,`user_id`),
   KEY `contributors_user_user_id_fk` (`user_id`),
   CONSTRAINT `contributors_game_game_id_fk` FOREIGN KEY (`game_id`) REFERENCES `game` (`game_id`) ON DELETE CASCADE ON UPDATE CASCADE,

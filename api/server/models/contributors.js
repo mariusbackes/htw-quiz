@@ -21,10 +21,9 @@ export default function(Contributors) {
             let r_contributors_obj = {};
             r_contributors_obj.game_id = c.game_id;
             r_contributors_obj.user_id = c.user_id;
-            r_contributors_obj.play_value = c.play;
-            r_contributors_obj.create_value = c.create;
-            r_contributors_obj.edit_value = c.edit;
-            r_contributors_obj.delete_value = c.delete;
+            r_contributors_obj.play_value = c.play_value;
+            r_contributors_obj.edit_value = c.edit_value;
+            r_contributors_obj.delete_value = c.delete_value;
             User.getById(c.user_id).then((res_user) => {
               r_contributors_obj.user = res_user;
               r_contributors_arr.push(r_contributors_obj);
@@ -35,7 +34,7 @@ export default function(Contributors) {
               }
             });
           })
-        }else {
+        } else {
           response.success = true;
           response.contributors = r_contributors_arr;
           callback(null, response);

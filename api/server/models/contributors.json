@@ -16,19 +16,15 @@
       "required": true,
       "id": true
     },
-    "play": {
+    "play_value": {
       "type": "boolean",
       "required": true
     },
-    "create": {
+    "edit_value": {
       "type": "boolean",
       "required": true
     },
-    "edit": {
-      "type": "boolean",
-      "required": true
-    },
-    "delete": {
+    "delete_value": {
       "type": "boolean",
       "required": true
     }

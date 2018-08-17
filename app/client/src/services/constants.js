@@ -16,6 +16,18 @@ export const CONSTANTS = {
   ERROR_DELETE_CONTRIBUTOR_TITLE: "Fehler beim löschen",
   ERROR_DELETE_CONTRIBUTOR_BODY: "Beim Löschen des Mitwirkenden ist ein Fehler aufgetreten",
 
+  WARNING_NO_USER_FOR_CONTRIBUTOR_TITLE: "Kein Spieler vorhanden",
+  WARNING_NO_USER_FOR_CONTRIBUTOR_BODY: "Es konnte kein Spieler mit dieser E-Mail Adresse gefunden werden",
+
+  WARNING_CONTRIBUTOR_SAME_EMAIL_TITLE: "Gleiche E-Mail Adresse",
+  WARNING_CONTRIBUTOR_SAME_EMAIL_BODY: "Es ist nich möglich sich selbst als Mitwirkender hinzuzufügen",
+
+  ERROR_ADD_CONTRIBUTOR_TITLE: "Fehler beim hinzufügen",
+  ERROR_ADD_CONTRIBUTOR_BODY: "Es ist ein Fehler beim Hinzufügen des Mitwirkenden gekommen",
+
+  ERROR_UPDATE_CONTRIBUTOR_TITLE: "Fehler beim aktualisieren",
+  ERROR_UPDATE_CONTRIBUTOR_BODY: "Es ist ein Fehler beim Aktualisieren des Mitwirkenden gekommen",
+
   // Sweet Alert Options
   INFO: "info",
   SUCCESS: "success",
