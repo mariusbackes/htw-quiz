@@ -51,7 +51,6 @@
 </template>
 
 <script>
-  import globalService from '../../services/global.service';
   import userService from '../../services/user.service';
 
   export default {
@@ -76,7 +75,7 @@
     },
     methods: {
       getUserData() {
-        this.user = globalService.getUser();
+        this.user = JSON.parse(localStorage.getItem('user'));
       },
       changePassword() {
         if (this.$refs.changePasswordForm.validate()) {
@@ -84,7 +83,6 @@
             if(response.success){
               this.user.password = this.new_password;
               localStorage.setItem('user', JSON.stringify(this.user));
-              globalService.setUser(this.user);
             }
           })
         }

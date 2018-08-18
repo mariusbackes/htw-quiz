@@ -14,6 +14,9 @@
             <v-list-tile-title>{{ item.title }}</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
+        <v-list-tile>
+            <v-btn block outline color="error" @click="logout()">Abmelden</v-btn>
+        </v-list-tile>
       </v-list>
     </v-navigation-drawer>
     <v-toolbar fixed app :clipped-left="clipped">
@@ -43,8 +46,9 @@
       }
     },
     methods: {
-      openPage(path) {
-        this.$router.push(path);
+      logout() {
+        localStorage.clear();
+        this.$router.push('/');
       }
     }
   }

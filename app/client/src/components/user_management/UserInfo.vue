@@ -90,9 +90,6 @@
 </template>
 
 <script>
-  // Services
-  import globalService from '../../services/global.service';
-
   export default {
     name: "UserInfo",
     data(){
@@ -102,7 +99,7 @@
     },
     methods: {
       getUserData() {
-        this.user = globalService.getUser();
+        this.user =JSON.parse(localStorage.getItem('user'));
       }
     },
     mounted() {

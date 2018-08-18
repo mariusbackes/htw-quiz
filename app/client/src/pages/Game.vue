@@ -14,13 +14,6 @@
         <v-icon>edit_attributes</v-icon>
       </v-tab>
 
-      <!--
-      <v-tab href="#tab-3">
-        Spielen
-        <v-icon>play_arrow</v-icon>
-      </v-tab>
-      -->
-
       <!-- Spiel erstellen -->
       <v-tab-item id="tab-1">
         <GameCreate />
@@ -31,12 +24,6 @@
         <GameEdit />
       </v-tab-item>
 
-      <!--
-      <v-tab-item id="tab-3">
-        <GamePlay />
-      </v-tab-item>
-      -->
-
     </v-tabs>
     </div>
 </template>
@@ -45,12 +32,10 @@
   import NavigationBar from '../components/NavigationBar';
   import GameCreate from '../components/game_management/GameCreate'
   import GameEdit from "../components/game_management/GameEdit";
-  import GamePlay from "../components/game_management/GamePlay";
 
   export default {
     name: "Game",
     components: {
-      GamePlay,
       GameEdit,
       NavigationBar,
       GameCreate

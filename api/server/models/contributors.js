@@ -97,4 +97,21 @@ export default function(Contributors) {
       accepts: { arg: 'data', type: 'object', http: { source: 'body' } },
       returns: { arg: 'response', type: 'object' }
   });
+
+  Contributors.getContributionsForUser = function(p_user_id, callback){
+    let response = {
+      success: false
+    };
+    let filter = { where: {user_id: p_user_id }};
+
+    Contributors.find(filter, (err, res) => {
+      if(res && res.length > 0){
+        response.success = true;
+        response.contributing_games = res;
+        callback(null, response);
+      } else {
+        callback(null, response);
+      }
+    })
+  }
 };

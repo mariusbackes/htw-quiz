@@ -43,7 +43,7 @@
             <v-list subheader>
               <v-subheader inset>Spiele für dich</v-subheader>
               <div v-for="(cg, index) in site_data.games.contributingGames">
-                <v-list-tile ripple @click="showHighscoreForSpecificGame(og)">
+                <v-list-tile ripple @click="showHighscoreForSpecificGame(cg)">
                   <v-list-tile-content>
                     <v-list-tile-title>{{ cg.description }}</v-list-tile-title>
                   </v-list-tile-content>
@@ -79,14 +79,13 @@
       }
     },
     methods: {
-      getUserId(){
+      getUser(){
         this.user = JSON.parse(localStorage.getItem('user'));
       },
       getSiteData(){
         highscoreService.getAllDataForHighscorePage(this.user.user_id).then((response) => {
           if(response.success){
             this.site_data = response.data;
-            console.log(this.site_data);
           }
         })
       },
@@ -95,7 +94,7 @@
       }
     },
     beforeMount(){
-      this.getUserId();
+      this.getUser();
       this.getSiteData();
     }
   }

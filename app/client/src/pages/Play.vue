@@ -57,7 +57,6 @@
 
 <script>
   import NavigationBar from '../components/NavigationBar';
-  import globalService from '../services/global.service';
   import questionService from '../services/question.service';
   import { CONSTANTS } from "../services/constants";
   import swal from 'sweetalert';
@@ -95,7 +94,7 @@
       getInfos(){
         this.game_id = this.$route.params.game_id;
         this.game = this.$route.params.game;
-        this.user = globalService.getUser();
+        this.user = JSON.parse(localStorage.getItem('user'));
         this.getQuestions();
       },
       getQuestions() {

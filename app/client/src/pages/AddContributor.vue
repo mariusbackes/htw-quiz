@@ -145,7 +145,6 @@
 
 <script>
   import NavigationBar from '../components/NavigationBar';
-  import globalService from '../services/global.service';
   import userService from '../services/user.service';
   import contributorService from '../services/contributor.service';
   import { CONSTANTS } from "../services/constants";
@@ -196,7 +195,7 @@
     methods: {
       getGameInfos(){
         this.game = this.$route.params.game;
-        this.user = globalService.getUser();
+        this.user = JSON.parse(localStorage.getItem('user'));
         this.loadContributors();
       },
       loadContributors(){

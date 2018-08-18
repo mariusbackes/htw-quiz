@@ -4,29 +4,31 @@
     <v-list two-line subheader>
       <v-subheader inset>Alles zum Spiel</v-subheader>
       <!-- Questions -->
-      <CostumListTile icon="done" title="Fragen"
+      <CostumListTile icon="help_outline" title="Fragen"
                       subtitle="Anzahl Fragen im Spiel" :count="game_summary.answers_correct + game_summary.answers_wrong"></CostumListTile>
       <CostumListTile icon="done" title="Richtig"
                       subtitle="Davon richtig beantwortet" :count="game_summary.answers_correct"></CostumListTile>
-      <CostumListTile icon="done" title="Falsch"
+      <CostumListTile icon="close" title="Falsch"
                       subtitle="Davon falsch beantwortet" :count="game_summary.answers_wrong"></CostumListTile>
-      <CostumListTile icon="done" title="Prozentzahl"
+      <CostumListTile icon="compare_arrows" title="Prozentzahl"
                       subtitle="Prozentual richtig" :count="((game_summary.answers_correct * 100) / (game_summary.answers_correct + game_summary.answers_wrong)).toFixed(2) + ' %'"></CostumListTile>
 
       <!-- Points -->
-      <CostumListTile icon="done" title="Punkte"
+      <CostumListTile icon="control_point" title="Punkte"
                       subtitle="Erreichte Punkte" :count="game_summary.reached_score"></CostumListTile>
-      <CostumListTile icon="done" title="Maximale Punkte"
+      <CostumListTile icon="unfold_more" title="Maximale Punkte"
                       subtitle="Maximal erreichbare Punkte" :count="game_summary.maximum_score"></CostumListTile>
       <v-divider inset></v-divider>
       <v-subheader inset>Nutzerinfos</v-subheader>
-      <CostumListTile icon="done" title="Spiele gesamt"
+      <CostumListTile icon="zoom_out_map" title="Spiele gesamt"
                       subtitle="Alle abgeschlossenen Spiele" :count="user.completed_games"></CostumListTile>
-      <CostumListTile icon="done" title="Punkte gesamt"
+      <CostumListTile icon="thumb_up_alt" title="Punkte gesamt"
                       subtitle="Alle erreichten Punkte" :count="user.reached_points"></CostumListTile>
     </v-list>
 
-    <v-btn block color="primary" @click="saveHighscore()">Spiel abschließen</v-btn>
+    <div style="padding: 16px">
+      <v-btn block color="primary" @click="saveHighscore()">Spiel abschließen</v-btn>
+    </div>
   </div>
 </template>
 
@@ -34,7 +36,6 @@
   import NavigationBar from '../components/NavigationBar';
   import CostumListTile from '../components/CostumListTile';
   import highscoreService from '../services/highscore.service'
-  import globalService from '../services/global.service';
 
   export default {
     name: "GameSummary",
@@ -63,7 +64,6 @@
       saveHighscore(){
         highscoreService.saveHighscore(this.game_id, this.user, this.game_summary).then((response) => {
           if(response.success){
-            globalService.setUser(this.user);
             localStorage.setItem('user', JSON.stringify(this.user));
             this.$router.push('/home');
           }

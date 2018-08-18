@@ -118,7 +118,6 @@
 
 <script>
   // Services
-  import globalService from '../../services/global.service';
   import userService from '../../services/user.service';
 
   export default {
@@ -146,7 +145,7 @@
     },
     methods: {
       getUserData() {
-        this.user = globalService.getUser();
+        this.user = JSON.parse(localStorage.getItem('user'));
       },
       changeUsername() {
         userService.changeUsername(this.user, this.new_username).then((response) => {
@@ -177,7 +176,6 @@
       },
       storeUser(){
         localStorage.setItem('user', JSON.stringify(this.user));
-        globalService.setUser(this.user);
       }
     },
     mounted() {

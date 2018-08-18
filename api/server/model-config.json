@@ -29,11 +29,11 @@
     "dataSource": "htw_quiz",
     "public": true
   },
-  "game": {
+  "contributors": {
     "dataSource": "htw_quiz",
     "public": true
   },
-  "contributors": {
+  "game": {
     "dataSource": "htw_quiz",
     "public": true
   },

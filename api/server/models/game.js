@@ -2,10 +2,12 @@
 
 export default function(Game) {
   let TimeFrame;
+  let Contributors;
 
   // TimeFrame Methoden aktivieren
   Game.on('attached', (app) => {
     TimeFrame = app.models.time_frame;
+    Contributors = app.models.contributors;
   });
 
   // Create Game
@@ -81,15 +83,55 @@ export default function(Game) {
   });
 
   Game.getContributingGames = function(p_data, callback){
-    // TODO: Implement
     let response = null;
-    callback(null, response);
+    let games_array = [];
+    Contributors.getContributionsForUser(p_data.user_id, (err, res) => {
+      if(res.success){
+        let contributing_games = res.contributing_games;
+        contributing_games.forEach((cg, index) => {
+          Game.findById(cg.game_id, (err, res) => {
+            games_array.push(res);
+            if(index === contributing_games.length - 1){
+              Game.collectGameInformation(games_array).then((result) => {
+                response = result;
+                callback(null, response);
+              })
+            }
+          });
+        });
+      } else {
+        callback(null, response);
+      }
+    });
   };
 
   Game.getChallengedGames = function(p_data, callback){
-    // TODO: Implement
     let response = null;
-    callback(null, response);
+    let filter = { where: { challenged: true }};
+    let current_challenged_games = [];
+
+    Game.find(filter, (err, res) => {
+      if(res && res.length > 0){
+        Game.collectGameInformation(res).then((games) => {
+          games.forEach((game, index) => {
+            let current = new Date();
+            let from = new Date(game.time_frame.from);
+            let to = new Date(game.time_frame.to);
+
+            if(from < current && current < to){
+              current_challenged_games.push(game);
+            }
+
+            if(index === games.length - 1){
+              response = current_challenged_games;
+              callback(null, response);
+            }
+          });
+        })
+      } else {
+        callback(null, response);
+      }
+    })
   };
 
   // Get own Games
@@ -104,26 +146,10 @@ export default function(Game) {
         response.success = true;
         if(res_games.length > 0){
           // Checking index, to check if loop is completed
-          res_games.forEach((game, index) => {
-            // Load time frames for challenged games
-            if(game.challenged){
-              Game.getTimeFrameForGame(game).then((result) => {
-                game.time_frame = {
-                  from: result.from,
-                  to: result.to
-                };
-                if(index === res_games.length - 1){
-                  response.games = res_games;
-                  callback(null, response);
-                }
-              });
-            } else {
-              if(index === res_games.length - 1){
-                response.games = res_games;
-                callback(null, response);
-              }
-            }
-          });
+          Game.collectGameInformation(res_games).then((games) => {
+            response.games = games;
+            callback(null, response);
+          })
         } else {
           callback(null, response);
         }
@@ -138,6 +164,29 @@ export default function(Game) {
     accepts: { arg: 'data', type: 'object', http: { source: 'body' } },
     returns: { arg: 'response', type: 'object' }
   });
+
+  Game.collectGameInformation = function(games) {
+    return new Promise((resolve) => {
+      games.forEach((game, index) => {
+        // Load time frames for challenged games
+        if(game.challenged){
+          Game.getTimeFrameForGame(game).then((result) => {
+            game.time_frame = {
+              from: result.from,
+              to: result.to
+            };
+            if(index === games.length - 1){
+              resolve(games);
+            }
+          });
+        } else {
+          if(index === games.length - 1){
+            resolve(games);
+          }
+        }
+      });
+    })
+  };
 
   // Edit Game
   Game.editGame = function(p_data, callback) {

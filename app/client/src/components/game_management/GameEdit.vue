@@ -116,7 +116,6 @@
 </template>
 
 <script>
-  import globalService from '../../services/global.service';
   import gameService from '../../services/game.service';
   import { CONSTANTS } from "../../services/constants";
   import swal from 'sweetalert';
@@ -144,17 +143,18 @@
     },
     methods: {
       getUserId(){
-        this.user_id = globalService.getUserId();
+        let user = JSON.parse(localStorage.getItem('user'));
+        this.user_id = user.user_id;
       },
       getGames(){
         // Check if games are loaded
-        this.games = globalService.getGames();
+        this.games = JSON.parse(localStorage.getItem('games'));
         if(this.games == null){
           this.loading = true;
           gameService.getOwnGames(this.user_id).then((response) => {
             if(response.success){
               this.games = response.games;
-              globalService.setGames(this.games);
+              localStorage.setItem('games', JSON.stringify(this.games));
             } else {
               swal(CONSTANTS.ERROR_TITLE, CONSTANTS.ERROR_NO_GAMES, CONSTANTS.ERROR);
             }

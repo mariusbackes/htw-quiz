@@ -117,7 +117,6 @@
 </template>
 
 <script>
-  import globalService from '../../services/global.service';
   import gameService from '../../services/game.service';
   import { CONSTANTS } from "../../services/constants";
   import swal from 'sweetalert';
@@ -149,7 +148,7 @@
     },
     methods: {
       getUserData() {
-        this.user = globalService.getUser();
+        this.user = JSON.parse(localStorage.getItem('user'));
       },
       checkDateTimes(){
         // Compare Dates if End-Date is bigger than Start-Date

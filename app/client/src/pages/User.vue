@@ -44,9 +44,6 @@
   import UserData from '../components/user_management/UserData';
   import UserChangePassword from '../components/user_management/UserChangePassword';
 
-  // Services
-  import globalService from '../services/global.service';
-
   export default {
     name: "User",
     components: {
@@ -62,7 +59,7 @@
     },
     methods: {
       getUserData() {
-        this.user = globalService.getUser();
+        this.user = JSON.parse(localStorage.getItem('user'));
       }
     },
     mounted() {

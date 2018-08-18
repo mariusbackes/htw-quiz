@@ -77,7 +77,6 @@
 
 <script>
   import userService from '../services/user.service';
-  import globalService from '../services/global.service';
   import { CONSTANTS } from "../services/constants";
   import swal from 'sweetalert';
 
@@ -88,7 +87,7 @@
       return {
         loading: false,
         // Register-Data
-        user_id: null,
+        user: null,
         username: null,
         first_name: null,
         last_name: null,
@@ -118,7 +117,6 @@
         if(this.$refs.loginForm.validate()){
           this.loading = true;
           let login_obj = {
-            user_id: globalService.getUserId(),
             email: this.email,
             password: this.password
           };
@@ -152,7 +150,7 @@
               user.completed_games = 0;
               user.reached_points = 0;
               user.admin = false;
-              // Localstorage speichern und im GlobalService als temporäre Variable
+              // Localstorage speichern
               this.storeUserData(user);
             } else {
               swal(CONSTANTS.ERROR_TITLE, CONSTANTS.ERROR_REGISTER, CONSTANTS.ERROR);
@@ -164,11 +162,9 @@
         // Prüfen ob ein User vorhanden ist
         let json = localStorage.getItem('user');
         if(json){
-          let user = JSON.parse(json);
-          this.email = user.email;
-          this.password = user.password;
-          // Wenn ja, den Nutzer temporär speichern
-          globalService.setUser(user);
+          this.user = JSON.parse(json);
+          this.email = this.user.email;
+          this.password = this.user.password;
 
           // Automatisches Login ausführen
           /*
@@ -180,7 +176,6 @@
       },
       storeUserData(user) {
         localStorage.setItem('user', JSON.stringify(user));
-        globalService.setUser(user);
       }
     },
     mounted() {
