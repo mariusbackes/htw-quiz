@@ -30,6 +30,12 @@
                                     () => !!question.time_limit || 'Das Zeitlimit ist ein Pflichtfeld',
                                     () => !isNaN(question.time_limit) || 'Das Zeitlimit muss als Zahl angeben werden']"
                                       required></v-text-field>
+                        <v-switch
+                          v-model="question_to_edit.is_html"
+                          label="Ist die Frage im HTML Format?"
+                          required
+                        ></v-switch>
+
                         <v-flex xs9>
                           <v-switch
                             v-model="question.is_multiple_choice"
@@ -159,6 +165,12 @@
                                     required></v-text-field>
 
                       <v-switch
+                        v-model="question_to_edit.is_html"
+                        label="Ist die Frage im HTML Format?"
+                        required
+                      ></v-switch>
+
+                      <v-switch
                         v-model="question_to_edit.is_multiple_choice"
                         label="Hat die Frage mehrere Antwortmöglichkeiten?"
                         required
@@ -215,6 +227,7 @@
           // Time limit is 20 seconds default
           time_limit: 20,
           is_multiple_choice: true,
+          is_html: false,
           multiple_choice: {
             wrong_answer_1: "",
             wrong_answer_2: "",

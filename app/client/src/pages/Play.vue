@@ -17,7 +17,11 @@
             <v-flex>
               <v-progress-linear v-model="secondsLeftProgress"></v-progress-linear>
 
-              <v-text-field p-2 outline label="Frage:" :placeholder="current_question.text" disabled></v-text-field>
+              <!-- Check if Question is in HTML Format -->
+              <v-text-field v-if="!current_question.is_html" p-2 outline label="Frage:" :placeholder="current_question.text" disabled></v-text-field>
+              <div v-if="current_question.is_html">
+                <p v-html="current_question.text"></p>
+              </div>
               <v-divider class="my-3"></v-divider>
 
               <div v-if="current_question.is_multiple_choice">

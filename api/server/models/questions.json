@@ -30,6 +30,10 @@
     "is_multiple_choice": {
       "type": "boolean",
       "required": true
+    },
+    "is_html": {
+      "type": "boolean",
+      "required": true
     }
   },
   "validations": [],

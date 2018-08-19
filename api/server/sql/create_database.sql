@@ -147,6 +147,7 @@ CREATE TABLE `questions` (
   `correct_answer` varchar(350) NOT NULL,
   `time_limit` int(11) DEFAULT NULL,
   `is_multiple_choice` tinyint(4) NOT NULL DEFAULT '0',
+  `is_html` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`question_id`),
   KEY `questions_game_game_id_fk` (`game_id`),
   CONSTRAINT `questions_game_game_id_fk` FOREIGN KEY (`game_id`) REFERENCES `game` (`game_id`) on delete cascade on update cascade

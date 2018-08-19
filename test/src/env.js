@@ -49,11 +49,12 @@ export const env = {
       correct_answer: "Hier steht die Korrekte Antwort",
       time_limit: 20,
       is_multiple_choice: true,
+      is_html: true,
       multiple_choice: {
         wrong_answer_1: "Das hier ist die erste falsche Antwort",
         wrong_answer_2: "Hier kommt die zweite Unwahrheit",
         wrong_answer_3: "Und zuletzt auch noch die Dritte"
-      }
+      },
     },
     game_summary: {
       answers_correct: 4,
