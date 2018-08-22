@@ -199,6 +199,7 @@
         gameService.deleteGame(this.game).then((response) => {
           if(response.success){
             this.games.splice(this.games_index, 1);
+            localStorage.setItem('games', JSON.stringify(this.games));
           } else {
             swal(CONSTANTS.ERROR_TITLE, CONSTANTS.ERROR_DELETE_GAME, CONSTANTS.ERROR);
           }

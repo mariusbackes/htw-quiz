@@ -127,6 +127,8 @@
     data() {
       return {
         user: {},
+        //All Games variable
+        games: null,
         // Game-Data
         stepper: 0,
         game: {
@@ -166,6 +168,8 @@
         }
       },
       createGame() {
+        this.games = JSON.parse(localStorage.getItem('games'));
+        console.log(this.games);
         if(this.$refs.gameCreateForm.validate()){
           this.game.creator = this.user.user_id;
           if(this.game.challenged){
@@ -175,7 +179,10 @@
           console.log(this.game);
           gameService.createGame(this.game, this.user).then((response) => {
             if(response.success){
-              // TODO: Store game
+              //Store game
+              this.games.push(this.game);
+              console.log(this.games);
+              localStorage.setItem('games', JSON.stringify(this.games));
             }
           });
         }

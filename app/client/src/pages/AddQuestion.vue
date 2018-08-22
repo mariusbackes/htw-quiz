@@ -31,7 +31,7 @@
                                     () => !isNaN(question.time_limit) || 'Das Zeitlimit muss als Zahl angeben werden']"
                                       required></v-text-field>
                         <v-switch
-                          v-model="question_to_edit.is_html"
+                          v-model="question.is_html"
                           label="Ist die Frage im HTML Format?"
                           required
                         ></v-switch>
