@@ -225,6 +225,10 @@
         // Antworten zurücksetzen
         this.answer_radio_group = null;
         this.text_answer = "";
+        if(this.current_question.is_multiple_choice){
+                this.setAnswerInputOptions();
+                this.resetTimer();
+              }
         this.resetTimer();
       },
       setPointsForAnswer(){

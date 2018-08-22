@@ -116,6 +116,8 @@
       login() {
         if(this.$refs.loginForm.validate()){
           this.loading = true;
+          localStorage.clear();
+          localStorage.setItem('games', null);
           let login_obj = {
             email: this.email,
             password: this.password
