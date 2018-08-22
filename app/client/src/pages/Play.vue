@@ -108,9 +108,9 @@
             if(response.success){
               this.questions = response.questions;
               this.current_question = this.questions[this.current_question_index];
+              this.resetTimer();
               if(this.current_question.is_multiple_choice){
-                this.setAnswerInputOptions();
-                this.resetTimer();
+                this.setAnswerInputOptions();                
               }
             } else {
               if(Array.isArray(response.questions) && response.questions.length === 0){
