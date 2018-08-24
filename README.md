@@ -5,13 +5,13 @@
 Eine Webapplikation für die htw-saar zum spielerischen Testen oder Überprüfen des Wissens von Studenten. Mehr Infos zum Aufbau und den Funktionen dieser Applikation können im [Wiki](https://github.com/mariusbackes/htw-quiz/wiki/) gefunden werden.
 
 ## Verwendete Tools und Libraries:
-__node.js__  https://nodejs.org/en/  
-__loopback__ https://loopback.io/  
-__vue.js__ https://vuejs.org/  
-__vuetifyjs__ https://vuetifyjs.com/en/  
-__icons__ https://material.io/  
-__mocha test framework__ https://mochajs.org/  
-__sweetalert__ https://sweetalert.js.org/  
+__node.js__  https://nodejs.org/en/
+__loopback__ https://loopback.io/
+__vue.js__ https://vuejs.org/
+__vuetifyjs__ https://vuetifyjs.com/en/
+__icons__ https://material.io/
+__mocha test framework__ https://mochajs.org/
+__sweetalert__ https://sweetalert.js.org/
 
 ## Packages
 ### Packages für die App
@@ -23,12 +23,14 @@ __sweetalert__ https://sweetalert.js.org/
 | vuetify-datetime-picker| DateTime Picker | npm install vuetify-datetime-picker|
 | axios         | HTTP Requests                 | npm install axios      |
 | sweetalert    | Pretty Alert for JavaScript   | npm install sweetalert |
+| socket.io-client| Socket Verbindung für Client| npm install socket.io-client  |
 
 ### Packages für die API
 | Package       | Beschreibung                  | Installationskommando  |
 | ------------- |:----------------------------: | ----------------------:|
 | loopback      | Serverinstanz                 | npm install loopback   |
 | bcrypt        | Verschlüsselung               | npm install bcrypt     |
+| socket.io     | SocketServer Verbindung       | npm install socket.io  |
 
 Bei der Installation von Loopback werden auch `loopback-boot`, `loopback-component-explorer` und `loopback-connector-mysql` installiert, welche das Starten des Servers, die Explorer-Oberfläche für den Browser und den Datenaustausch mit der Datenbank ermöglichen.
 

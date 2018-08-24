@@ -30,7 +30,7 @@ export const env = {
       last_login: new Date().toLocaleString(),
       completed_games: 0,
       reached_points: 0,
-      admin: 0
+      admin: true
     },
     game: {
       game_id: -1,
@@ -50,7 +50,7 @@ export const env = {
       correct_answer: "Hier steht die Korrekte Antwort",
       time_limit: 20,
       is_multiple_choice: true,
-      is_html: true,
+      is_html: false,
       multiple_choice: {
         wrong_answer_1: "Das hier ist die erste falsche Antwort",
         wrong_answer_2: "Hier kommt die zweite Unwahrheit",

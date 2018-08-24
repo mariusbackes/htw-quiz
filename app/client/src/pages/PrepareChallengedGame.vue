@@ -65,12 +65,15 @@
   import NavigationBar from "../components/NavigationBar";
   import swal from 'sweetalert';
   import { CONSTANTS } from "../services/constants";
+  import { environment } from "../environment/environment";
+  import io from 'socket.io-client';
 
   export default {
     name: "PrepareChallengedGame",
     components: { NavigationBar },
     data() {
       return {
+        socket: null,
         invitation_code_input: "",
         game_enabled: false,
         game_id: -1,
@@ -85,6 +88,9 @@
         this.game = this.$route.params.game;
         this.user = JSON.parse(localStorage.getItem('user'));
 
+        // Connect to socket
+        this.socket = io.connect(environment.socket_url);
+
         if(this.game.creator === this.user.user_id){
           this.game_enabled = true;
         }
@@ -92,7 +98,14 @@
       activateGame(){
         if(this.game.time_frame.invitation_code === parseInt(this.invitation_code_input)){
           this.game_enabled = true;
-          // TODO: join socket server
+          let user_data_to_send = {
+            user_id: this.user.user_id,
+            first_name: this.user.first_name,
+            last_name: this.user.last_name
+          };
+          this.socket.emit('join_game', {
+            user: user_data_to_send
+          });
         } else {
           swal(CONSTANTS.ERROR_WRONG_INVITATION_CODE_TITLE, CONSTANTS.ERROR_WRONG_INVITATION_CODE_BODY, CONSTANTS.ERROR);
         }
@@ -104,6 +117,11 @@
     },
     beforeMount() {
       this.getInfos();
+    },
+    mounted() {
+      this.socket.on('user_joined_game', (data) => {
+        this.joined_users.push(data.user);
+      });
     }
   }
 </script>
