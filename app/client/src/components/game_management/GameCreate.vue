@@ -32,6 +32,7 @@
               <!-- Check if challenged -->
               <v-checkbox
                 v-model="game.challenged"
+                @change="generateInvitationCode()"
                 label="Spiel nur zu bestimmter Zeit spielbar?"
                 required
               ></v-checkbox>
@@ -103,6 +104,17 @@
                         </v-list-tile-sub-title>
                       </v-list-tile-content>
                     </v-list-tile>
+                    <v-list-tile avatar v-if="game.challenged">
+                      <v-list-tile-avatar>
+                        <v-icon>code</v-icon>
+                      </v-list-tile-avatar>
+                      <v-list-tile-content>
+                        <v-list-tile-title>Einladungscode</v-list-tile-title>
+                        <v-list-tile-sub-title>
+                          {{game.time_frame.invitation_code}}
+                        </v-list-tile-sub-title>
+                      </v-list-tile-content>
+                    </v-list-tile>
                   </v-list>
                 </v-card-text>
               </v-card>
@@ -138,7 +150,8 @@
           challenged: false,
           time_frame: {
             from: null,
-            to: null
+            to: null,
+            invitation_code: 0
           } // Time-Frame object ist just initialized if game is challenged
         },
         picker_count: 0,
@@ -176,7 +189,6 @@
             this.game.time_frame.from = this.start_time_picker;
             this.game.time_frame.to = this.end_time_picker;
           }
-          console.log(this.game);
           gameService.createGame(this.game, this.user).then((response) => {
             if(response.success){
               //Store game
@@ -185,6 +197,11 @@
               localStorage.setItem('games', JSON.stringify(this.games));
             }
           });
+        }
+      },
+      generateInvitationCode(){
+        if(this.game.challenged){
+          this.game.time_frame.invitation_code = Math.floor(Math.random() * 100000 + 100000);
         }
       }
     },

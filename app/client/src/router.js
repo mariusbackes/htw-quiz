@@ -10,6 +10,7 @@ import Play from './pages/Play'
 import GameSummary from './pages/GameSummary'
 import AddContributor from './pages/AddContributor'
 import HighscoreForGame from './pages/highscores/HighscoreForGame'
+import PrepareChallengedGame from './pages/PrepareChallengedGame'
 
 Vue.use(Router);
 
@@ -54,6 +55,11 @@ export default new Router({
       path: '/game/:game_id/play',
       name: 'play',
       component: Play
+    },
+    {
+      path: '/game/:game_id/prepareChallengedGame',
+      name: 'prepareChallengedGame',
+      component: PrepareChallengedGame
     },
     {
       path: '/game/:game_id/gameSummary',

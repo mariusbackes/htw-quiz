@@ -17,7 +17,7 @@ export const env = {
       last_login: new Date().toLocaleString(),
       completed_games: 0,
       reached_points: 0,
-      admin: 0
+      admin: true
     },
     contributing_user: {
       user_id: null,
@@ -40,7 +40,8 @@ export const env = {
       challenged: true,
       time_frame: {
         from: new Date().toLocaleString(),
-        to: new Date().toLocaleString()
+        to: new Date().toLocaleString(),
+        invitation_code: 111111
       }
     },
     question: {

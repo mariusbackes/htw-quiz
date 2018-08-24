@@ -174,6 +174,7 @@ CREATE TABLE `time_frame` (
   `game_id` int(11) NOT NULL,
   `from` datetime NOT NULL,
   `to` datetime NOT NULL,
+  `invitation_code` int NOT NULL,
   PRIMARY KEY (`game_id`),
   KEY `time_frame_game_game_id_fk` (`game_id`),
   CONSTRAINT `time_frame_game_game_id_fk` FOREIGN KEY (`game_id`) REFERENCES `game` (`game_id`) on delete cascade on update cascade

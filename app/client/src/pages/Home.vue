@@ -116,7 +116,11 @@
         }
       },
       playGame(game){
-        this.$router.push({name: 'play', params: {game_id: game.game_id, game: game}});
+        if(game.challenged){
+          this.$router.push({name: 'prepareChallengedGame', params: {game_id: game.game_id, game: game}});
+        } else {
+          this.$router.push({name: 'play', params: {game_id: game.game_id, game: game}});
+        }
       }
     },
     mounted() {

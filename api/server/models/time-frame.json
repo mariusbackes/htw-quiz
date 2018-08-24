@@ -18,6 +18,10 @@
     "to": {
       "type": "date",
       "required": true
+    },
+    "invitation_code": {
+      "type": "number",
+      "required": true
     }
   },
   "validations": [],

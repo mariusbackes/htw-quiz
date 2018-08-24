@@ -173,7 +173,8 @@ export default function(Game) {
           Game.getTimeFrameForGame(game).then((result) => {
             game.time_frame = {
               from: result.from,
-              to: result.to
+              to: result.to,
+              invitation_code: result.invitation_code
             };
             if(index === games.length - 1){
               resolve(games);

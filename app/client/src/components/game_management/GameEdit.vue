@@ -149,7 +149,7 @@
       getGames(){
         // Check if games are loaded
         this.games = JSON.parse(localStorage.getItem('games'));
-        if(this.games == null){
+        if(this.games.length === 0){
           this.loading = true;
           gameService.getOwnGames(this.user_id).then((response) => {
             if(response.success){

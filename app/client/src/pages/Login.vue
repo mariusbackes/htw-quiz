@@ -60,6 +60,9 @@
                                 ref="repeat_password"
                                 v-model="repeat_password"
                                 :rules="repeatPasswordRules"></v-text-field>
+                  <v-checkbox v-model="admin">
+
+                  </v-checkbox>
                 </v-form>
                 <v-card-actions>
                   <v-spacer></v-spacer>
@@ -93,6 +96,7 @@
         last_name: null,
         email: null,
         password: null,
+        admin: true,
         repeat_password: null,
         showRegisterModal: false,
 
@@ -117,7 +121,7 @@
         if(this.$refs.loginForm.validate()){
           this.loading = true;
           localStorage.clear();
-          localStorage.setItem('games', null);
+          localStorage.setItem('games', JSON.stringify([]));
           let login_obj = {
             email: this.email,
             password: this.password
@@ -141,6 +145,7 @@
             last_name: this.last_name,
             email: this.email,
             password: this.password,
+            admin: this.admin
           };
           userService.register(user).then((response) => {
             if(response.success){
@@ -151,7 +156,6 @@
               user.last_login = response.last_login;
               user.completed_games = 0;
               user.reached_points = 0;
-              user.admin = false;
               // Localstorage speichern
               this.storeUserData(user);
             } else {

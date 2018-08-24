@@ -12,6 +12,7 @@ export default function(Timeframe) {
         game_id: game.game_id,
         from: game.time_frame.from,
         to: game.time_frame.to,
+        invitation_code: game.time_frame.invitation_code,
       };
 
       if (user.user_id != game.creator) {

@@ -28,6 +28,9 @@ export const CONSTANTS = {
   ERROR_UPDATE_CONTRIBUTOR_TITLE: "Fehler beim aktualisieren",
   ERROR_UPDATE_CONTRIBUTOR_BODY: "Es ist ein Fehler beim Aktualisieren des Mitwirkenden gekommen",
 
+  ERROR_WRONG_INVITATION_CODE_TITLE: "Fehler beim aktivieren",
+  ERROR_WRONG_INVITATION_CODE_BODY: "Der eingebene Code ist fehlerhaft",
+
   // Sweet Alert Options
   INFO: "info",
   SUCCESS: "success",
