@@ -192,9 +192,11 @@
           gameService.createGame(this.game, this.user).then((response) => {
             if(response.success){
               //Store game
+              this.game.game_id = response.game_id;
               this.games.push(this.game);
-              console.log(this.games);
-              localStorage.setItem('games', JSON.stringify(this.games));
+              localStorage.setItem('games', JSON.stringify(this.games)); 
+              swal("Spiel erfolgreich angelegt");
+              this.$router.push('/home');
             }
           });
         }

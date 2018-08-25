@@ -264,6 +264,7 @@
             if(response.success){
               this.question.question_id = response.question.question_id;
               this.questions.push(this.question);  
+              swal("Frage erfolgreich angelegt");
               this.$router.push('/game');
             } else {
               swal(CONSTANTS.ERROR_TITLE, CONSTANTS.ERRROR_SAVE_QUESTION, CONSTANTS.ERROR);
