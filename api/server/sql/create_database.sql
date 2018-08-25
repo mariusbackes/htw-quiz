@@ -208,7 +208,6 @@ CREATE TABLE `user` (
   `last_login` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `completed_games` int(11) NOT NULL DEFAULT '0',
   `reached_points` int(11) NOT NULL DEFAULT '0',
-  `admin` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `user_email_uindex` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;

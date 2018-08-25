@@ -19,8 +19,8 @@ describe("Question API-Methods", function() {
     });
 
     it("edit question success", async () => {
-        env.question.text = "Das ist ein neuer Testfragetext!"
-        env.question.correct_answer = "Und auch eine neue richtige Antwort :-)"
+        env.question.text = "Das ist ein neuer Testfragetext!";
+        env.question.correct_answer = "Und auch eine neue richtige Antwort :-)";
         let post_data = {
             question: env.question
         };
@@ -51,7 +51,7 @@ describe("Question API-Methods", function() {
 const doRequest = async (options, query) => {
     options.uri = env.url + query;
     options.json = true;
-  
+
     return request(options)
       .then(data => {
         return data;

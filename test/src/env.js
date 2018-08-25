@@ -16,8 +16,7 @@ export const env = {
       registered_at: new Date().toLocaleString(),
       last_login: new Date().toLocaleString(),
       completed_games: 0,
-      reached_points: 0,
-      admin: true
+      reached_points: 0
     },
     contributing_user: {
       user_id: null,
@@ -29,8 +28,7 @@ export const env = {
       registered_at: new Date().toLocaleString(),
       last_login: new Date().toLocaleString(),
       completed_games: 0,
-      reached_points: 0,
-      admin: true
+      reached_points: 0
     },
     game: {
       game_id: -1,

@@ -60,9 +60,6 @@
                                 ref="repeat_password"
                                 v-model="repeat_password"
                                 :rules="repeatPasswordRules"></v-text-field>
-                  <v-checkbox v-model="admin">
-
-                  </v-checkbox>
                 </v-form>
                 <v-card-actions>
                   <v-spacer></v-spacer>
@@ -96,7 +93,6 @@
         last_name: null,
         email: null,
         password: null,
-        admin: true,
         repeat_password: null,
         showRegisterModal: false,
 
@@ -144,8 +140,7 @@
             first_name: this.first_name,
             last_name: this.last_name,
             email: this.email,
-            password: this.password,
-            admin: this.admin
+            password: this.password
           };
           userService.register(user).then((response) => {
             if(response.success){

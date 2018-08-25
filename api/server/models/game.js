@@ -58,8 +58,6 @@ export default function(Game) {
       success: false
     };
 
-    //callback(null, response);
-
     // Get own gamges
     Game.getOwnGames(p_data, (err, res) => {
       response.ownGames = res.games;
@@ -179,6 +177,8 @@ export default function(Game) {
             if(index === games.length - 1){
               resolve(games);
             }
+          }).catch((err) => {
+            console.log(err);
           });
         } else {
           if(index === games.length - 1){

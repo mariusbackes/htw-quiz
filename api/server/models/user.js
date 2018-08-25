@@ -144,8 +144,7 @@ export default function(User) {
             registered_at: new Date(),
             last_login: new Date(),
             completed_games: 0,
-            reached_points: 0,
-            admin: p_user.admin
+            reached_points: 0
         };
         bcrypt.genSalt(saltRounds, function(err, salt) {
             bcrypt.hash(user.password, salt, function(err, hash) {
