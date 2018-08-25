@@ -52,6 +52,30 @@ export default function(Game) {
     returns: { arg: 'response', type: 'object' }
   });
 
+  // Get all games for editing page
+  Game.getAllGamesForEditpage = function(p_data, callback) {
+    let response = {
+      success: false
+    };
+
+    // Get own gamges
+    Game.getOwnGames(p_data, (err, res) => {
+      response.ownGames = res.games;
+      // Contributing games
+      Game.getContributingGames(p_data, (err, res) => {
+        response.contributingGames = res;
+        response.success = true;
+        callback(null, response);
+      })
+    });
+  };
+
+  Game.remoteMethod('getAllGamesForEditpage', {
+    http: { path: '/getAllGamesForEditpage', verb: 'post' },
+    accepts: { arg: 'data', type: 'object', http: { source: 'body' } },
+    returns: { arg: 'response', type: 'object' }
+  });
+
   // Get all games for start page
   Game.getAllGamesForStartpage = function(p_data, callback) {
     let response = {

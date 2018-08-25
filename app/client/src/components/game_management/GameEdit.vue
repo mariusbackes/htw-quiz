@@ -151,9 +151,12 @@
         this.games = JSON.parse(localStorage.getItem('games'));
         if(this.games.length === 0){
           this.loading = true;
-          gameService.getOwnGames(this.user_id).then((response) => {
+          gameService.getAllGamesForEditpage(this.user_id).then((response) => {
             if(response.success){
-              this.games = response.games;
+              this.games = response.ownGames;
+              var contributingGames = response.contributingGames;
+              for (var i = 0; i< contributingGames.length;i++)
+                this.games.push(contributingGames[i]);
               localStorage.setItem('games', JSON.stringify(this.games));
             } else {
               swal(CONSTANTS.ERROR_TITLE, CONSTANTS.ERROR_NO_GAMES, CONSTANTS.ERROR);

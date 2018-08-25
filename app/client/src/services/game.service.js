@@ -43,6 +43,15 @@ export default {
       return response.data.response;
     })
   },
+  getAllGamesForEditpage(user_id){
+    let data = {
+      user_id: user_id
+    };
+    let api_endpoint = 'games/getAllGamesForEditpage';
+    return axios.post(environment.api_url + api_endpoint, data).then((response) => {
+      return response.data.response;
+    })
+  },
   deleteGame(game){
     let api_endpoint = 'games/deleteGame';
     return axios.post(environment.api_url + api_endpoint, game).then((response) => {
