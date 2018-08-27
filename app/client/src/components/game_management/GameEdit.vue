@@ -155,6 +155,8 @@
             if(response.success){
               this.games = response.ownGames;
               var contributingGames = response.contributingGames;
+              if (contributingGames == null)
+                contributingGames = [];
               for (var i = 0; i< contributingGames.length;i++)
                 this.games.push(contributingGames[i]);
               localStorage.setItem('games', JSON.stringify(this.games));
