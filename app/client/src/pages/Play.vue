@@ -141,6 +141,7 @@
       finishGame() {
         // Maximale erreibare Punkte für ein Spiel ermitteln
         this.game_summary.maximum_score = this.getMaximumPoints();
+        clearInterval(this.countdown);
         // Spiel abschließen
         console.log(this.game_summary);
         this.$router.push({name: 'gameSummary',
@@ -227,7 +228,7 @@
         this.text_answer = "";
         if(this.current_question.is_multiple_choice){
                 this.setAnswerInputOptions();
-                this.resetTimer();
+                //this.resetTimer();
               }
         this.resetTimer();
       },
