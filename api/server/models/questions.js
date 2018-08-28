@@ -40,11 +40,15 @@ export default function(Questions) {
                 }  
               });            
             } else {
-              // TODO: Bugfix: wenn die letzte frage kein mc ist, dann werden falsche werte gesendet
+              
               if(index === res_questions.length - 1){
-                response.success = true;
-                response.questions = res_questions;
-                callback(null, response);
+                
+                 setTimeout(function(){// Bugfix: wenn die letzte frage kein mc ist, dann werden falsche werte gesendet 
+                 response.success = true;
+                 response.questions = res_questions;
+                 callback(null, response);
+                 }, 2000)
+                
               }
             }
           });
@@ -219,3 +223,4 @@ export default function(Questions) {
     });
   }
 };
+
