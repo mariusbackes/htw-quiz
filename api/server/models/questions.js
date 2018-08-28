@@ -47,7 +47,7 @@ export default function(Questions) {
                  response.success = true;
                  response.questions = res_questions;
                  callback(null, response);
-                 }, 2000)
+                 }, 4000)
                 
               }
             }
