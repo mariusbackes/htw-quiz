@@ -232,7 +232,7 @@
             this.contributorOptions.user = this.contributingUser;
             this.contributorsForGame.push(this.contributorOptions);
             this.showContributorOptions = false;
-            swal("Contributer erfolgreich hinzugefügt");
+            swal(CONSTANTS.SUCCESS_ADD_CONTRIBUTOR_TITLE, CONSTANTS.SUCCESS_ADD_CONTRIBUTOR_BODY, CONSTANTS.SUCCESS);
             this.$router.push('/game');
           } else {
             swal(CONSTANTS.ERROR_ADD_CONTRIBUTOR_TITLE, CONSTANTS.ERROR_ADD_CONTRIBUTOR_BODY, CONSTANTS.ERROR);
@@ -250,7 +250,7 @@
             swal(CONSTANTS.ERROR_UPDATE_CONTRIBUTOR_TITLE, CONSTANTS.ERROR_UPDATE_CONTRIBUTOR_BODY, CONSTANTS.ERROR);
           }
           else
-            swal("Contributer erfolgreich geändert");
+            swal(CONSTANTS.SUCCESS_EDIT_CONTRIBUTOR_TITLE, CONSTANTS.SUCCESS_EDIT_CONTRIBUTOR_BODY, CONSTANTS.SUCCESS);
         })
       },
       openDeleteContributorDialog(user_id_to_delete, index){

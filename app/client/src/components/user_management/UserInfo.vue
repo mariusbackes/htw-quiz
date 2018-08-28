@@ -54,7 +54,7 @@
                 </v-list-tile-avatar>
                 <v-list-tile-content>
                   <v-list-tile-title>Angemeldet seit</v-list-tile-title>
-                  <v-list-tile-sub-title>{{user.registered_at}}</v-list-tile-sub-title>
+                  <v-list-tile-sub-title>{{registered_at_date.toLocaleDateString('de-DE')}} {{registered_at_date.toLocaleTimeString('de-DE')}} Uhr</v-list-tile-sub-title>
                 </v-list-tile-content>
               </v-list-tile>
 
@@ -94,15 +94,17 @@
     name: "UserInfo",
     data(){
       return {
-        user: {}
+        user: {},
+        registered_at_date: null
       }
     },
     methods: {
       getUserData() {
-        this.user =JSON.parse(localStorage.getItem('user'));
+        this.user = JSON.parse(localStorage.getItem('user'));
+        this.registered_at_date = new Date(this.user.registered_at);
       }
     },
-    mounted() {
+    beforeMount() {
       this.getUserData();
     }
   }

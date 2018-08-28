@@ -31,6 +31,21 @@ export const CONSTANTS = {
   ERROR_WRONG_INVITATION_CODE_TITLE: "Fehler beim aktivieren",
   ERROR_WRONG_INVITATION_CODE_BODY: "Der eingebene Code ist fehlerhaft",
 
+  SUCCESS_CREATE_GAME_TITLE: "Spiel erstellt",
+  SUCCESS_CREATE_GAME_BODY: "Das Spiel wurde erfolgreich angelegt",
+
+  SUCCESS_DELETE_GAME_TITLE: "Spiel gelöscht",
+  SUCCESS_DELETE_GAME_BODY: "Das Spiel wurde erfolgreich gelöscht",
+
+  SUCCESS_ADD_CONTRIBUTOR_TITLE: "Mitwirkender hinzugefügt",
+  SUCCESS_ADD_CONTRIBUTOR_BODY: "Der Mitwirkende wurde erfolgreich hinzugefügt",
+
+  SUCCESS_EDIT_CONTRIBUTOR_TITLE: "Mitwirkender geändert",
+  SUCCESS_EDIT_CONTRIBUTOR_BODY: "Der Mitwirkende wurde erfolgreich geändert",
+
+  SUCCESS_CREATE_QUESTION_TITLE: "Frage erstellt",
+  SUCCESS_CREATE_QUESTION_BODY: "Die Frage wurde erfolgreich erstellt",
+
   // Sweet Alert Options
   INFO: "info",
   SUCCESS: "success",

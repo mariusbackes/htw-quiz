@@ -194,8 +194,8 @@
               //Store game
               this.game.game_id = response.game_id;
               this.games.push(this.game);
-              localStorage.setItem('games', JSON.stringify(this.games)); 
-              swal("Spiel erfolgreich angelegt");
+              localStorage.setItem('games', JSON.stringify(this.games));
+              swal(CONSTANTS.SUCCESS_CREATE_GAME_TITLE, CONSTANTS.SUCCESS_CREATE_GAME_BODY, CONSTANTS.SUCCESS);
               this.$router.push('/home');
             }
           });

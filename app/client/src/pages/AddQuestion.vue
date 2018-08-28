@@ -263,8 +263,8 @@
           questionService.saveQuestion(this.question).then((response) => {
             if(response.success){
               this.question.question_id = response.question.question_id;
-              this.questions.push(this.question);  
-              swal("Frage erfolgreich angelegt");
+              this.questions.push(this.question);
+              swal(CONSTANTS.SUCCESS_CREATE_QUESTION_TITLE, CONSTANTS.SUCCESS_CREATE_QUESTION_BODY, CONSTANTS.SUCCESS);
               this.$router.push('/game');
             } else {
               swal(CONSTANTS.ERROR_TITLE, CONSTANTS.ERRROR_SAVE_QUESTION, CONSTANTS.ERROR);
