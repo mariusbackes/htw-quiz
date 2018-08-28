@@ -37,7 +37,7 @@
 
               <!-- Question is not multiple choice -->
               <div v-if="!current_question.is_multiple_choice">
-                <v-text-field text label="Text der Frage"
+                <v-text-field text label="Antwort der Frage"
                               v-model="text_answer"
                               :rules="[() => !!text_answer && text_answer.length >= 1 || 'Die Antwort muss eingegeben werden']"
                               required>
@@ -183,6 +183,7 @@
 
         for (let key in this.current_question.multiple_choice) {
           let wrong_answer = {
+            text: "Matheschatz",
             correct: false
           };
           // skip loop if the property is from prototype

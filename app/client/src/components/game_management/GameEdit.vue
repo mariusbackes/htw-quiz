@@ -206,7 +206,7 @@
             this.games.splice(this.games_index, 1);
             localStorage.setItem('games', JSON.stringify(this.games));
             swal("Löschen erfolgreich");
-            this.$router.push('/home');
+            //this.$router.push('/home');
           } else {
             swal(CONSTANTS.ERROR_TITLE, CONSTANTS.ERROR_DELETE_GAME, CONSTANTS.ERROR);
           }

@@ -2,19 +2,25 @@
 
 export default function(Multiplechoice) {
   // Mulitplce Choice Antworten zu einer Frage eintragen
-  Multiplechoice.getMultipleChoiceOptions = function(p_question_id, callback){
+  Multiplechoice.getMultipleChoiceOptions = function(p_question_id){
     let response = {
       success: false
     };
 
-    Multiplechoice.findById(p_question_id, (err, res) => {
-      if(res) {
-        response.success = true;
-        response.multiple_choice = res;
-      }
-      callback(null, response);
-    });
-  };
+    
+      return new Promise (function(resolve, reject)
+        {
+          Multiplechoice.findById(p_question_id, (err, res) => {
+            if(res) {        
+              response.success = true;
+              response.multiple_choice = res;
+            }
+            //callback(null, response);
+            resolve(response);
+            });
+        }
+    
+      )};
 
   Multiplechoice.remoteMethod('insertMutlipleChoiceOptions', {
     http: { path: '/insertMutlipleChoiceOptions', verb: 'post' },
