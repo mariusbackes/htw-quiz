@@ -40,6 +40,10 @@ boot(app, __dirname, function(err) {
         console.log(data);
         app.io.emit('user_joined_game', data)
       });
+
+      socket.on('start_game_for_everyone', function(data) {
+        app.io.emit('starting_the_game', data)
+      });
     });
   }
 });

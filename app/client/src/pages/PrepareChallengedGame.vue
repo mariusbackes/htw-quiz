@@ -51,6 +51,7 @@
           <div class="site_padding">
             <v-btn v-if="game.creator === user.user_id"
                    block color="primary"
+                   :disabled="joined_users.length === 0"
                    @click="startGame()">
               Spiel starten
             </v-btn>
@@ -111,8 +112,10 @@
         }
       },
       startGame(){
-        // TODO: Start game for everyone
-        console.log(this.game);
+        this.socket.emit('start_game_for_everyone', {
+          game_id: this.game_id,
+          game: this.game
+        });
       }
     },
     beforeMount() {
@@ -121,6 +124,9 @@
     mounted() {
       this.socket.on('user_joined_game', (data) => {
         this.joined_users.push(data.user);
+      });
+      this.socket.on('starting_the_game', (data) => {
+        this.$router.push({name: 'play', params: {game_id: data.game.game_id, game: data.game}});
       });
     }
   }
