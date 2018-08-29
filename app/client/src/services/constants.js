@@ -46,6 +46,12 @@ export const CONSTANTS = {
   SUCCESS_CREATE_QUESTION_TITLE: "Frage erstellt",
   SUCCESS_CREATE_QUESTION_BODY: "Die Frage wurde erfolgreich erstellt",
 
+  SUCCESS_DELETE_QUESTION_TITLE: "Frage gelöscht",
+  SUCCESS_DELETE_QUESTION_BODY: "Die Frage wurde erfolgreich gelöscht",
+
+  ERROR_DELETE_QUESTION_TITLE: "Fehler beim Löschen",
+  ERROR_DELETE_QUESTION_BODY: "Die Frage konnte nicht gelöscht werden",
+
   // Sweet Alert Options
   INFO: "info",
   SUCCESS: "success",

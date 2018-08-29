@@ -21,33 +21,33 @@ export default function(Questions) {
             // Load time frames for challenged games
             if(question.is_multiple_choice){
               // Multiplechoice.getMultipleChoiceOptions(question.question_id, (err, result) => {
-              //   question.multiple_choice = {
-              //     wrong_answer_1: result.multiple_choice.wrong_answer_1,
-              //     wrong_answer_2: result.multiple_choice.wrong_answer_2,
-              //     wrong_answer_3: result.multiple_choice.wrong_answer_3
-              //   };
+              // question.multiple_choice = {
+              //   wrong_answer_1: result.multiple_choice.wrong_answer_1,
+              //   wrong_answer_2: result.multiple_choice.wrong_answer_2,
+              //   wrong_answer_3: result.multiple_choice.wrong_answer_3
+              // };
               var mc = Multiplechoice.getMultipleChoiceOptions(question.question_id);
               mc.then(function(mc_answers){
                 question.multiple_choice = {
-                       wrong_answer_1: mc_answers.multiple_choice.wrong_answer_1,
-                       wrong_answer_2: mc_answers.multiple_choice.wrong_answer_2,
-                       wrong_answer_3: mc_answers.multiple_choice.wrong_answer_3
-                    };              
+                  wrong_answer_1: mc_answers.multiple_choice.wrong_answer_1,
+                  wrong_answer_2: mc_answers.multiple_choice.wrong_answer_2,
+                  wrong_answer_3: mc_answers.multiple_choice.wrong_answer_3
+                };
                 if(index === res_questions.length - 1){
                   response.success = true;
                   response.questions = res_questions;
                   callback(null, response);                  
-                }  
+                }
               });            
             } else {
               
               if(index === res_questions.length - 1){
                 
-                 setTimeout(function(){// Bugfix: wenn die letzte frage kein mc ist, dann werden falsche werte gesendet 
-                 response.success = true;
-                 response.questions = res_questions;
-                 callback(null, response);
-                 }, 4000)
+                setTimeout(function(){// Bugfix: wenn die letzte frage kein mc ist, dann werden falsche werte gesendet 
+                  response.success = true;
+                  response.questions = res_questions;
+                  callback(null, response);
+                }, 4000)
                 
               }
             }
