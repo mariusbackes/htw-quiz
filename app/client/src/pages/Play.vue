@@ -183,7 +183,6 @@
 
         for (let key in this.current_question.multiple_choice) {
           let wrong_answer = {
-            text: "Matheschatz",
             correct: false
           };
           // skip loop if the property is from prototype
