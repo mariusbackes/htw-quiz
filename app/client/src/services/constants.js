@@ -46,6 +46,15 @@ export const CONSTANTS = {
   SUCCESS_CREATE_QUESTION_TITLE: "Frage erstellt",
   SUCCESS_CREATE_QUESTION_BODY: "Die Frage wurde erfolgreich erstellt",
 
+  SUCCESS_EDIT_MAIL_TITLE: "E-Mailadresse geändert",
+  SUCCESS_EDIT_MAIL_BODY: "Die E-Mailadresse wurde erfolgreich geändert",
+
+  SUCCESS_EDIT_USERNAME_TITLE: "Username geändert",
+  SUCCESS_EDIT_USERNAME_BODY: "Der Username wurde erfolgreich geändert",
+
+  SUCCESS_EDIT_PASSWORD_TITLE: "Passwort geändert",
+  SUCCESS_EDIT_PASSWORD_BODY: "Das Passwort wurde erfolgreich geändert",
+
   // Sweet Alert Options
   INFO: "info",
   SUCCESS: "success",

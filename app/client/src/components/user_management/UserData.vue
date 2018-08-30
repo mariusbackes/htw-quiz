@@ -119,6 +119,7 @@
 <script>
   // Services
   import userService from '../../services/user.service';
+import { CONSTANTS } from '../../services/constants';
 
   export default {
     name: "UserData",
@@ -152,6 +153,7 @@
           if(response.success){
             this.user.username = this.new_username;
             this.storeUser();
+            swal(CONSTANTS.SUCCESS_EDIT_USERNAME_TITLE, CONSTANTS.SUCCESS_EDIT_USERNAME_BODY, CONSTANTS.SUCCESS);
           }
         })
       },
@@ -160,6 +162,7 @@
           if(response.success){
             this.user.email = this.new_email;
             this.storeUser();
+            swal(CONSTANTS.SUCCESS_EDIT_MAIL_TITLE,CONSTANTS.SUCCESS_EDIT_MAIL_BODY, CONSTANTS.SUCCESS);
           }
         })
       },
@@ -169,6 +172,7 @@
           userService.deleteUser(this.user, this.confirm_password).then(response => {
             if(response.success){
               localStorage.removeItem('user');
+              swal("User erfolgreich gelöscht");
               this.$router.push('/');
             }
           })

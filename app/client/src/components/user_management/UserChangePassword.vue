@@ -52,6 +52,7 @@
 
 <script>
   import userService from '../../services/user.service';
+  import { CONSTANTS } from '../../services/constants';
 
   export default {
     name: "UserChangePassword",
@@ -83,6 +84,7 @@
             if(response.success){
               this.user.password = this.new_password;
               localStorage.setItem('user', JSON.stringify(this.user));
+              swal(CONSTANTS.SUCCESS_EDIT_PASSWORD_TITLE, CONSTANTS.SUCCESS_EDIT_PASSWORD_BODY, CONSTANTS.SUCCESS);
             }
           })
         }

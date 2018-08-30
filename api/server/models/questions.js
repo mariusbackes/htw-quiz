@@ -16,6 +16,7 @@ export default function(Questions) {
     Questions.find({where: {game_id:p_data.game_id}}, (err, res_questions) => {
       if(res_questions){
         if(res_questions.length > 0){
+          var questionsToSend = []
           // Checking index, to check if loop is completed
           res_questions.forEach((question, index) => {
             // Load time frames for challenged games
@@ -32,23 +33,20 @@ export default function(Questions) {
                        wrong_answer_1: mc_answers.multiple_choice.wrong_answer_1,
                        wrong_answer_2: mc_answers.multiple_choice.wrong_answer_2,
                        wrong_answer_3: mc_answers.multiple_choice.wrong_answer_3
-                    };              
-                if(index === res_questions.length - 1){
+                    };          
+                    questionsToSend.push(question);    
+                if(questionsToSend.length === res_questions.length){
                   response.success = true;
-                  response.questions = res_questions;
+                  response.questions = questionsToSend;
                   callback(null, response);                  
                 }  
               });            
             } else {
-              
-              if(index === res_questions.length - 1){
-                
-                 setTimeout(function(){// Bugfix: wenn die letzte frage kein mc ist, dann werden falsche werte gesendet 
+              questionsToSend.push(question);
+              if(questionsToSend.length === res_questions.length){
                  response.success = true;
-                 response.questions = res_questions;
-                 callback(null, response);
-                 }, 4000)
-                
+                 response.questions = questionsToSend;
+                 callback(null, response);                
               }
             }
           });
