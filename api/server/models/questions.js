@@ -22,24 +22,26 @@ export default function(Questions) {
             // Load time frames for challenged games
             if(question.is_multiple_choice){
               // Multiplechoice.getMultipleChoiceOptions(question.question_id, (err, result) => {
-              //   question.multiple_choice = {
-              //     wrong_answer_1: result.multiple_choice.wrong_answer_1,
-              //     wrong_answer_2: result.multiple_choice.wrong_answer_2,
-              //     wrong_answer_3: result.multiple_choice.wrong_answer_3
-              //   };
+              // question.multiple_choice = {
+              //   wrong_answer_1: result.multiple_choice.wrong_answer_1,
+              //   wrong_answer_2: result.multiple_choice.wrong_answer_2,
+              //   wrong_answer_3: result.multiple_choice.wrong_answer_3
+              // };
               var mc = Multiplechoice.getMultipleChoiceOptions(question.question_id);
               mc.then(function(mc_answers){
                 question.multiple_choice = {
+
                        wrong_answer_1: mc_answers.multiple_choice.wrong_answer_1,
                        wrong_answer_2: mc_answers.multiple_choice.wrong_answer_2,
                        wrong_answer_3: mc_answers.multiple_choice.wrong_answer_3
                     };          
                     questionsToSend.push(question);    
                 if(questionsToSend.length === res_questions.length){
+
                   response.success = true;
                   response.questions = questionsToSend;
                   callback(null, response);                  
-                }  
+                }
               });            
             } else {
               questionsToSend.push(question);

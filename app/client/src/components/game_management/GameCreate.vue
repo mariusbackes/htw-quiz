@@ -182,6 +182,7 @@
       },
       createGame() {
         this.games = JSON.parse(localStorage.getItem('games'));
+        if (this.games == null) this.games = new Array();
         console.log(this.games);
         if(this.$refs.gameCreateForm.validate()){
           this.game.creator = this.user.user_id;

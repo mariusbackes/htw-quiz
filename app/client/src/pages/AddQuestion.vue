@@ -80,9 +80,9 @@
             <div slot="header">Alle Fragen anzeigen</div>
             <v-card v-if="questions.length > 0">
               <v-list two-line>
-                <template v-for="q in questions">
+                <template v-for="(q, index) in questions">
                   <v-list-tile
-                    @click="editQuestion(q)"
+                    @click="editQuestion(q, index)"
                     :key="q.text"
                     ripple>
                     <v-list-tile-content>
@@ -143,6 +143,10 @@
           <v-card>
             <v-card-title>
               <span class="headline">Frage bearbeiten</span>
+              <v-spacer></v-spacer>
+              <v-btn outline small fab color="error" @click="deleteQuestion()">
+                <v-icon>delete</v-icon>
+              </v-btn>
             </v-card-title>
             <v-card-text>
               <v-container grid-list-md>
@@ -240,6 +244,7 @@
         game: {},
         showMulitpleChoiceDialog: false,
         editQuestionDialog: false,
+        edit_index: -1
       }
     },
     methods: {
@@ -272,7 +277,8 @@
           })
         }
       },
-      editQuestion(question){
+      editQuestion(question, index){
+        this.edit_index = index;
         this.question_to_edit = question;
         if(!this.question_to_edit.is_multiple_choice){
           this.question_to_edit.multiple_choice =  {
@@ -293,6 +299,17 @@
             }
           })
         }
+      },
+      deleteQuestion(){
+        this.editQuestionDialog = false;
+        questionService.deleteQuestion(this.question_to_edit).then((response) => {
+          if(response.success){
+            this.questions.splice(this.edit_index, 1);
+            swal(CONSTANTS.SUCCESS_DELETE_QUESTION_TITLE, CONSTANTS.SUCCESS_DELETE_QUESTION_BODY, CONSTANTS.SUCCESS);
+          } else {
+            swal(CONSTANTS.ERROR_DELETE_QUESTION_TITLE, CONSTANTS.ERROR_DELETE_QUESTION_BODY, CONSTANTS.ERROR);
+          }
+        })
       }
     },
     mounted() {

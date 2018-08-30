@@ -55,6 +55,12 @@ export const CONSTANTS = {
   SUCCESS_EDIT_PASSWORD_TITLE: "Passwort geändert",
   SUCCESS_EDIT_PASSWORD_BODY: "Das Passwort wurde erfolgreich geändert",
 
+  SUCCESS_DELETE_QUESTION_TITLE: "Frage gelöscht",
+  SUCCESS_DELETE_QUESTION_BODY: "Die Frage wurde erfolgreich gelöscht",
+
+  ERROR_DELETE_QUESTION_TITLE: "Fehler beim Löschen",
+  ERROR_DELETE_QUESTION_BODY: "Die Frage konnte nicht gelöscht werden",
+
   // Sweet Alert Options
   INFO: "info",
   SUCCESS: "success",

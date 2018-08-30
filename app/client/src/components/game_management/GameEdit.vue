@@ -168,6 +168,7 @@
         }
       },
       editGame(game){
+        // TODO: User can only edit the game if he has the contributing rights
         this.game = game;
         this.editGameDialog = true;
 
@@ -200,6 +201,7 @@
         this.confirmDeleteGameDialog = true;
       },
       deleteGame(){
+        // TODO: User can only delete the game if he has the contributing rights
         this.confirmDeleteGameDialog = false;
         gameService.deleteGame(this.game).then((response) => {
           if(response.success){
